@@ -1,20 +1,24 @@
+import { zenTextKeysZH } from "./zentextkeys";
+
 export const zh = {
   common: {
     home: "首页",
     rooms: "客房",
-    features: "设施",
-    gallery: "画廊",
+    features: "特色",
+    gallery: "图库",
     contact: "联系我们",
-    viewPrices: "查看房价",
+    viewPrices: "查看价格",
     bookNow: "立即预订",
     learnMore: "了解更多",
     viewAllRooms: "查看所有客房",
     sendMessage: "发送消息",
     subscribe: "订阅",
+    selectRoom: "选择此房间",
   },
   hero: {
     title: "清新舒适的度假体验",
-    subtitle: "在Hotel Wellies，我们提供宁静、舒适的住宿环境，让您远离喧嚣，享受宁静。",
+    subtitle:
+      "在Hotel Wellies，我们提供宁静、舒适的住宿环境，让您远离喧嚣，享受宁静。",
     convenientLocation: "便捷位置",
     convenientLocationDesc: "位于轻井泽，从东京乘火车仅需一小时。",
     comfortableRooms: "舒适客房",
@@ -25,20 +29,23 @@ export const zh = {
     terraceSubtitle: "在我们宁静的露台上放松，尽情享受轻井泽的自然美景",
   },
   about: {
-    title: "关于Hotel Wellies",
+    title: "关于威利斯酒店",
+    subtitle: "关于我们",
     description:
-      "Hotel Wellies于2013年7月在治愈系山地度假胜地轻井泽开业，作为一个欧式风格的隐秘之所，距离东京乘火车约一小时。我们帮助您创造有趣、友好和放松的回忆。享用茶或在酒吧（酒馆）喝酒，体验仿佛身在英国的感觉。1984年来到日本的英国老板克里斯，用英语以及有点独特的日语与大家交流。酒店近年来经过时尚的翻新，每个客房都像精品店一样个性化设计。",
+      "威利斯酒店于2013年7月在轻井泽这个治愈系山区度假胜地开业，是一处欧式风格的隐秘住所，距离东京乘火车约一小时。我们致力于帮助您创造愉快、友好和轻松的回忆。品尝一杯茶，在酒吧享用饮品，体验日本中的英国风情。1984年来到日本的英国老板克里斯将用英语和略显特别的日语与您交流。酒店在近年来进行了时尚翻新，每个房间都像精品酒店一样独特设计。",
     tourismInfo:
       "为什么不在轻井泽观光或参加活动时使用Wellies呢？住2-3晚，您可以充分享受美丽的景点、美食餐厅、知名品牌和有趣的特色商店。",
     diningInfo:
       "我们提供推荐的英式早餐和伦敦风格的4道菜晚餐。例如，培根、烟熏三文鱼、黑布丁和肝酱等食物都是酒店自制的。鸡蛋来自酒店场地内饲养的可爱母鸡。酒店还提供品种丰富的酒吧（酒馆）、柴火炉、LP唱片......以及英国幽默！",
-    locationInfo: "位于距离轻井泽站约7分钟车程、距离中轻井泽站约2分钟、距离星野区域约3分钟的地方。",
+    locationInfo:
+      "位于距离轻井泽站约7分钟车程、距离中轻井泽站约2分钟、距离星野区域约3分钟的地方。",
     smokingPolicy: "酒店内禁止吸烟。",
     artworkInfo: "酒店客房和餐食的图片由酒店客人兼艺术家若松伦夫先生提供。",
+    ...zenTextKeysZH.about,
   },
   features: {
     title: "我们的服务",
-    subtitle: "我们提供各种服务，使您的住宿舒适难忘。",
+    subtitle: "酒店特色",
     dining: {
       title: "早餐、晚餐和茶点",
       desc: "入住后，您可以在休息室或木甲板上享用英式茶和蛋糕。在我们友好宽敞的休息室和餐厅里，品尝我们特制的自制英式早餐和伦敦风格的四道菜晚餐。我们还提供精心挑选的单点菜单。",
@@ -67,6 +74,7 @@ export const zh = {
       title: "自行车租赁",
       desc: "可租用自行车和电动自行车。请提前预订。电动自行车：全天1,500日元，半天750日元。自行车：全天1,000日元，半天500日元。",
     },
+    ...zenTextKeysZH.features,
   },
   rooms: {
     title: "精选客房",
@@ -81,14 +89,16 @@ export const zh = {
     popular: "热门",
     perNight: "/ 晚",
     viewDetails: "查看详情",
+    ...zenTextKeysZH.rooms,
   },
   testimonials: {
     title: "客户评价",
     subtitle: "听听我们的客人怎么说。",
+    ...zenTextKeysZH.testimonials,
   },
   gallery: {
-    title: "酒店画廊",
-    subtitle: "探索我们位于轻井泽的英式风格隐秘住所的魅力与优雅",
+    title: "酒店图库",
+    subtitle: "照片展示",
     categories: {
       all: "所有照片",
       interior: "室内",
@@ -98,6 +108,7 @@ export const zh = {
     locationTitle: "便捷位置",
     locationInfo: "距离星野区域和布莱斯顿庭院酒店不到5分钟车程",
     mapAriaLabel: "显示轻井泽维利斯酒店位置的地图",
+    ...zenTextKeysZH.gallery,
   },
   contact: {
     title: "联系我们",
@@ -186,7 +197,6 @@ export const zh = {
     bookingConfirmationSent: "确认邮件已发送至您的电子邮箱",
     needHelp: "需要帮助？",
     contactUsForAssistance: "联系我们的预订团队获取预订帮助",
-    selectRoom: "选择客房",
     guestDetails: "客人详情",
     errors: {
       required: "此字段为必填项",
@@ -208,4 +218,4 @@ export const zh = {
     acceptedPaymentMethods: "接受的支付方式",
     faq: "常见问题",
   },
-}
+};

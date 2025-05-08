@@ -1,32 +1,40 @@
+import { zenTextKeysEN } from "./zentextkeys";
+
 export const en = {
   common: {
     home: "Home",
     rooms: "Rooms",
-    features: "Facilities",
+    features: "Features",
     gallery: "Gallery",
-    contact: "Contact Us",
+    contact: "Contact",
     viewPrices: "View Prices",
     bookNow: "Book Now",
     learnMore: "Learn More",
     viewAllRooms: "View All Rooms",
     sendMessage: "Send Message",
     subscribe: "Subscribe",
+    selectRoom: "Select Room",
   },
   hero: {
     title: "Comfortable and Relaxing Stay",
     subtitle:
       "At Hotel Wellies, we provide a peaceful and comfortable accommodation environment, away from the hustle and bustle.",
     convenientLocation: "Convenient Location",
-    convenientLocationDesc: "Located in Karuizawa, just an hour from Tokyo by train.",
+    convenientLocationDesc:
+      "Located in Karuizawa, just an hour from Tokyo by train.",
     comfortableRooms: "Comfortable Rooms",
-    comfortableRoomsDesc: "Thoughtfully designed rooms for a comfortable sleep experience.",
+    comfortableRoomsDesc:
+      "Thoughtfully designed rooms for a comfortable sleep experience.",
     attentiveService: "Attentive Service",
-    attentiveServiceDesc: "24-hour front desk service to meet your various needs.",
+    attentiveServiceDesc:
+      "24-hour front desk service to meet your various needs.",
     terraceTitle: "Experience Tranquility",
-    terraceSubtitle: "Relax on our peaceful terrace surrounded by Karuizawa's natural beauty",
+    terraceSubtitle:
+      "Relax on our peaceful terrace surrounded by Karuizawa's natural beauty",
   },
   about: {
     title: "About Hotel Wellies",
+    subtitle: "About Us",
     description:
       "Hotel Wellies opened in July 2013 as a European-style hideaway in the healing mountain resort of Karuizawa, about an hour by train from Tokyo. We help you create fun, friendly, and relaxing memories. Enjoy tea or drinks at the bar (pub) for an experience as if you were in the UK. Chris, the British owner who came to Japan in 1984, speaks English and a bit of unique Japanese. The hotel has been stylishly renovated in recent years, with each room individually designed like a boutique.",
     tourismInfo:
@@ -38,10 +46,11 @@ export const en = {
     smokingPolicy: "The hotel is non-smoking.",
     artworkInfo:
       "The pictures of the hotel rooms and meals are by Michio Wakamatsu, who is both a guest and an artist at the hotel.",
+    ...zenTextKeysEN.about,
   },
   features: {
     title: "Our Services",
-    subtitle: "We provide a variety of services to make your stay comfortable and memorable.",
+    subtitle: "Hotel Features",
     dining: {
       title: "Breakfast, Dinner & Tea",
       desc: "Enjoy English tea and cake in the lounge or on the wood deck after check-in. Try our special homemade English breakfast and London-style 4-course dinner in our friendly and spacious lounge & dining room. We also offer a carefully selected à la carte menu.",
@@ -70,10 +79,12 @@ export const en = {
       title: "Bicycle Rental",
       desc: "Bicycles and electric bicycles are available for rent. Please reserve in advance. Electric bicycle: 1,500 yen per day, 750 yen for half a day. Bicycle: 1,000 yen per day, 500 yen for half a day.",
     },
+    ...zenTextKeysEN.features,
   },
   rooms: {
     title: "Featured Rooms",
-    subtitle: "We offer various types of rooms to meet the needs of different guests.",
+    subtitle:
+      "We offer various types of rooms to meet the needs of different guests.",
     standard: "Standard Double Room",
     standardDesc: "Comfortable and practical double room",
     deluxe: "Deluxe Suite",
@@ -84,14 +95,16 @@ export const en = {
     popular: "Popular",
     perNight: "/ night",
     viewDetails: "View Details",
+    ...zenTextKeysEN.rooms,
   },
   testimonials: {
     title: "Guest Reviews",
     subtitle: "Hear what our guests have to say.",
+    ...zenTextKeysEN.testimonials,
   },
   gallery: {
     title: "Hotel Gallery",
-    subtitle: "Explore the charm and elegance of our British-style hideaway in Karuizawa",
+    subtitle: "Photo Gallery",
     categories: {
       all: "All Photos",
       interior: "Interior",
@@ -99,8 +112,10 @@ export const en = {
       exterior: "Exterior & Surroundings",
     },
     locationTitle: "Convenient Location",
-    locationInfo: "Less than 5 minutes drive from Hoshino area and Hotel Bleston Court",
+    locationInfo:
+      "Less than 5 minutes drive from Hoshino area and Hotel Bleston Court",
     mapAriaLabel: "Map showing Hotel Wellies location in Karuizawa",
+    ...zenTextKeysEN.gallery,
   },
   contact: {
     title: "Contact Us",
@@ -121,12 +136,14 @@ export const en = {
     messageSent: "Message Prepared",
     messageSentDesc: "Your email client has been opened with your message.",
     error: "Unable to Open Email App",
-    errorDesc: "Please try clicking the button below or contact us directly at info@hotelwellies.jp",
+    errorDesc:
+      "Please try clicking the button below or contact us directly at info@hotelwellies.jp",
     orClickBelow: "Or click below to open your email app directly",
     openEmailApp: "Open Email App",
   },
   footer: {
-    description: "Providing a fresh and comfortable accommodation experience to make your trip more enjoyable.",
+    description:
+      "Providing a fresh and comfortable accommodation experience to make your trip more enjoyable.",
     quickLinks: "Quick Links",
     policies: "Policies",
     bookingPolicy: "Booking Policy",
@@ -134,7 +151,8 @@ export const en = {
     privacyPolicy: "Privacy Policy",
     faq: "FAQ",
     newsletter: "Newsletter",
-    newsletterDesc: "Subscribe to our newsletter to receive the latest offers and event information.",
+    newsletterDesc:
+      "Subscribe to our newsletter to receive the latest offers and event information.",
     yourEmail: "Your email",
     allRightsReserved: "All rights reserved.",
   },
@@ -142,7 +160,8 @@ export const en = {
     title: "Book Your Stay",
     subtitle: "Complete your reservation in a few simple steps",
     searchRooms: "Search for Rooms",
-    selectDatesAndGuests: "Select your check-in and check-out dates, and number of guests",
+    selectDatesAndGuests:
+      "Select your check-in and check-out dates, and number of guests",
     checkIn: "Check-in",
     checkOut: "Check-out",
     selectDate: "Select date",
@@ -156,7 +175,6 @@ export const en = {
     maxCapacity: "Max Capacity",
     showDetails: "Show details",
     hideDetails: "Hide details",
-    selectRoom: "Select Room",
     selected: "Selected",
     notAvailable: "Not Available",
     exceedsCapacity: "This room cannot accommodate your group size",
@@ -169,7 +187,8 @@ export const en = {
     roomSubtotal: "Room subtotal",
     taxesAndFees: "Taxes and fees (10%)",
     totalPrice: "Total price",
-    priceDisclaimer: "Prices are in Japanese Yen (JPY) and include all applicable taxes and fees.",
+    priceDisclaimer:
+      "Prices are in Japanese Yen (JPY) and include all applicable taxes and fees.",
     guestInformation: "Guest Information",
     firstName: "First Name",
     lastName: "Last Name",
@@ -181,15 +200,18 @@ export const en = {
     selectTime: "Select time",
     after22: "After 22:00",
     specialRequests: "Special Requests",
-    specialRequestsPlaceholder: "Please let us know if you have any special requests or requirements",
-    agreeToTerms: "I agree to the terms and conditions, cancellation policy, and privacy policy",
+    specialRequestsPlaceholder:
+      "Please let us know if you have any special requests or requirements",
+    agreeToTerms:
+      "I agree to the terms and conditions, cancellation policy, and privacy policy",
     continueToPayment: "Continue to Payment",
     processing: "Processing...",
     bookingSuccessful: "Booking Successful",
-    bookingConfirmationSent: "A confirmation email has been sent to your email address",
+    bookingConfirmationSent:
+      "A confirmation email has been sent to your email address",
     needHelp: "Need Help?",
-    contactUsForAssistance: "Contact our reservation team for assistance with your booking",
-    selectRoom: "Select Room",
+    contactUsForAssistance:
+      "Contact our reservation team for assistance with your booking",
     guestDetails: "Guest Details",
     errors: {
       required: "This field is required",
@@ -211,4 +233,4 @@ export const en = {
     acceptedPaymentMethods: "Accepted Payment Methods",
     faq: "Frequently Asked Questions",
   },
-}
+};

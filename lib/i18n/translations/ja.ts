@@ -1,3 +1,5 @@
+import { zenTextKeysJA } from "./zentextkeys";
+
 export const ja = {
   common: {
     home: "ホーム",
@@ -11,35 +13,42 @@ export const ja = {
     viewAllRooms: "すべての客室を見る",
     sendMessage: "メッセージを送信",
     subscribe: "登録",
+    selectRoom: "この部屋を選択",
   },
   hero: {
     title: "心地よい滞在体験",
-    subtitle: "ホテルウェリーズでは、喧騒から離れた静かで快適な宿泊環境を提供しています。",
+    subtitle:
+      "ホテルウェリーズでは、喧騒から離れた静かで快適な宿泊環境を提供しています。",
     convenientLocation: "便利なロケーション",
     convenientLocationDesc: "東京から電車で約1時間の軽井沢に位置しています。",
     comfortableRooms: "快適な客室",
     comfortableRoomsDesc: "心地よい睡眠体験のために丁寧に設計された客室。",
     attentiveService: "行き届いたサービス",
-    attentiveServiceDesc: "24時間対応のフロントサービスで様々なニーズにお応えします。",
+    attentiveServiceDesc:
+      "24時間対応のフロントサービスで様々なニーズにお応えします。",
     terraceTitle: "静寂を体験する",
-    terraceSubtitle: "軽井沢の自然美に囲まれた、静かなテラスでくつろぎのひとときを",
+    terraceSubtitle:
+      "軽井沢の自然美に囲まれた、静かなテラスでくつろぎのひとときを",
   },
   about: {
     title: "ホテルウェリーズについて",
+    subtitle: "私たちについて",
     description:
       "ウエリーズは、2013年7月、癒しのマウンテンリゾート軽井沢にヨーロッパ風の隠れ家としてオープンしました‐東京から電車で一時間程度です。楽しく、フレンドリーで、リラックスした思い出作りのお手伝いをいたします。紅茶を飲んだり、バー（パブ）でお酒を楽しんだりして、まるで英国にいるかのような体験をしてください。１９８４年に日本に来た英国人オーナーのクリスは、英語で、また、ちょっと変わった日本語で皆様とお話します。ホテルは、ここ数年の間におしゃれに改装され、各客室はブティックのように個性的にデザインされています。",
     tourismInfo:
       "軽井沢観光、または、イベントの際にウエリーズを利用しませんか？２から３泊していただけると、美しいスポット、グルメなレストラン、有名ブランド、面白い個性的なショップ等を十分に味わっていただけます。",
     diningInfo:
       "お勧めのイングリッシュブレックファーストや、ロンドンスタイルの４コースディナーをお出しいたします。例えば、ベーコン、スモークサーモン、ブラックプディングやパテといった食べ物は、ホテルの自家製です。卵もホテルの敷地内で育てられているかわいい雌鶏からです。また、ホテルでは、品揃え豊富なバー（パブ）、薪ストーブ、LPレコード..…と英国のユーモーアーを提供いたします！",
-    locationInfo: "軽井沢駅から車で約７分・中軽井沢駅から約２分・星野エリアから約３分のところに位置しています。",
+    locationInfo:
+      "軽井沢駅から車で約７分・中軽井沢駅から約２分・星野エリアから約３分のところに位置しています。",
     smokingPolicy: "ホテル内禁煙です。",
     artworkInfo:
       "ホテルの客室や食事の絵は、ホテルのお客様でもあり、アーティストでもある、若松　倫夫さんによるものです。",
+    ...zenTextKeysJA.about,
   },
   features: {
     title: "私たちのサービス",
-    subtitle: "快適で思い出に残る滞在のために様々なサービスを提供しています。",
+    subtitle: "ホテルの特色",
     dining: {
       title: "朝食、夕食、お茶",
       desc: "チェックイン後、ラウンジまたはウッドデッキでイングリッシュティーとケーキをお楽しみいただけます。フレンドリーで広々としたラウンジ＆ダイニングルームで、特製の自家製イングリッシュブレックファーストとロンドンスタイルの4コースディナーをお試しください。厳選されたアラカルトメニューもご用意しております。",
@@ -68,10 +77,12 @@ export const ja = {
       title: "貸自転車",
       desc: "自転車と電動自転車をレンタルできます。事前に予約してください。電動自転車1日1500円、半日750円。 自転車1日1000円、半日500円",
     },
+    ...zenTextKeysJA.features,
   },
   rooms: {
     title: "おすすめの客室",
-    subtitle: "様々なゲストのニーズに応えるために、多様なタイプの客室を提供しています。",
+    subtitle:
+      "様々なゲストのニーズに応えるために、多様なタイプの客室を提供しています。",
     standard: "スタンダードダブルルーム",
     standardDesc: "快適で実用的なダブルルーム",
     deluxe: "デラックススイート",
@@ -82,14 +93,16 @@ export const ja = {
     popular: "人気",
     perNight: "/ 一泊",
     viewDetails: "詳細を見る",
+    ...zenTextKeysJA.rooms,
   },
   testimonials: {
     title: "お客様の声",
     subtitle: "当ホテルのお客様からの声をご紹介します。",
+    ...zenTextKeysJA.testimonials,
   },
   gallery: {
     title: "ホテルギャラリー",
-    subtitle: "軽井沢の英国風隠れ家の魅力と優雅さをご覧ください",
+    subtitle: "フォトギャラリー",
     categories: {
       all: "すべての写真",
       interior: "インテリア",
@@ -99,6 +112,7 @@ export const ja = {
     locationTitle: "便利な立地",
     locationInfo: "星野エリア、ホテルブレストンコートまで車5分以内",
     mapAriaLabel: "軽井沢のホテルウェリーズの位置を示す地図",
+    ...zenTextKeysJA.gallery,
   },
   contact: {
     title: "お問い合わせ",
@@ -119,7 +133,8 @@ export const ja = {
     messageSent: "メッセージの準備ができました",
     messageSentDesc: "メールクライアントがメッセージと共に開かれました。",
     error: "メールアプリを開けませんでした",
-    errorDesc: "下のボタンをクリックするか、直接 info@hotelwellies.jp までご連絡ください",
+    errorDesc:
+      "下のボタンをクリックするか、直接 info@hotelwellies.jp までご連絡ください",
     orClickBelow: "または下のボタンをクリックして直接メールアプリを開く",
     openEmailApp: "メールアプリを開く",
   },
@@ -132,7 +147,8 @@ export const ja = {
     privacyPolicy: "プライバシーポリシー",
     faq: "よくある質問",
     newsletter: "ニュースレター",
-    newsletterDesc: "ニュースレターを購読して、最新のオファーやイベント情報を受け取りましょう。",
+    newsletterDesc:
+      "ニュースレターを購読して、最新のオファーやイベント情報を受け取りましょう。",
     yourEmail: "メールアドレス",
     allRightsReserved: "All rights reserved.",
   },
@@ -140,7 +156,8 @@ export const ja = {
     title: "ご予約",
     subtitle: "簡単な手順で予約を完了します",
     searchRooms: "客室を検索",
-    selectDatesAndGuests: "チェックイン・チェックアウト日とゲスト数を選択してください",
+    selectDatesAndGuests:
+      "チェックイン・チェックアウト日とゲスト数を選択してください",
     checkIn: "チェックイン",
     checkOut: "チェックアウト",
     selectDate: "日付を選択",
@@ -167,7 +184,8 @@ export const ja = {
     roomSubtotal: "客室小計",
     taxesAndFees: "税金およびサービス料（10％）",
     totalPrice: "合計金額",
-    priceDisclaimer: "料金は日本円（JPY）で、適用されるすべての税金とサービス料が含まれています。",
+    priceDisclaimer:
+      "料金は日本円（JPY）で、適用されるすべての税金とサービス料が含まれています。",
     guestInformation: "ゲスト情報",
     firstName: "名",
     lastName: "姓",
@@ -179,15 +197,17 @@ export const ja = {
     selectTime: "時間を選択",
     after22: "22:00以降",
     specialRequests: "特別リクエスト",
-    specialRequestsPlaceholder: "特別なリクエストや要件がありましたらお知らせください",
-    agreeToTerms: "利用規約、キャンセルポリシー、プライバシーポリシーに同意します",
+    specialRequestsPlaceholder:
+      "特別なリクエストや要件がありましたらお知らせください",
+    agreeToTerms:
+      "利用規約、キャンセルポリシー、プライバシーポリシーに同意します",
     continueToPayment: "支払いに進む",
     processing: "処理中...",
     bookingSuccessful: "予約完了",
     bookingConfirmationSent: "確認メールがメールアドレスに送信されました",
     needHelp: "サポートが必要ですか？",
-    contactUsForAssistance: "予約に関するサポートが必要な場合は、予約チームにお問い合わせください",
-    selectRoom: "客室選択",
+    contactUsForAssistance:
+      "予約に関するサポートが必要な場合は、予約チームにお問い合わせください",
     guestDetails: "ゲスト詳細",
     errors: {
       required: "このフィールドは必須です",
@@ -209,4 +229,4 @@ export const ja = {
     acceptedPaymentMethods: "利用可能な支払い方法",
     faq: "よくある質問",
   },
-}
+};

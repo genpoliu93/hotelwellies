@@ -1,25 +1,27 @@
-import { Header } from "@/components/header"
-import { Hero } from "@/components/hero"
-import { About } from "@/components/about"
-import { Features } from "@/components/features"
-import { Rooms } from "@/components/rooms"
-import { Testimonials } from "@/components/testimonials"
-import { Gallery } from "@/components/gallery"
-import { Contact } from "@/components/contact"
-import { Footer } from "@/components/footer"
+import { Header } from "@/components/header";
+import {
+  ZenHero,
+  ZenAbout,
+  ZenFeatures,
+  ZenRooms,
+  ZenTestimonials,
+  ZenGallery,
+  ZenContact,
+} from "@/components/zen-components";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-stone-50 text-stone-800">
       <Header />
-      <Hero />
-      <About />
-      <Features />
-      <Rooms />
-      <Testimonials />
-      <Gallery />
-      <Contact />
+      <ZenHero />
+      <ZenAbout />
+      <ZenFeatures />
+      <ZenRooms />
+      <ZenTestimonials />
+      <ZenGallery />
+      <ZenContact />
       <Footer />
     </main>
-  )
+  );
 }
