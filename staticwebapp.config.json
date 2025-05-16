@@ -1,0 +1,43 @@
+{
+  "routes": [
+    {
+      "route": "/[locale]/booking",
+      "rewrite": "/[locale]/booking/index.html"
+    },
+    {
+      "route": "/[locale]",
+      "rewrite": "/[locale]/index.html"
+    },
+    {
+      "route": "/en/*",
+      "rewrite": "/en/*"
+    },
+    {
+      "route": "/ja/*",
+      "rewrite": "/ja/*"
+    },
+    {
+      "route": "/zh/*",
+      "rewrite": "/zh/*"
+    },
+    {
+      "route": "/*",
+      "rewrite": "/index.html"
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html"
+  },
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/404.html",
+      "statusCode": 404
+    }
+  },
+  "globalHeaders": {
+    "content-security-policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://*.tile.openstreetmap.org; img-src 'self' data: https://*.tile.openstreetmap.org https://unpkg.com;"
+  },
+  "mimeTypes": {
+    ".json": "text/json"
+  }
+}
