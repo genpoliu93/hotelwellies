@@ -117,7 +117,11 @@ export const ja = {
   contact: {
     title: "お問い合わせ",
     subtitle: "ご質問やご要望がございましたら、お気軽にお問い合わせください。",
+    emailTitle: "メールでお問い合わせ",
+    hoursTitle: "営業時間",
+    hours: "10:00 - 18:00",
     address: "住所",
+    getInTouch: "お問い合わせ",
     phone: "電話",
     email: "メール",
     frontDeskHours: "フロント営業時間",

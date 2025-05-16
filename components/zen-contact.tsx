@@ -49,7 +49,7 @@ export function ZenContact() {
                   </div>
                   <div>
                     <h4 className="text-stone-800 font-medium mb-2">
-                      {t("contact.addressTitle")}
+                      {t("contact.title")}
                     </h4>
                     <p className="text-stone-600 text-sm font-light">
                       {t("contact.address")}
