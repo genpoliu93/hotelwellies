@@ -16,14 +16,14 @@ export const metadata = {
     "European-style hideaway in the healing mountain resort of Karuizawa",
 };
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: Locale };
+  params: any;
 }) {
-  const { locale } = params;
+  const { locale } = params as { locale: Locale };
 
   return (
     <html lang={locale} suppressHydrationWarning>
