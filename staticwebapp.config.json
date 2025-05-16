@@ -1,36 +1,32 @@
 {
   "routes": [
     {
-      "route": "/[locale]/booking",
-      "rewrite": "/[locale]/booking/index.html"
-    },
-    {
-      "route": "/[locale]",
-      "rewrite": "/[locale]/index.html"
-    },
-    {
       "route": "/en/*",
-      "rewrite": "/en/*"
+      "serve": "/en/*",
+      "statusCode": 200
     },
     {
       "route": "/ja/*",
-      "rewrite": "/ja/*"
+      "serve": "/ja/*",
+      "statusCode": 200
     },
     {
       "route": "/zh/*",
-      "rewrite": "/zh/*"
+      "serve": "/zh/*",
+      "statusCode": 200
     },
     {
       "route": "/*",
-      "rewrite": "/index.html"
+      "serve": "/en/index.html",
+      "statusCode": 200
     }
   ],
   "navigationFallback": {
-    "rewrite": "/index.html"
+    "rewrite": "/en/index.html"
   },
   "responseOverrides": {
     "404": {
-      "rewrite": "/404.html",
+      "rewrite": "/en/404/index.html",
       "statusCode": 404
     }
   },

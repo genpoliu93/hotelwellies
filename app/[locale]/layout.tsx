@@ -16,6 +16,11 @@ export const metadata = {
     "European-style hideaway in the healing mountain resort of Karuizawa",
 };
 
+// 为静态导出生成所有支持的语言页面
+export function generateStaticParams() {
+  return [{ locale: "en" }, { locale: "ja" }, { locale: "zh" }];
+}
+
 export default async function LocaleLayout({
   children,
   params,
