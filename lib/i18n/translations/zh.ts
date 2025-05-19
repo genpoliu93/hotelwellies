@@ -4,9 +4,10 @@ export const zh = {
   common: {
     home: "首页",
     rooms: "客房",
-    features: "特色",
-    gallery: "图库",
+    features: "设施",
+    gallery: "画廊",
     contact: "联系我们",
+    news: "公告",
     viewPrices: "查看价格",
     bookNow: "立即预订",
     learnMore: "了解更多",
@@ -134,17 +135,17 @@ export const zh = {
     openEmailApp: "打开邮箱应用",
   },
   footer: {
-    description: "提供清新舒适的住宿体验，让您的旅行更加愉快。",
+    description: "提供舒适的住宿体验，让您的旅行更加愉快。",
     quickLinks: "快速链接",
     policies: "政策",
     bookingPolicy: "预订政策",
     cancellationPolicy: "取消政策",
     privacyPolicy: "隐私政策",
     faq: "常见问题",
-    newsletter: "通讯",
-    newsletterDesc: "订阅我们的通讯，获取最新优惠和活动信息。",
+    newsletter: "新闻通讯",
+    newsletterDesc: "订阅我们的新闻通讯，获取最新优惠和活动信息。",
     yourEmail: "您的邮箱",
-    allRightsReserved: "保留所有权利。",
+    allRightsReserved: "版权所有。",
   },
   booking: {
     title: "预订住宿",
@@ -266,5 +267,69 @@ export const zh = {
     paymentId: "支付编号",
     totalAmount: "总金额",
     printConfirmation: "打印确认单",
+  },
+  news: {
+    title: "公告",
+    subtitle: "新闻与公告",
+    sustainabilityTitle: "可持续发展举措公告",
+    sustainability: {
+      breadcrumbHome: "首页",
+      breadcrumbNews: "可持续发展举措公告",
+      pageTitle: "Hotel Wellies可持续发展举措公告",
+      publicationDate: "公布日期：2024年5月15日",
+      introduction:
+        "Hotel Wellies致力于为客人提供舒适的住宿体验，同时通过可持续的酒店运营为当地社区和环境做出贡献。我们很高兴报告我们正在实施的具体举措。这些举措基于日本政府制定的旅游设施价值提升管理指南。",
+      initiatives: {
+        policy: {
+          title: "制定并传达可持续管理政策 (A1)",
+          content:
+            "Hotel Wellies制定了以环境保护、与当地社区共存以及提高客人和员工满意度为核心的可持续管理政策。这一政策与所有员工共享，并通过官方网站和酒店内部展示积极向业务合作伙伴和客人传达。",
+        },
+        compliance: {
+          title: "全面遵守法律法规 (A2)",
+          content:
+            "我们的酒店严格遵守与业务活动相关的所有法律、条例和法规，包括旅馆业法、消防法、食品卫生法、劳动相关法律和个人信息保护法。我们为所有员工定期开展培训，提高和确保合规意识。",
+        },
+        internalDialogue: {
+          title: "建立内部意见交流机会 (A4)",
+          content:
+            "为促进可持续管理，我们定期与所有员工举行会议和意见交流会。这使我们能够收集一线反馈，并将减少环境影响和提高客人满意度的想法纳入管理决策。",
+        },
+        feedback: {
+          title: "客人反馈响应系统 (A5)",
+          content:
+            "我们认为客人的意见、请求、投诉和建议是服务改进的宝贵资产。我们建立了通过问卷调查、电子邮件、电话和面对面互动等各种方法接收反馈，并及时真诚地响应的系统。收到的反馈会被记录并定期分析以持续改进。",
+        },
+        workConditions: {
+          title: "员工工作条件和福利的文档化和通知 (B7)",
+          content:
+            "为使所有员工能够安心地展示他们的能力，工作时间、假期、工资、社会保险和培训计划等工作条件和福利都在工作规则中记录，并在雇用时以及需要时向所有员工仔细解释。我们努力创造一个有价值的工作环境。",
+        },
+        culture: {
+          title: "对当地文化保护和推广的贡献 (C2, C3)",
+          content:
+            "Hotel Wellies旨在尊重当地文化并为其保护和推广做出贡献。我们采取的举措包括在酒店展示和销售当地工艺品，以及在地方美食中使用当地食材。我们还积极配合并推广当地文化活动。",
+        },
+        sustainable: {
+          title: "优先购买可重复使用、可修复和可回收的产品 (D1.2)",
+          content:
+            "我们的酒店在采购物品时，积极优先选择可重复使用、可修复和可回收的产品，以减少环境影响。例如，我们选择可以重复使用的设备，并努力尽量减少一次性产品的使用。",
+        },
+        energy: {
+          title: "引入可再生能源或安装节能设备 (D1.3)",
+          content:
+            "为减少和优化能源消耗，我们在整个酒店积极采用LED照明。我们还在推动升级空调系统以使用更节能的设备，并在客房中安装提示，鼓励节约用电。我们还在考虑未来引入可再生能源。",
+        },
+        waste: {
+          title: "促进废物减少和适当处理 (D2.4)",
+          content:
+            "为控制废物产生，我们在客房中只提供必要的生活用品（例如，在前台提供或使用环保材料）。我们还彻底分类产生的废物，并按照当地规则通知员工和客人正确处理方法。",
+        },
+      },
+      conclusion1:
+        "通过这些举措，Hotel Wellies旨在为客人提供更舒适、高质量的住宿体验，同时为实现可持续社会做出贡献。我们将继续倾听客人和当地社区的声音，并努力不断改进。",
+      conclusion2:
+        "如果您对我们的举措有任何反馈或建议，请随时与我们的员工联系。我们衷心感谢您的理解和配合。",
+    },
   },
 };

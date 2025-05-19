@@ -7,6 +7,7 @@ export const en = {
     features: "Features",
     gallery: "Gallery",
     contact: "Contact",
+    news: "News",
     viewPrices: "View Prices",
     bookNow: "Book Now",
     learnMore: "Learn More",
@@ -143,7 +144,7 @@ export const en = {
   },
   footer: {
     description:
-      "Providing a fresh and comfortable accommodation experience to make your trip more enjoyable.",
+      "Providing comfortable stays and making your travels more enjoyable.",
     quickLinks: "Quick Links",
     policies: "Policies",
     bookingPolicy: "Booking Policy",
@@ -152,8 +153,8 @@ export const en = {
     faq: "FAQ",
     newsletter: "Newsletter",
     newsletterDesc:
-      "Subscribe to our newsletter to receive the latest offers and event information.",
-    yourEmail: "Your email",
+      "Subscribe to our newsletter to receive updates on our latest offers and events.",
+    yourEmail: "Your Email",
     allRightsReserved: "All rights reserved.",
   },
   booking: {
@@ -285,5 +286,75 @@ export const en = {
     paymentId: "Payment ID",
     totalAmount: "Total Amount",
     printConfirmation: "Print Confirmation",
+  },
+  news: {
+    title: "News",
+    subtitle: "News & Announcements",
+    sustainabilityTitle: "Sustainability Initiatives Announcement",
+    sustainability: {
+      breadcrumbHome: "Home",
+      breadcrumbNews: "Sustainability Initiatives Announcement",
+      pageTitle: "Hotel Wellies Sustainability Initiatives Announcement",
+      publicationDate: "Publication Date: May 15, 2024",
+      introduction:
+        "Hotel Wellies is committed to providing comfortable stays for our guests while contributing to local communities and the environment through sustainable hotel operations. We are pleased to report on the specific initiatives we are implementing. These initiatives are based on the management guidelines for enhancing the value of tourism facilities established by the Japanese government.",
+      initiatives: {
+        policy: {
+          title:
+            "Development and Communication of Sustainable Management Policy (A1)",
+          content:
+            "Hotel Wellies has established a sustainable management policy centered on environmental conservation, coexistence with local communities, and improving guest and employee satisfaction. This policy is shared with all employees and actively communicated to business partners and guests through our official website and in-house displays.",
+        },
+        compliance: {
+          title: "Thorough Compliance with Laws and Regulations (A2)",
+          content:
+            "Our hotel strictly complies with all laws, ordinances, and regulations related to business activities, including the Hotel Business Act, Fire Service Act, Food Sanitation Act, labor-related laws, and the Personal Information Protection Act. We conduct regular training for all employees to enhance and ensure compliance awareness.",
+        },
+        internalDialogue: {
+          title:
+            "Establishing Opportunities for Internal Exchange of Opinions (A4)",
+          content:
+            "To promote sustainable management, we regularly hold meetings and opinion exchange sessions with all employees. This allows us to gather feedback from the frontline and incorporate ideas for reducing environmental impact and improving guest satisfaction into management decisions.",
+        },
+        feedback: {
+          title: "Response System for Guest Feedback (A5)",
+          content:
+            "We consider guest opinions, requests, complaints, and suggestions valuable assets for service improvement. We have established a system to receive feedback through various methods such as surveys, emails, phone calls, and face-to-face interactions, and to respond promptly and sincerely. Feedback received is recorded and regularly analyzed for continuous improvement.",
+        },
+        workConditions: {
+          title:
+            "Documentation and Notification of Employee Working Conditions and Benefits (B7)",
+          content:
+            "To enable all employees to demonstrate their abilities with peace of mind, working conditions and benefits including working hours, holidays, wages, social insurance, and training programs are documented in work rules and carefully explained to all employees upon hiring and as needed. We strive to create a rewarding work environment.",
+        },
+        culture: {
+          title:
+            "Contribution to Local Cultural Preservation and Promotion (C2, C3)",
+          content:
+            "Hotel Wellies aims to respect local culture and contribute to its preservation and promotion. We implement initiatives such as displaying and selling local crafts in the hotel and incorporating local ingredients in regional cuisine. We also actively cooperate with and promote local cultural events.",
+        },
+        sustainable: {
+          title:
+            "Priority Purchase of Reusable, Repairable, and Recyclable Products (D1.2)",
+          content:
+            "Our hotel has a policy of actively prioritizing the selection of reusable, repairable, and recyclable products to reduce environmental impact when procuring items. For example, we choose equipment that can be used repeatedly and make efforts to minimize the use of disposable products.",
+        },
+        energy: {
+          title:
+            "Introduction of Renewable Energy or Installation of Energy-Efficient Equipment (D1.3)",
+          content:
+            "To reduce and optimize energy consumption, we actively adopt LED lighting throughout the hotel. We are also promoting the upgrade to energy-efficient equipment for air conditioning systems and have installed notices in guest rooms to encourage cooperation in saving electricity. We are also considering the introduction of renewable energy in the future.",
+        },
+        waste: {
+          title: "Promotion of Waste Reduction and Proper Disposal (D2.4)",
+          content:
+            "To control waste generation, we promote a system of providing only necessary amenities in guest rooms (e.g., offering at the front desk or using environmentally friendly materials). We also thoroughly sort generated waste and inform employees and guests about proper disposal according to local rules.",
+        },
+      },
+      conclusion1:
+        "Through these initiatives, Hotel Wellies aims to provide guests with a more comfortable and high-quality stay while contributing to the realization of a sustainable society. We will continue to listen to the voices of our guests and local communities and strive for continuous improvement.",
+      conclusion2:
+        "If you have any feedback or suggestions regarding our initiatives, please do not hesitate to speak to our staff. We sincerely appreciate your understanding and cooperation.",
+    },
   },
 };
