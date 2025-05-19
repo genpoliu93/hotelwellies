@@ -14,7 +14,11 @@ const nextConfig = {
       },
     ],
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
+    // 减少文件监视范围，排除不需要监视的目录
+    config.watchOptions = {
+      ignored: ["**/.git/**", "**/node_modules/**", "**/out/**", "**/.next/**"],
+    };
     return config;
   },
 };
