@@ -112,6 +112,12 @@ export function BookingForm() {
                 <GuestInfoForm
                   onSubmit={handleGuestInfoSubmit}
                   isSubmitting={isSubmitting}
+                  checkInDate={checkInDate}
+                  checkOutDate={checkOutDate}
+                  roomId={selectedRoomId}
+                  roomPrice={roomPrice}
+                  adults={adults}
+                  children={children}
                 />
               )}
             </div>
