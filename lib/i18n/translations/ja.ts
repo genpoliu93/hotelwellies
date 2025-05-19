@@ -233,6 +233,9 @@ export const ja = {
     secureBooking: "安全な予約",
     acceptedPaymentMethods: "利用可能な支払い方法",
     faq: "よくある質問",
+    loadingRooms: "客室を読み込み中",
+    errorLoadingRooms: "客室の読み込み中にエラーが発生しました",
+    noRoomsAvailable: "選択された日付で利用可能な客室がありません",
   },
   payment: {
     title: "お支払い",
