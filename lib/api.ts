@@ -35,9 +35,22 @@ export interface RoomQueryResult {
   pageSize: number;
 }
 
+// 环境判断，根据环境选择不同的API基础URL
+const getApiBaseUrl = () => {
+  // 判断是否为生产环境
+  const isProduction = process.env.NODE_ENV === "production";
+
+  // 优先使用环境变量中配置的API URL，如果没有设置则使用默认值
+  const productionUrl =
+    process.env.NEXT_PUBLIC_API_URL || "https://api.fuyosankyo.jp";
+  const developmentUrl = "http://localhost:5257";
+
+  return isProduction ? productionUrl : developmentUrl;
+};
+
 // API配置
 const API_CONFIG = {
-  baseURL: "http://localhost:5257",
+  baseURL: getApiBaseUrl(),
   defaultHeaders: {
     "Content-Type": "application/json",
   },
