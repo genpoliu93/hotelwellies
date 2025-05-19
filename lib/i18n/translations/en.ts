@@ -175,6 +175,7 @@ export const en = {
     maxCapacity: "Max Capacity",
     showDetails: "Show details",
     hideDetails: "Hide details",
+    selectRoom: "Select Room",
     selected: "Selected",
     notAvailable: "Not Available",
     exceedsCapacity: "This room cannot accommodate your group size",
