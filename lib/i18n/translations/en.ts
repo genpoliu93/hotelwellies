@@ -297,16 +297,16 @@ export const en = {
       pageTitle: "Hotel Wellies Sustainability Initiatives Announcement",
       publicationDate: "Publication Date: May 15, 2024",
       introduction:
-        "Hotel Wellies is committed to providing comfortable stays for our guests while contributing to local communities and the environment through sustainable hotel operations. We are pleased to report on the specific initiatives we are implementing.",
+        "Hotel Wellies is committed to providing comfortable stays for our guests while contributing to local communities and the environment through sustainable hotel operations. We are pleased to report on the specific initiatives we are implementing. These initiatives are based on the management guidelines for enhancing the value of tourism facilities established by the Japanese government.",
       initiatives: {
         policy: {
           title:
-            "Development and Communication of Sustainable Management Policy ",
+            "Development and Communication of Sustainable Management Policy (A1)",
           content:
             "Hotel Wellies has established a sustainable management policy centered on environmental conservation, coexistence with local communities, and improving guest and employee satisfaction. This policy is shared with all employees and actively communicated to business partners and guests through our official website and in-house displays.",
         },
         compliance: {
-          title: "Thorough Compliance with Laws and Regulations ",
+          title: "Thorough Compliance with Laws and Regulations (A2)",
           content:
             "Our hotel strictly complies with all laws, ordinances, and regulations related to business activities, including the Hotel Business Act, Fire Service Act, Food Sanitation Act, labor-related laws, and the Personal Information Protection Act. We conduct regular training for all employees to enhance and ensure compliance awareness.",
         },
@@ -317,7 +317,7 @@ export const en = {
             "To promote sustainable management, we regularly hold meetings and opinion exchange sessions with all employees. This allows us to gather feedback from the frontline and incorporate ideas for reducing environmental impact and improving guest satisfaction into management decisions.",
         },
         feedback: {
-          title: "Response System for Guest Feedback ",
+          title: "Response System for Guest Feedback (A5)",
           content:
             "We consider guest opinions, requests, complaints, and suggestions valuable assets for service improvement. We have established a system to receive feedback through various methods such as surveys, emails, phone calls, and face-to-face interactions, and to respond promptly and sincerely. Feedback received is recorded and regularly analyzed for continuous improvement.",
         },
@@ -328,13 +328,14 @@ export const en = {
             "To enable all employees to demonstrate their abilities with peace of mind, working conditions and benefits including working hours, holidays, wages, social insurance, and training programs are documented in work rules and carefully explained to all employees upon hiring and as needed. We strive to create a rewarding work environment.",
         },
         culture: {
-          title: "Contribution to Local Cultural Preservation and Promotion ",
+          title:
+            "Contribution to Local Cultural Preservation and Promotion (C2, C3)",
           content:
             "Hotel Wellies aims to respect local culture and contribute to its preservation and promotion. We implement initiatives such as displaying and selling local crafts in the hotel and incorporating local ingredients in regional cuisine. We also actively cooperate with and promote local cultural events.",
         },
         sustainable: {
           title:
-            "Priority Purchase of Reusable, Repairable, and Recyclable Products ",
+            "Priority Purchase of Reusable, Repairable, and Recyclable Products (D1.2)",
           content:
             "Our hotel has a policy of actively prioritizing the selection of reusable, repairable, and recyclable products to reduce environmental impact when procuring items. For example, we choose equipment that can be used repeatedly and make efforts to minimize the use of disposable products.",
         },

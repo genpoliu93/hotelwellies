@@ -8,6 +8,10 @@ import { useLanguage } from "@/lib/i18n/context";
 export default function NewsPage() {
   const { t, locale } = useLanguage();
 
+  const removeCodeInParenthesis = (text: string): string => {
+    return text.replace(/\s*\([A-Z][0-9](?:\.[0-9])?\)\s*$/, "");
+  };
+
   return (
     <main className="flex-1">
       {/* 页面标题 */}
@@ -63,7 +67,9 @@ export default function NewsPage() {
                     1
                   </div>
                   <h3 className="text-xl font-semibold mb-3 text-primary">
-                    {t("news.sustainability.initiatives.policy.title")}
+                    {removeCodeInParenthesis(
+                      t("news.sustainability.initiatives.policy.title")
+                    )}
                   </h3>
                   <p className="text-muted-foreground mb-3">
                     {t("news.sustainability.initiatives.policy.content")}
@@ -78,7 +84,9 @@ export default function NewsPage() {
                     2
                   </div>
                   <h3 className="text-xl font-semibold mb-3 text-primary">
-                    {t("news.sustainability.initiatives.compliance.title")}
+                    {removeCodeInParenthesis(
+                      t("news.sustainability.initiatives.compliance.title")
+                    )}
                   </h3>
                   <p className="text-muted-foreground mb-3">
                     {t("news.sustainability.initiatives.compliance.content")}
@@ -93,8 +101,10 @@ export default function NewsPage() {
                     3
                   </div>
                   <h3 className="text-xl font-semibold mb-3 text-primary">
-                    {t(
-                      "news.sustainability.initiatives.internalDialogue.title"
+                    {removeCodeInParenthesis(
+                      t(
+                        "news.sustainability.initiatives.internalDialogue.title"
+                      )
                     )}
                   </h3>
                   <p className="text-muted-foreground mb-3">
@@ -112,7 +122,9 @@ export default function NewsPage() {
                     4
                   </div>
                   <h3 className="text-xl font-semibold mb-3 text-primary">
-                    {t("news.sustainability.initiatives.feedback.title")}
+                    {removeCodeInParenthesis(
+                      t("news.sustainability.initiatives.feedback.title")
+                    )}
                   </h3>
                   <p className="text-muted-foreground mb-3">
                     {t("news.sustainability.initiatives.feedback.content")}
@@ -127,7 +139,9 @@ export default function NewsPage() {
                     5
                   </div>
                   <h3 className="text-xl font-semibold mb-3 text-primary">
-                    {t("news.sustainability.initiatives.workConditions.title")}
+                    {removeCodeInParenthesis(
+                      t("news.sustainability.initiatives.workConditions.title")
+                    )}
                   </h3>
                   <p className="text-muted-foreground mb-3">
                     {t(
@@ -144,7 +158,9 @@ export default function NewsPage() {
                     6
                   </div>
                   <h3 className="text-xl font-semibold mb-3 text-primary">
-                    {t("news.sustainability.initiatives.culture.title")}
+                    {removeCodeInParenthesis(
+                      t("news.sustainability.initiatives.culture.title")
+                    )}
                   </h3>
                   <p className="text-muted-foreground mb-3">
                     {t("news.sustainability.initiatives.culture.content")}
@@ -159,7 +175,9 @@ export default function NewsPage() {
                     7
                   </div>
                   <h3 className="text-xl font-semibold mb-3 text-primary">
-                    {t("news.sustainability.initiatives.sustainable.title")}
+                    {removeCodeInParenthesis(
+                      t("news.sustainability.initiatives.sustainable.title")
+                    )}
                   </h3>
                   <p className="text-muted-foreground mb-3">
                     {t("news.sustainability.initiatives.sustainable.content")}
@@ -174,7 +192,9 @@ export default function NewsPage() {
                     8
                   </div>
                   <h3 className="text-xl font-semibold mb-3 text-primary">
-                    {t("news.sustainability.initiatives.energy.title")}
+                    {removeCodeInParenthesis(
+                      t("news.sustainability.initiatives.energy.title")
+                    )}
                   </h3>
                   <p className="text-muted-foreground mb-3">
                     {t("news.sustainability.initiatives.energy.content")}
@@ -189,7 +209,9 @@ export default function NewsPage() {
                     9
                   </div>
                   <h3 className="text-xl font-semibold mb-3 text-primary">
-                    {t("news.sustainability.initiatives.waste.title")}
+                    {removeCodeInParenthesis(
+                      t("news.sustainability.initiatives.waste.title")
+                    )}
                   </h3>
                   <p className="text-muted-foreground mb-3">
                     {t("news.sustainability.initiatives.waste.content")}

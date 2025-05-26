@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -92,7 +93,14 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 relative">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link href={`/${locale}`} className="flex items-center">
+          <Link href={`/${locale}`} className="flex items-center gap-2">
+            <Image
+              src="/logo.png"
+              alt="Hotel Wellies Logo"
+              width={40}
+              height={40}
+              className="h-10 w-10 transition-transform duration-300 hover:scale-110 hover:rotate-12"
+            />
             <span className="text-xl font-semibold tracking-tight">
               Hotel Wellies
             </span>
