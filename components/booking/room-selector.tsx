@@ -86,7 +86,25 @@ export function RoomSelector({
 
   // 检查房间是否可用（基于客人数量）
   const isRoomAvailable = (room: Room) => {
-    return adults <= room.maxOccupancy && children <= (room.maxChildren || 0);
+    const maxOccupancy = room.maxOccupancy || 0;
+    const maxChildren = room.maxChildren || 0;
+
+    // 检查成人数量是否超过最大容量
+    if (adults > maxOccupancy) {
+      return false;
+    }
+
+    // 检查儿童数量是否超过最大儿童容量
+    if (children > maxChildren) {
+      return false;
+    }
+
+    // 检查总人数是否超过最大容量
+    if (adults + children > maxOccupancy) {
+      return false;
+    }
+
+    return true;
   };
 
   // 切换房间详情展开状态
