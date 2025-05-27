@@ -167,6 +167,8 @@ export const en = {
   booking: {
     title: "Book Your Stay",
     subtitle: "Complete your reservation in a few simple steps",
+    heroTitle: "Book Your Stay",
+    heroSubtitle: "Experience the charm and comfort of Hotel Wellies",
     searchRooms: "Search for Rooms",
     selectDatesAndGuests:
       "Select your check-in and check-out dates, and number of guests",

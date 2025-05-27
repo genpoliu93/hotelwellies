@@ -164,6 +164,8 @@ export const ja = {
   booking: {
     title: "ご予約",
     subtitle: "簡単な手順で予約を完了します",
+    heroTitle: "ご予約",
+    heroSubtitle: "Hotel Welliesの魅力と快適さをご体験ください",
     searchRooms: "客室を検索",
     selectDatesAndGuests:
       "チェックイン・チェックアウト日とゲスト数を選択してください",

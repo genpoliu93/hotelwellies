@@ -157,6 +157,8 @@ export const zh = {
   booking: {
     title: "预订住宿",
     subtitle: "通过几个简单步骤完成您的预订",
+    heroTitle: "预订住宿",
+    heroSubtitle: "体验Hotel Wellies的魅力与舒适",
     searchRooms: "搜索客房",
     selectDatesAndGuests: "选择您的入住和退房日期，以及客人数量",
     checkIn: "入住",
