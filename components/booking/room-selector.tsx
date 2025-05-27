@@ -48,6 +48,7 @@ export function RoomSelector({
 }: RoomSelectorProps) {
   const { t, locale } = useLanguage();
   const [expandedRoomId, setExpandedRoomId] = useState<string | null>(null);
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
   // 计算住宿天数
   const calculateNights = () => {
@@ -121,6 +122,19 @@ export function RoomSelector({
   // 获取可用房间列表
   const availableRooms = data ? data.rooms : [];
 
+  // 处理图片加载错误
+  const handleImageError = (roomCode: string) => {
+    setImageErrors((prev) => new Set(prev).add(roomCode));
+  };
+
+  // 获取图片源，如果加载失败则使用默认图片
+  const getImageSrc = (room: Room) => {
+    if (imageErrors.has(room.roomCode) || !room.images[0]) {
+      return "/placeholder.svg";
+    }
+    return room.images[0];
+  };
+
   return (
     <div className="space-y-6">
       <h3 className="text-xl font-semibold text-gray-800">
@@ -163,10 +177,11 @@ export function RoomSelector({
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
                     <div className="relative h-60 md:h-full">
                       <Image
-                        src={room.images[0] || "/placeholder.svg"}
+                        src={getImageSrc(room)}
                         alt={room.roomName}
                         fill
                         className="object-cover"
+                        onError={() => handleImageError(room.roomCode)}
                       />
                       {room.availableCount < 3 && (
                         <Badge className="absolute top-3 right-3 bg-orange-500 text-white font-medium px-3 py-1">
