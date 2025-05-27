@@ -1,18 +1,24 @@
-"use client"
+"use client";
 
-import { useLanguage } from "@/lib/i18n/context"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Globe } from "lucide-react"
+import { useLanguage } from "@/lib/i18n/context";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Globe } from "lucide-react";
+import { Z_INDEX } from "@/lib/z-index";
 
 export function LanguageSwitcher() {
-  const { locale, setLocale } = useLanguage()
+  const { locale, setLocale } = useLanguage();
 
   const languages = [
     { code: "en", name: "English" },
     { code: "ja", name: "日本語" },
     { code: "zh", name: "中文" },
-  ]
+  ];
 
   return (
     <DropdownMenu>
@@ -22,7 +28,7 @@ export function LanguageSwitcher() {
           <span className="sr-only">Switch language</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" style={{ zIndex: Z_INDEX.DROPDOWN }}>
         {languages.map((language) => (
           <DropdownMenuItem
             key={language.code}
@@ -34,5 +40,5 @@ export function LanguageSwitcher() {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Bed, Users, Wifi, Coffee } from "lucide-react";
 
 export function ZenRooms() {
   const { t, locale } = useLanguage();
@@ -22,6 +22,10 @@ export function ZenRooms() {
       image: "/images/deluxe-room.webp",
       features: [t("rooms.feature1"), t("rooms.feature2"), t("rooms.feature3")],
       japaneseLabel: "和室",
+      gradientFrom: "from-blue-500/80",
+      gradientTo: "to-indigo-600/80",
+      iconBg: "bg-blue-500/20",
+      icon: <Bed className="h-6 w-6 text-white" />,
     },
     {
       id: 2,
@@ -31,6 +35,10 @@ export function ZenRooms() {
       image: "/images/standard-room.webp",
       features: [t("rooms.feature1"), t("rooms.feature2"), t("rooms.feature4")],
       japaneseLabel: "洋室",
+      gradientFrom: "from-emerald-500/80",
+      gradientTo: "to-green-600/80",
+      iconBg: "bg-emerald-500/20",
+      icon: <Users className="h-6 w-6 text-white" />,
     },
     {
       id: 3,
@@ -40,12 +48,26 @@ export function ZenRooms() {
       image: "/images/hotel-room.webp",
       features: [t("rooms.feature1"), t("rooms.feature4"), t("rooms.feature5")],
       japaneseLabel: "特別",
+      gradientFrom: "from-amber-500/80",
+      gradientTo: "to-orange-600/80",
+      iconBg: "bg-amber-500/20",
+      icon: <Coffee className="h-6 w-6 text-white" />,
     },
   ];
 
   return (
-    <section id="rooms" className="py-24 bg-stone-50">
-      <div className="container">
+    <section
+      id="rooms"
+      className="py-24 bg-gradient-to-br from-stone-50 via-slate-50 to-stone-100 relative overflow-hidden"
+    >
+      {/* 背景装饰元素 */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="zen-bg-decoration absolute top-20 left-16 w-36 h-36 rounded-full bg-stone-400"></div>
+        <div className="zen-bg-decoration absolute bottom-20 right-16 w-28 h-28 rounded-full bg-slate-500"></div>
+        <div className="zen-bg-decoration absolute top-2/3 left-1/3 w-20 h-20 rounded-full bg-stone-300"></div>
+      </div>
+
+      <div className="container relative">
         {/* 标题区域 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end mb-16">
           <motion.div
@@ -56,8 +78,9 @@ export function ZenRooms() {
             className="space-y-6"
           >
             <div className="flex items-center gap-4">
-              <div className="h-px w-12 bg-stone-400"></div>
-              <h3 className="text-sm uppercase tracking-[0.25em] text-stone-500 font-light">
+              <div className="h-px w-12 bg-gradient-to-r from-transparent to-stone-400"></div>
+              <h3 className="text-sm uppercase tracking-[0.25em] text-stone-600 font-light flex items-center gap-2">
+                <Bed className="h-4 w-4" />
                 {t("rooms.subtitle")}
               </h3>
             </div>
@@ -79,7 +102,7 @@ export function ZenRooms() {
             className="flex justify-start md:justify-end"
           >
             <Button
-              className="bg-stone-800 hover:bg-stone-700 text-white font-light"
+              className="bg-gradient-to-r from-stone-700 to-stone-800 hover:from-stone-800 hover:to-stone-900 text-white font-light shadow-lg hover:shadow-xl transition-all duration-300"
               size="lg"
               asChild
             >
@@ -100,57 +123,78 @@ export function ZenRooms() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.1 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="group"
+              className="zen-feature-card group relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
               onMouseEnter={() => setHoveredRoom(room.id)}
               onMouseLeave={() => setHoveredRoom(null)}
             >
               {/* 房间图片 */}
-              <div className="relative h-[350px] mb-6 overflow-hidden">
+              <div className="relative h-[350px] overflow-hidden">
                 <Image
                   src={room.image}
                   alt={room.name}
                   fill
-                  className={`object-cover transition-transform duration-1000 ease-out ${
-                    hoveredRoom === room.id ? "scale-105" : "scale-100"
-                  }`}
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
+                {/* 渐变覆盖层 */}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${room.gradientFrom} ${room.gradientTo} opacity-0 group-hover:opacity-90 transition-opacity duration-500`}
+                ></div>
+
+                {/* 微妙的纹理覆盖层 */}
+                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
+
+                {/* 房间图标 */}
+                <div
+                  className={`absolute top-6 left-6 ${room.iconBg} backdrop-blur-sm p-3 rounded-full border border-white/20 transition-all duration-300 group-hover:scale-110 opacity-0 group-hover:opacity-100`}
+                >
+                  {room.icon}
+                </div>
+
                 {/* 日语标签 */}
-                <div className="absolute bottom-6 left-6 bg-white/80 backdrop-blur-sm px-4 py-2">
+                <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-sm transition-all duration-300 group-hover:bg-white/95 group-hover:scale-105">
                   <div className="text-lg font-light text-stone-800">
                     {room.japaneseLabel}
                   </div>
                 </div>
 
-                {/* 细线框 */}
-                <div
-                  className={`absolute inset-0 border border-white/0 group-hover:border-white/30 transition-all duration-300 pointer-events-none ${
-                    hoveredRoom === room.id
-                      ? "border-white/30"
-                      : "border-white/0"
-                  }`}
-                ></div>
+                {/* 价格标签 */}
+                <div className="absolute top-6 right-6 bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-sm text-sm font-light opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">
+                  {room.price}
+                </div>
+
+                {/* 边框光效 */}
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-lg transition-all duration-500"></div>
               </div>
 
               {/* 房间信息 */}
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-light text-stone-800">
-                    {room.name}
-                  </h3>
-                  <div className="text-stone-600 font-light">{room.price}</div>
+              <div className="p-6 bg-white space-y-4 relative">
+                {/* 装饰性日语符号 */}
+                <div className="absolute -top-2 -right-2 text-4xl text-stone-100 font-light opacity-50">
+                  {room.japaneseLabel.charAt(0)}
                 </div>
 
-                <p className="text-stone-600 font-light">{room.description}</p>
+                <div className="flex justify-between items-start">
+                  <h3 className="text-xl font-light text-stone-800 group-hover:text-stone-900 transition-colors duration-300">
+                    {room.name}
+                  </h3>
+                  <div className="text-stone-600 font-light bg-stone-50 px-2 py-1 rounded text-sm">
+                    {room.price}
+                  </div>
+                </div>
+
+                <p className="text-stone-600 font-light leading-relaxed">
+                  {room.description}
+                </p>
 
                 {/* 房间特色 */}
                 <div className="pt-2 space-y-2">
                   {room.features.map((feature, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center text-sm text-stone-600"
+                      className="flex items-center text-sm text-stone-600 transition-all duration-300 hover:text-stone-800"
                     >
-                      <div className="h-1 w-1 bg-stone-400 rounded-full mr-2"></div>
+                      <div className="h-1.5 w-1.5 bg-gradient-to-r from-stone-400 to-stone-500 rounded-full mr-3"></div>
                       <div>{feature}</div>
                     </div>
                   ))}
@@ -160,17 +204,53 @@ export function ZenRooms() {
                 <div className="pt-4">
                   <Button
                     variant="outline"
-                    className="border-stone-300 text-stone-700 hover:bg-stone-100 hover:text-stone-900 font-light w-full"
+                    className="border-stone-300 text-stone-700 hover:bg-gradient-to-r hover:from-stone-100 hover:to-stone-200 hover:text-stone-900 font-light w-full transition-all duration-300 group-hover:border-stone-400"
                     asChild
                   >
                     <Link href={`/${locale}/booking?room=${room.id}`}>
                       {t("common.selectRoom")}
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
                   </Button>
                 </div>
+
+                {/* 底部装饰线 */}
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-stone-300 to-stone-400 group-hover:w-16 transition-all duration-500"></div>
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* 装饰线条和墨迹元素 */}
+        <div className="mt-16 flex justify-center items-center space-x-8">
+          <div className="h-px w-24 bg-gradient-to-r from-transparent via-stone-400 to-transparent"></div>
+
+          {/* 使用SVG墨迹装饰 */}
+          <div className="relative flex items-center space-x-4">
+            <Image
+              src="/images/ink-branch.svg"
+              alt="Ink branch decoration"
+              width={30}
+              height={30}
+              className="opacity-30 transform rotate-12"
+            />
+            <Image
+              src="/images/ink-splash.svg"
+              alt="Ink splash decoration"
+              width={40}
+              height={40}
+              className="opacity-20"
+            />
+            <Image
+              src="/images/ink-branch.svg"
+              alt="Ink branch decoration"
+              width={30}
+              height={30}
+              className="opacity-30 transform -rotate-12 scale-x-[-1]"
+            />
+          </div>
+
+          <div className="h-px w-24 bg-gradient-to-r from-transparent via-stone-400 to-transparent"></div>
         </div>
       </div>
     </section>

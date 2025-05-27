@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n/context";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { WindChime } from "@/components/wind-chime";
+import { Z_INDEX } from "@/lib/z-index";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -90,7 +91,10 @@ export function Header() {
   }, [pathname, isNavigating]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 relative">
+    <header
+      className={`sticky top-0 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 relative`}
+      style={{ zIndex: Z_INDEX.HEADER }}
+    >
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href={`/${locale}`} className="flex items-center gap-2">

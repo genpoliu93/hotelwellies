@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Leaflet地图样式覆盖 */
+@import "./styles/leaflet-override.css";
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -75,4 +78,63 @@ button {
   padding: 0;
   cursor: pointer;
   font: inherit;
+}
+
+/* Zen Features 增强样式 */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.zen-feature-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.zen-feature-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s;
+  z-index: 1;
+}
+
+.zen-feature-card:hover::before {
+  left: 100%;
+}
+
+/* 背景装饰动画 */
+.zen-bg-decoration {
+  animation: float 6s ease-in-out infinite;
+}
+
+.zen-bg-decoration:nth-child(2) {
+  animation-delay: -2s;
+}
+
+.zen-bg-decoration:nth-child(3) {
+  animation-delay: -4s;
 }

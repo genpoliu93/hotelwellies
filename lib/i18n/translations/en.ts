@@ -120,6 +120,12 @@ export const en = {
   },
   contact: {
     title: "Contact Us",
+    description: "For any questions or needs, please feel free to contact us.",
+    getInTouch: "Contact Us",
+    emailTitle: "Email Us",
+    phoneTitle: "Call Us",
+    hoursTitle: "Business Hours",
+    hours: "10:00 - 18:00",
     subtitle: "For any questions or needs, please feel free to contact us.",
     address: "Address",
     phone: "Phone",

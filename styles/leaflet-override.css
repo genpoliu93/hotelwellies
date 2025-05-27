@@ -1,0 +1,21 @@
+/* Leaflet地图z-index覆盖 */
+.leaflet-container {
+  z-index: 10 !important;
+}
+
+.leaflet-control-container {
+  z-index: 11 !important;
+}
+
+.leaflet-popup-pane {
+  z-index: 12 !important;
+}
+
+.leaflet-tooltip-pane {
+  z-index: 13 !important;
+}
+
+/* 确保地图相关元素不会超过我们定义的层级 */
+.leaflet-container * {
+  z-index: inherit !important;
+}
