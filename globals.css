@@ -157,3 +157,39 @@ body {
 .language-switcher-item:hover {
   transform: translateX(2px);
 }
+
+/* Header Logo 简洁响应式样式 */
+@media (max-width: 768px) {
+  /* 移动端header高度调整 */
+  .header-container {
+    height: 4rem !important;
+  }
+
+  /* 移动端logo缩小 */
+  .header-logo {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+
+  /* 移动端品牌文字缩小 */
+  .brand-name {
+    font-size: 1.25rem !important;
+  }
+
+  /* 移动端间距调整 */
+  .logo-container {
+    gap: 0.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* 超小屏幕进一步优化 */
+  .brand-name {
+    font-size: 1.125rem !important;
+  }
+
+  .header-logo {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+  }
+}

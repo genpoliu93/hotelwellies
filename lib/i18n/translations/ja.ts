@@ -81,6 +81,7 @@ export const ja = {
     ...zenTextKeysJA.features,
   },
   rooms: {
+    almostSoldOut: "ほとんど売り切れ",
     title: "おすすめの客室",
     subtitle:
       "様々なゲストのニーズに応えるために、多様なタイプの客室を提供しています。",

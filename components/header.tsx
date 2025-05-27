@@ -95,20 +95,27 @@ export function Header() {
       className={`sticky top-0 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 relative`}
       style={{ zIndex: Z_INDEX.HEADER }}
     >
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Link href={`/${locale}`} className="flex items-center gap-2">
-            <Image
-              src="/logo.png"
-              alt="Hotel Wellies Logo"
-              width={40}
-              height={40}
-              className="h-10 w-10 transition-transform duration-300 hover:scale-110 hover:rotate-12"
-            />
-            <span className="text-xl font-semibold tracking-tight">
-              Hotel Wellies
-            </span>
-            <span className="ml-1 text-sm text-muted-foreground">.jp</span>
+      <div className="container flex h-20 items-center justify-between header-container">
+        <div className="flex items-center gap-3 logo-container">
+          <Link href={`/${locale}`} className="flex items-center gap-3 group">
+            {/* Logo */}
+            <div className="relative">
+              <Image
+                src="/logo.png"
+                alt="Hotel Wellies Logo"
+                width={56}
+                height={56}
+                className="h-14 w-14 header-logo transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+
+            {/* 品牌文字 - 垂直居中对齐 */}
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-light tracking-tight text-stone-800 brand-name">
+                Hotel Wellies
+              </span>
+              <span className="text-sm text-stone-500 font-light">.jp</span>
+            </div>
           </Link>
         </div>
 

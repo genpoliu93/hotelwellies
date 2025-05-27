@@ -3,6 +3,8 @@
 import { useLanguage } from "@/lib/i18n/context";
 import { motion } from "framer-motion";
 import { CalendarDays, Users, CreditCard, ShieldCheck } from "lucide-react";
+import { format } from "date-fns";
+import { ja, enUS, zhCN } from "date-fns/locale";
 
 interface PriceSummaryProps {
   checkInDate: Date | undefined;
@@ -75,17 +77,32 @@ export function PriceSummary({
     }
   };
 
+  // 根据当前语言获取date-fns locale
+  const getDateLocale = () => {
+    switch (locale) {
+      case "ja":
+        return ja;
+      case "zh":
+        return zhCN;
+      case "en":
+      default:
+        return enUS;
+    }
+  };
+
   // 格式化日期
   const formatDate = (date: Date | undefined) => {
     if (!date) return "";
-    return date.toLocaleDateString(
-      locale === "en" ? "en-US" : locale === "ja" ? "ja-JP" : "zh-CN",
-      {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }
-    );
+    const dateLocale = getDateLocale();
+
+    // 根据语言使用不同的格式
+    if (locale === "ja") {
+      return format(date, "yyyy年M月d日", { locale: dateLocale });
+    } else if (locale === "zh") {
+      return format(date, "yyyy年M月d日", { locale: dateLocale });
+    } else {
+      return format(date, "PPP", { locale: dateLocale });
+    }
   };
 
   // API返回的总价已经是住宿总价

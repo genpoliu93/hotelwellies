@@ -1,36 +1,75 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Calendar } from "@/components/ui/calendar"
-import { Button } from "@/components/ui/button"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { useLanguage } from "@/lib/i18n/context"
+import { useState } from "react";
+import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { ja, enUS, zhCN } from "date-fns/locale";
+import { CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n/context";
 
 interface DatePickerProps {
-  checkInDate: Date | undefined
-  checkOutDate: Date | undefined
-  onCheckInChange: (date: Date | undefined) => void
-  onCheckOutChange: (date: Date | undefined) => void
+  checkInDate: Date | undefined;
+  checkOutDate: Date | undefined;
+  onCheckInChange: (date: Date | undefined) => void;
+  onCheckOutChange: (date: Date | undefined) => void;
 }
 
-export function DatePicker({ checkInDate, checkOutDate, onCheckInChange, onCheckOutChange }: DatePickerProps) {
-  const { t } = useLanguage()
-  const [isCheckInOpen, setIsCheckInOpen] = useState(false)
-  const [isCheckOutOpen, setIsCheckOutOpen] = useState(false)
+export function DatePicker({
+  checkInDate,
+  checkOutDate,
+  onCheckInChange,
+  onCheckOutChange,
+}: DatePickerProps) {
+  const { t, locale } = useLanguage();
+  const [isCheckInOpen, setIsCheckInOpen] = useState(false);
+  const [isCheckOutOpen, setIsCheckOutOpen] = useState(false);
+
+  // 根据当前语言获取date-fns locale
+  const getDateLocale = () => {
+    switch (locale) {
+      case "ja":
+        return ja;
+      case "zh":
+        return zhCN;
+      case "en":
+      default:
+        return enUS;
+    }
+  };
+
+  // 格式化日期显示
+  const formatDate = (date: Date) => {
+    const dateLocale = getDateLocale();
+
+    // 根据语言使用不同的格式
+    if (locale === "ja") {
+      return format(date, "yyyy年M月d日", { locale: dateLocale });
+    } else if (locale === "zh") {
+      return format(date, "yyyy年M月d日", { locale: dateLocale });
+    } else {
+      return format(date, "PPP", { locale: dateLocale });
+    }
+  };
 
   // 计算最小退房日期（入住日期后一天）
-  const minCheckoutDate = checkInDate ? new Date(checkInDate) : undefined
+  const minCheckoutDate = checkInDate ? new Date(checkInDate) : undefined;
   if (minCheckoutDate) {
-    minCheckoutDate.setDate(minCheckoutDate.getDate() + 1)
+    minCheckoutDate.setDate(minCheckoutDate.getDate() + 1);
   }
 
   return (
     <div className="flex flex-col sm:flex-row gap-4">
       <div className="flex-1">
-        <label className="block text-sm font-medium mb-2 text-gray-700">{t("booking.checkIn")}</label>
+        <label className="block text-sm font-medium mb-2 text-gray-700">
+          {t("booking.checkIn")}
+        </label>
         <Popover open={isCheckInOpen} onOpenChange={setIsCheckInOpen}>
           <PopoverTrigger asChild>
             <Button
@@ -38,11 +77,11 @@ export function DatePicker({ checkInDate, checkOutDate, onCheckInChange, onCheck
               className={cn(
                 "w-full justify-start text-left font-normal border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-all",
                 !checkInDate && "text-gray-500",
-                "h-12",
+                "h-12"
               )}
             >
               <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
-              {checkInDate ? format(checkInDate, "PPP") : t("booking.selectDate")}
+              {checkInDate ? formatDate(checkInDate) : t("booking.selectDate")}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
@@ -50,15 +89,24 @@ export function DatePicker({ checkInDate, checkOutDate, onCheckInChange, onCheck
               mode="single"
               selected={checkInDate}
               onSelect={(date) => {
-                onCheckInChange(date)
-                setIsCheckInOpen(false)
+                onCheckInChange(date);
+                setIsCheckInOpen(false);
 
-                // 如果退房日期早于或等于新的入住日期，重置退房日期
-                if (checkOutDate && date && checkOutDate <= date) {
-                  onCheckOutChange(undefined)
+                // 如果选择了入住日期
+                if (date) {
+                  // 如果没有退房日期，或者退房日期早于或等于新的入住日期，自动设置为入住日期后3天
+                  if (!checkOutDate || checkOutDate <= date) {
+                    const defaultCheckOutDate = new Date(date);
+                    defaultCheckOutDate.setDate(
+                      defaultCheckOutDate.getDate() + 3
+                    );
+                    onCheckOutChange(defaultCheckOutDate);
+                  }
                 }
               }}
-              disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+              disabled={(date) =>
+                date < new Date(new Date().setHours(0, 0, 0, 0))
+              }
               initialFocus
               className="rounded-md border border-gray-200"
             />
@@ -67,7 +115,9 @@ export function DatePicker({ checkInDate, checkOutDate, onCheckInChange, onCheck
       </div>
 
       <div className="flex-1">
-        <label className="block text-sm font-medium mb-2 text-gray-700">{t("booking.checkOut")}</label>
+        <label className="block text-sm font-medium mb-2 text-gray-700">
+          {t("booking.checkOut")}
+        </label>
         <Popover open={isCheckOutOpen} onOpenChange={setIsCheckOutOpen}>
           <PopoverTrigger asChild>
             <Button
@@ -75,12 +125,14 @@ export function DatePicker({ checkInDate, checkOutDate, onCheckInChange, onCheck
               className={cn(
                 "w-full justify-start text-left font-normal border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-all",
                 !checkOutDate && "text-gray-500",
-                "h-12",
+                "h-12"
               )}
               disabled={!checkInDate}
             >
               <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
-              {checkOutDate ? format(checkOutDate, "PPP") : t("booking.selectDate")}
+              {checkOutDate
+                ? formatDate(checkOutDate)
+                : t("booking.selectDate")}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
@@ -88,11 +140,12 @@ export function DatePicker({ checkInDate, checkOutDate, onCheckInChange, onCheck
               mode="single"
               selected={checkOutDate}
               onSelect={(date) => {
-                onCheckOutChange(date)
-                setIsCheckOutOpen(false)
+                onCheckOutChange(date);
+                setIsCheckOutOpen(false);
               }}
               disabled={(date) =>
-                date < new Date(new Date().setHours(0, 0, 0, 0)) || (minCheckoutDate ? date < minCheckoutDate : false)
+                date < new Date(new Date().setHours(0, 0, 0, 0)) ||
+                (minCheckoutDate ? date < minCheckoutDate : false)
               }
               initialFocus
               className="rounded-md border border-gray-200"
@@ -101,5 +154,5 @@ export function DatePicker({ checkInDate, checkOutDate, onCheckInChange, onCheck
         </Popover>
       </div>
     </div>
-  )
+  );
 }

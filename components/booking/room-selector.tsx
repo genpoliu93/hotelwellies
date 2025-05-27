@@ -181,9 +181,7 @@ export function RoomSelector({
                           <h4 className="text-xl font-semibold text-gray-800">
                             {room.roomName}
                           </h4>
-                          <p className="text-gray-600 mt-2">
-                            {room.description}
-                          </p>
+                          <p className="text-gray-600 mt-2">{room.roomType}</p>
 
                           <div className="flex items-center gap-2 mt-4">
                             <Badge
