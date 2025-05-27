@@ -20,7 +20,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 );
 
 // 添加调试标志
-const DEBUG_I18N = true;
+const DEBUG_I18N = false;
 
 export function LanguageProvider({
   children,
@@ -59,7 +59,9 @@ export function LanguageProvider({
     const currentPathWithoutLocale =
       pathname.split("/").slice(2).join("/") || "";
     const newPath = `/${newLocale}/${currentPathWithoutLocale}`;
-    router.push(newPath);
+
+    // 使用 replace 而不是 push，并禁用自动滚动
+    router.replace(newPath, { scroll: false });
   };
 
   const t = (key: string): string => {
