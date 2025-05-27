@@ -19,12 +19,6 @@ import {
   Loader2,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { motion } from "framer-motion";
 import { useApi } from "@/hooks/use-api";
 import { fetchAvailableRooms, type Room } from "@/lib/api";
@@ -86,25 +80,7 @@ export function RoomSelector({
 
   // 检查房间是否可用（基于客人数量）
   const isRoomAvailable = (room: Room) => {
-    const maxOccupancy = room.maxOccupancy || 0;
-    const maxChildren = room.maxChildren || 0;
-
-    // 检查成人数量是否超过最大容量
-    if (adults > maxOccupancy) {
-      return false;
-    }
-
-    // 检查儿童数量是否超过最大儿童容量
-    if (children > maxChildren) {
-      return false;
-    }
-
-    // 检查总人数是否超过最大容量
-    if (adults + children > maxOccupancy) {
-      return false;
-    }
-
-    return true;
+    return adults <= room.maxOccupancy && children <= (room.maxChildren || 0);
   };
 
   // 切换房间详情展开状态
@@ -139,6 +115,9 @@ export function RoomSelector({
 
   // 获取可用房间列表
   const availableRooms = data ? data.rooms : [];
+
+  // 过滤出真正可用的房间（基于客人数量）
+  const filteredAvailableRooms = availableRooms.filter(isRoomAvailable);
 
   // 处理图片加载错误
   const handleImageError = (roomCode: string) => {
@@ -177,8 +156,8 @@ export function RoomSelector({
             </div>
           )}
 
-          {availableRooms.length > 0 ? (
-            availableRooms.map((room: Room, index: number) => (
+          {filteredAvailableRooms.length > 0 ? (
+            filteredAvailableRooms.map((room: Room, index: number) => (
               <motion.div
                 key={room.roomCode}
                 initial={{ opacity: 0, y: 20 }}
@@ -274,51 +253,29 @@ export function RoomSelector({
                           </div>
 
                           <div className="mt-6">
-                            {isRoomAvailable(room) ? (
-                              <Button
-                                onClick={() =>
-                                  onRoomSelect(room.roomType, room.price)
-                                }
-                                variant={
-                                  selectedRoomId === room.roomType
-                                    ? "default"
-                                    : "outline"
-                                }
-                                className={`px-6 ${
-                                  selectedRoomId === room.roomType
-                                    ? "bg-primary hover:bg-primary/90 text-white gap-2"
-                                    : "border-gray-200 hover:bg-gray-50 text-gray-800"
-                                }`}
-                                size="lg"
-                              >
-                                {selectedRoomId === room.roomType && (
-                                  <Check className="h-4 w-4" />
-                                )}
-                                {selectedRoomId === room.roomType
-                                  ? t("booking.selected")
-                                  : t("booking.selectRoom")}
-                              </Button>
-                            ) : (
-                              <TooltipProvider>
-                                <Tooltip>
-                                  <TooltipTrigger asChild>
-                                    <div>
-                                      <Button
-                                        variant="outline"
-                                        disabled
-                                        className="cursor-not-allowed opacity-60 border-gray-200"
-                                        size="lg"
-                                      >
-                                        {t("booking.notAvailable")}
-                                      </Button>
-                                    </div>
-                                  </TooltipTrigger>
-                                  <TooltipContent className="bg-gray-800 text-white">
-                                    <p>{t("booking.exceedsCapacity")}</p>
-                                  </TooltipContent>
-                                </Tooltip>
-                              </TooltipProvider>
-                            )}
+                            <Button
+                              onClick={() =>
+                                onRoomSelect(room.roomType, room.price)
+                              }
+                              variant={
+                                selectedRoomId === room.roomType
+                                  ? "default"
+                                  : "outline"
+                              }
+                              className={`px-6 ${
+                                selectedRoomId === room.roomType
+                                  ? "bg-primary hover:bg-primary/90 text-white gap-2"
+                                  : "border-gray-200 hover:bg-gray-50 text-gray-800"
+                              }`}
+                              size="lg"
+                            >
+                              {selectedRoomId === room.roomType && (
+                                <Check className="h-4 w-4" />
+                              )}
+                              {selectedRoomId === room.roomType
+                                ? t("booking.selected")
+                                : t("booking.selectRoom")}
+                            </Button>
                           </div>
                         </div>
                       </div>
