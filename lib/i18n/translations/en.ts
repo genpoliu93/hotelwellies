@@ -3,6 +3,7 @@ import { zenTextKeysEN } from "./zentextkeys";
 export const en = {
   common: {
     home: "Home",
+    almostSoldOut: "Almost Sold Out",
     rooms: "Rooms",
     features: "Features",
     gallery: "Gallery",
@@ -210,8 +211,21 @@ export const en = {
     specialRequests: "Special Requests",
     specialRequestsPlaceholder:
       "Please let us know if you have any special requests or requirements",
+    termsAndConditions: "Terms and Conditions",
+    privacyPolicy: "Privacy Policy",
+    terms: {
+      cancellation:
+        "Free cancellation up to 7 days before arrival, 50% refund for 3-7 days, no refund within 3 days",
+      checkInOut: "Check-in: 15:00-22:00, Check-out: 11:00",
+      payment: "Payment is required at the time of booking confirmation",
+      damages: "Guests are responsible for any damages to hotel property",
+    },
+    privacy: {
+      description:
+        "Your personal information will be used only for booking purposes and kept secure according to our privacy policy.",
+    },
     agreeToTerms:
-      "I agree to the terms and conditions, cancellation policy, and privacy policy",
+      "I have read and agree to the terms and conditions and privacy policy",
     continueToPayment: "Continue to Payment",
     processing: "Processing...",
     bookingSuccessful: "Booking Successful",

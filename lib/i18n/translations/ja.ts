@@ -208,8 +208,20 @@ export const ja = {
     specialRequests: "特別リクエスト",
     specialRequestsPlaceholder:
       "特別なリクエストや要件がありましたらお知らせください",
-    agreeToTerms:
-      "利用規約、キャンセルポリシー、プライバシーポリシーに同意します",
+    termsAndConditions: "利用規約",
+    privacyPolicy: "プライバシーポリシー",
+    terms: {
+      cancellation:
+        "到着7日前まで無料キャンセル、3-7日前は50%返金、3日前未満は返金不可",
+      checkInOut: "チェックイン：15:00-22:00、チェックアウト：11:00",
+      payment: "予約確定時にお支払いが必要です",
+      damages: "ホテル施設への損害についてはお客様の責任となります",
+    },
+    privacy: {
+      description:
+        "お客様の個人情報は予約目的のみに使用され、プライバシーポリシーに従って安全に保管されます。",
+    },
+    agreeToTerms: "利用規約とプライバシーポリシーを読み、同意します",
     continueToPayment: "支払いに進む",
     processing: "処理中...",
     bookingSuccessful: "予約完了",

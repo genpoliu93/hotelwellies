@@ -78,6 +78,7 @@ export const zh = {
     ...zenTextKeysZH.features,
   },
   rooms: {
+    almostSoldOut: "几乎售罄",
     title: "精选客房",
     subtitle: "我们提供各种类型的客房，满足不同客人的需求。",
     standard: "标准双人间",
@@ -197,7 +198,19 @@ export const zh = {
     after22: "22:00之后",
     specialRequests: "特殊要求",
     specialRequestsPlaceholder: "如果您有任何特殊要求或需求，请告知我们",
-    agreeToTerms: "我同意条款和条件、取消政策和隐私政策",
+    termsAndConditions: "条款和条件",
+    privacyPolicy: "隐私政策",
+    terms: {
+      cancellation:
+        "到达前7天以上免费取消，3-7天前取消退还50%，3天内取消不予退款",
+      checkInOut: "入住：15:00-22:00，退房：11:00",
+      payment: "预订确认时需要付款",
+      damages: "客人需对酒店财产的任何损坏负责",
+    },
+    privacy: {
+      description: "您的个人信息仅用于预订目的，并根据我们的隐私政策安全保存。",
+    },
+    agreeToTerms: "我已阅读并同意条款和条件以及隐私政策",
     continueToPayment: "继续支付",
     processing: "处理中...",
     bookingSuccessful: "预订成功",

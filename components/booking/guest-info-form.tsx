@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
+
 import { useLanguage } from "@/lib/i18n/context";
 import {
   Select,
@@ -372,24 +372,56 @@ export function GuestInfoForm({
           />
         </div>
 
-        <div className="flex items-start space-x-3 mt-6">
-          <Checkbox
-            id="agreeToTerms"
-            checked={formData.agreeToTerms}
-            onCheckedChange={handleCheckboxChange}
-            className={errors.agreeToTerms ? "border-red-500" : ""}
-          />
-          <div className="space-y-1">
-            <label
-              htmlFor="agreeToTerms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-700"
-            >
-              {t("booking.agreeToTerms")}{" "}
-              <span className="text-red-500">*</span>
-            </label>
-            {errors.agreeToTerms && (
-              <p className="text-xs text-red-500">{errors.agreeToTerms}</p>
-            )}
+        <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <div className="space-y-4">
+            {/* 条款详细内容 */}
+            <div className="text-sm text-gray-700 space-y-3">
+              <div>
+                <h4 className="font-medium text-gray-800 mb-2">
+                  {t("booking.termsAndConditions")}
+                </h4>
+                <ul className="space-y-1 text-xs text-gray-600 ml-4">
+                  <li>• {t("booking.terms.cancellation")}</li>
+                  <li>• {t("booking.terms.checkInOut")}</li>
+                  <li>• {t("booking.terms.payment")}</li>
+                  <li>• {t("booking.terms.damages")}</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-medium text-gray-800 mb-2">
+                  {t("booking.privacyPolicy")}
+                </h4>
+                <p className="text-xs text-gray-600">
+                  {t("booking.privacy.description")}
+                </p>
+              </div>
+            </div>
+
+            {/* Checkbox */}
+            <div className="flex items-center space-x-3 pt-2">
+              <input
+                type="checkbox"
+                id="agreeToTerms"
+                checked={formData.agreeToTerms}
+                onChange={(e) => handleCheckboxChange(e.target.checked)}
+                className={`h-4 w-4 text-primary border-2 border-gray-300 rounded focus:ring-primary focus:ring-2 flex-shrink-0 ${
+                  errors.agreeToTerms ? "border-red-500" : ""
+                }`}
+              />
+              <div className="space-y-1">
+                <label
+                  htmlFor="agreeToTerms"
+                  className="text-sm font-medium leading-relaxed cursor-pointer text-gray-700"
+                >
+                  {t("booking.agreeToTerms")}{" "}
+                  <span className="text-red-500">*</span>
+                </label>
+                {errors.agreeToTerms && (
+                  <p className="text-xs text-red-500">{errors.agreeToTerms}</p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -193,3 +193,19 @@ body {
     height: 2.25rem !important;
   }
 }
+
+/* Checkbox 样式优化 */
+input[type="checkbox"] {
+  accent-color: hsl(var(--primary));
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background-color: hsl(var(--primary));
+  border-color: hsl(var(--primary));
+}
+
+input[type="checkbox"]:focus {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
