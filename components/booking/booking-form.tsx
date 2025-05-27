@@ -78,24 +78,29 @@ export function BookingForm() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="bg-white p-8 rounded-xl shadow-sm border border-gray-100"
+                    className="bg-white rounded-xl shadow-sm border border-gray-100 p-8"
                   >
-                    <h3 className="text-xl font-semibold text-gray-800 mb-6">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                      <div className="w-1 h-6 bg-primary rounded-full"></div>
                       {t("booking.searchRooms")}
                     </h3>
                     <div className="space-y-6">
-                      <DatePicker
-                        checkInDate={checkInDate}
-                        checkOutDate={checkOutDate}
-                        onCheckInChange={setCheckInDate}
-                        onCheckOutChange={setCheckOutDate}
-                      />
-                      <GuestSelector
-                        adults={adults}
-                        children={children}
-                        onAdultsChange={setAdults}
-                        onChildrenChange={setChildren}
-                      />
+                      <div className="p-6 bg-gray-50/50 rounded-lg border border-gray-200">
+                        <DatePicker
+                          checkInDate={checkInDate}
+                          checkOutDate={checkOutDate}
+                          onCheckInChange={setCheckInDate}
+                          onCheckOutChange={setCheckOutDate}
+                        />
+                      </div>
+                      <div className="p-6 bg-gray-50/50 rounded-lg border border-gray-200">
+                        <GuestSelector
+                          adults={adults}
+                          children={children}
+                          onAdultsChange={setAdults}
+                          onChildrenChange={setChildren}
+                        />
+                      </div>
                     </div>
                   </motion.div>
 

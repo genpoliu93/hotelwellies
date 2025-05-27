@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import { useLanguage } from "@/lib/i18n/context";
+import { translations } from "@/lib/i18n/translations";
 import {
   Select,
   SelectContent,
@@ -161,20 +162,46 @@ export function GuestInfoForm({
     }
   };
 
-  const countries = [
-    { value: "jp", label: "Japan" },
-    { value: "cn", label: "China" },
-    { value: "us", label: "United States" },
-    { value: "gb", label: "United Kingdom" },
-    { value: "au", label: "Australia" },
-    { value: "ca", label: "Canada" },
-    { value: "fr", label: "France" },
-    { value: "de", label: "Germany" },
-    { value: "it", label: "Italy" },
-    { value: "kr", label: "South Korea" },
-    { value: "sg", label: "Singapore" },
-    { value: "th", label: "Thailand" },
-  ];
+  // 获取国际化的国家列表
+  const getCountries = () => {
+    const countryKeys = [
+      "jp",
+      "cn",
+      "us",
+      "gb",
+      "au",
+      "ca",
+      "fr",
+      "de",
+      "it",
+      "kr",
+      "sg",
+      "th",
+    ];
+
+    // 直接从translations对象中获取当前语言的countries
+    const currentTranslations = translations[locale];
+    const countries = (currentTranslations as any)?.countries;
+
+    if (!countries) {
+      // 如果countries不存在，返回默认的英文名称
+      return countryKeys
+        .map((key) => ({
+          value: key,
+          label: key.toUpperCase(),
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label, locale));
+    }
+
+    return countryKeys
+      .map((key) => ({
+        value: key,
+        label: countries[key] || key.toUpperCase(),
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label, locale));
+  };
+
+  const countries = getCountries();
 
   const arrivalTimes = [
     { value: "12-14", label: "12:00 - 14:00" },
@@ -193,8 +220,9 @@ export function GuestInfoForm({
       onSubmit={handleSubmit}
       className="space-y-8 bg-white p-8 rounded-xl shadow-sm border border-gray-100"
     >
-      <div>
-        <h3 className="text-xl font-semibold text-gray-800 mb-6">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+          <div className="w-1 h-6 bg-primary rounded-full"></div>
           {t("booking.guestInformation")}
         </h3>
 
@@ -202,7 +230,7 @@ export function GuestInfoForm({
           <div className="space-y-2">
             <label
               htmlFor="firstName"
-              className="text-sm font-medium text-gray-700"
+              className="text-sm font-medium text-gray-700 block"
             >
               {t("booking.firstName")} <span className="text-red-500">*</span>
             </label>
@@ -211,19 +239,23 @@ export function GuestInfoForm({
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
-              className={`h-12 border-gray-200 focus:border-primary focus:ring-primary ${
-                errors.firstName ? "border-red-500" : ""
+              className={`h-12 bg-gray-50 border-gray-300 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 ${
+                errors.firstName ? "border-red-500 bg-red-50" : ""
               }`}
+              placeholder="请输入名字"
             />
             {errors.firstName && (
-              <p className="text-xs text-red-500">{errors.firstName}</p>
+              <p className="text-xs text-red-500 flex items-center gap-1">
+                <span className="w-1 h-1 bg-red-500 rounded-full"></span>
+                {errors.firstName}
+              </p>
             )}
           </div>
 
           <div className="space-y-2">
             <label
               htmlFor="lastName"
-              className="text-sm font-medium text-gray-700"
+              className="text-sm font-medium text-gray-700 block"
             >
               {t("booking.lastName")} <span className="text-red-500">*</span>
             </label>
@@ -232,12 +264,16 @@ export function GuestInfoForm({
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
-              className={`h-12 border-gray-200 focus:border-primary focus:ring-primary ${
-                errors.lastName ? "border-red-500" : ""
+              className={`h-12 bg-gray-50 border-gray-300 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 ${
+                errors.lastName ? "border-red-500 bg-red-50" : ""
               }`}
+              placeholder="请输入姓氏"
             />
             {errors.lastName && (
-              <p className="text-xs text-red-500">{errors.lastName}</p>
+              <p className="text-xs text-red-500 flex items-center gap-1">
+                <span className="w-1 h-1 bg-red-500 rounded-full"></span>
+                {errors.lastName}
+              </p>
             )}
           </div>
         </div>
@@ -246,7 +282,7 @@ export function GuestInfoForm({
           <div className="space-y-2">
             <label
               htmlFor="email"
-              className="text-sm font-medium text-gray-700"
+              className="text-sm font-medium text-gray-700 block"
             >
               {t("booking.email")} <span className="text-red-500">*</span>
             </label>
@@ -256,19 +292,23 @@ export function GuestInfoForm({
               type="email"
               value={formData.email}
               onChange={handleChange}
-              className={`h-12 border-gray-200 focus:border-primary focus:ring-primary ${
-                errors.email ? "border-red-500" : ""
+              className={`h-12 bg-gray-50 border-gray-300 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 ${
+                errors.email ? "border-red-500 bg-red-50" : ""
               }`}
+              placeholder="example@email.com"
             />
             {errors.email && (
-              <p className="text-xs text-red-500">{errors.email}</p>
+              <p className="text-xs text-red-500 flex items-center gap-1">
+                <span className="w-1 h-1 bg-red-500 rounded-full"></span>
+                {errors.email}
+              </p>
             )}
           </div>
 
           <div className="space-y-2">
             <label
               htmlFor="phone"
-              className="text-sm font-medium text-gray-700"
+              className="text-sm font-medium text-gray-700 block"
             >
               {t("booking.phone")} <span className="text-red-500">*</span>
             </label>
@@ -277,12 +317,16 @@ export function GuestInfoForm({
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className={`h-12 border-gray-200 focus:border-primary focus:ring-primary ${
-                errors.phone ? "border-red-500" : ""
+              className={`h-12 bg-gray-50 border-gray-300 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 ${
+                errors.phone ? "border-red-500 bg-red-50" : ""
               }`}
+              placeholder="+81 90-1234-5678"
             />
             {errors.phone && (
-              <p className="text-xs text-red-500">{errors.phone}</p>
+              <p className="text-xs text-red-500 flex items-center gap-1">
+                <span className="w-1 h-1 bg-red-500 rounded-full"></span>
+                {errors.phone}
+              </p>
             )}
           </div>
         </div>
@@ -291,7 +335,7 @@ export function GuestInfoForm({
           <div className="space-y-2">
             <label
               htmlFor="country"
-              className="text-sm font-medium text-gray-700"
+              className="text-sm font-medium text-gray-700 block"
             >
               {t("booking.country")} <span className="text-red-500">*</span>
             </label>
@@ -300,29 +344,36 @@ export function GuestInfoForm({
               onValueChange={(value) => handleSelectChange("country", value)}
             >
               <SelectTrigger
-                className={`h-12 border-gray-200 ${
-                  errors.country ? "border-red-500" : ""
+                className={`h-12 bg-gray-50 border-gray-300 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 ${
+                  errors.country ? "border-red-500 bg-red-50" : ""
                 }`}
               >
                 <SelectValue placeholder={t("booking.selectCountry")} />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white border border-gray-200 shadow-lg">
                 {countries.map((country) => (
-                  <SelectItem key={country.value} value={country.value}>
+                  <SelectItem
+                    key={country.value}
+                    value={country.value}
+                    className="hover:bg-gray-50 focus:bg-primary/10"
+                  >
                     {country.label}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             {errors.country && (
-              <p className="text-xs text-red-500">{errors.country}</p>
+              <p className="text-xs text-red-500 flex items-center gap-1">
+                <span className="w-1 h-1 bg-red-500 rounded-full"></span>
+                {errors.country}
+              </p>
             )}
           </div>
 
           <div className="space-y-2">
             <label
               htmlFor="arrivalTime"
-              className="text-sm font-medium text-gray-700"
+              className="text-sm font-medium text-gray-700 block"
             >
               {t("booking.estimatedArrival")}{" "}
               <span className="text-red-500">*</span>
@@ -334,22 +385,29 @@ export function GuestInfoForm({
               }
             >
               <SelectTrigger
-                className={`h-12 border-gray-200 ${
-                  errors.arrivalTime ? "border-red-500" : ""
+                className={`h-12 bg-gray-50 border-gray-300 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 ${
+                  errors.arrivalTime ? "border-red-500 bg-red-50" : ""
                 }`}
               >
                 <SelectValue placeholder={t("booking.selectTime")} />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white border border-gray-200 shadow-lg">
                 {arrivalTimes.map((time) => (
-                  <SelectItem key={time.value} value={time.value}>
+                  <SelectItem
+                    key={time.value}
+                    value={time.value}
+                    className="hover:bg-gray-50 focus:bg-primary/10"
+                  >
                     {time.label}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             {errors.arrivalTime && (
-              <p className="text-xs text-red-500">{errors.arrivalTime}</p>
+              <p className="text-xs text-red-500 flex items-center gap-1">
+                <span className="w-1 h-1 bg-red-500 rounded-full"></span>
+                {errors.arrivalTime}
+              </p>
             )}
           </div>
         </div>
@@ -357,9 +415,10 @@ export function GuestInfoForm({
         <div className="mt-6 space-y-2">
           <label
             htmlFor="specialRequests"
-            className="text-sm font-medium text-gray-700"
+            className="text-sm font-medium text-gray-700 block"
           >
             {t("booking.specialRequests")}
+            <span className="text-xs text-gray-500 ml-1">(可选)</span>
           </label>
           <Textarea
             id="specialRequests"
@@ -368,58 +427,77 @@ export function GuestInfoForm({
             onChange={handleChange}
             placeholder={t("booking.specialRequestsPlaceholder")}
             rows={4}
-            className="border-gray-200 focus:border-primary focus:ring-primary"
+            className="bg-gray-50 border-gray-300 focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 resize-none"
           />
         </div>
 
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <div className="mt-8 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
           <div className="space-y-4">
             {/* 条款详细内容 */}
-            <div className="text-sm text-gray-700 space-y-3">
-              <div>
-                <h4 className="font-medium text-gray-800 mb-2">
+            <div className="text-sm text-gray-700 space-y-4">
+              <div className="bg-white/60 p-4 rounded-lg border border-blue-100">
+                <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                   {t("booking.termsAndConditions")}
                 </h4>
-                <ul className="space-y-1 text-xs text-gray-600 ml-4">
-                  <li>• {t("booking.terms.cancellation")}</li>
-                  <li>• {t("booking.terms.checkInOut")}</li>
-                  <li>• {t("booking.terms.payment")}</li>
-                  <li>• {t("booking.terms.damages")}</li>
+                <ul className="space-y-2 text-xs text-gray-600">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span>{t("booking.terms.cancellation")}</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span>{t("booking.terms.checkInOut")}</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span>{t("booking.terms.payment")}</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span>{t("booking.terms.damages")}</span>
+                  </li>
                 </ul>
               </div>
 
-              <div>
-                <h4 className="font-medium text-gray-800 mb-2">
+              <div className="bg-white/60 p-4 rounded-lg border border-blue-100">
+                <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                   {t("booking.privacyPolicy")}
                 </h4>
-                <p className="text-xs text-gray-600">
+                <p className="text-xs text-gray-600 leading-relaxed">
                   {t("booking.privacy.description")}
                 </p>
               </div>
             </div>
 
             {/* Checkbox */}
-            <div className="flex items-center space-x-3 pt-2">
-              <input
-                type="checkbox"
-                id="agreeToTerms"
-                checked={formData.agreeToTerms}
-                onChange={(e) => handleCheckboxChange(e.target.checked)}
-                className={`h-4 w-4 text-primary border-2 border-gray-300 rounded focus:ring-primary focus:ring-2 flex-shrink-0 ${
-                  errors.agreeToTerms ? "border-red-500" : ""
-                }`}
-              />
-              <div className="space-y-1">
-                <label
-                  htmlFor="agreeToTerms"
-                  className="text-sm font-medium leading-relaxed cursor-pointer text-gray-700"
-                >
-                  {t("booking.agreeToTerms")}{" "}
-                  <span className="text-red-500">*</span>
-                </label>
-                {errors.agreeToTerms && (
-                  <p className="text-xs text-red-500">{errors.agreeToTerms}</p>
-                )}
+            <div className="bg-white p-4 rounded-lg border border-blue-200 shadow-sm">
+              <div className="flex items-start space-x-3">
+                <input
+                  type="checkbox"
+                  id="agreeToTerms"
+                  checked={formData.agreeToTerms}
+                  onChange={(e) => handleCheckboxChange(e.target.checked)}
+                  className={`h-5 w-5 text-primary border-2 border-gray-300 rounded focus:ring-primary focus:ring-2 flex-shrink-0 mt-0.5 transition-all duration-200 ${
+                    errors.agreeToTerms ? "border-red-500" : ""
+                  }`}
+                />
+                <div className="space-y-1 flex-1">
+                  <label
+                    htmlFor="agreeToTerms"
+                    className="text-sm font-medium leading-relaxed cursor-pointer text-gray-700 block"
+                  >
+                    {t("booking.agreeToTerms")}{" "}
+                    <span className="text-red-500">*</span>
+                  </label>
+                  {errors.agreeToTerms && (
+                    <p className="text-xs text-red-500 flex items-center gap-1">
+                      <span className="w-1 h-1 bg-red-500 rounded-full"></span>
+                      {errors.agreeToTerms}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>

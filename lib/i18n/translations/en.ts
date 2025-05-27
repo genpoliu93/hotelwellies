@@ -379,4 +379,18 @@ export const en = {
         "If you have any feedback or suggestions regarding our initiatives, please do not hesitate to speak to our staff. We sincerely appreciate your understanding and cooperation.",
     },
   },
+  countries: {
+    jp: "Japan",
+    cn: "China",
+    us: "United States",
+    gb: "United Kingdom",
+    au: "Australia",
+    ca: "Canada",
+    fr: "France",
+    de: "Germany",
+    it: "Italy",
+    kr: "South Korea",
+    sg: "Singapore",
+    th: "Thailand",
+  },
 };

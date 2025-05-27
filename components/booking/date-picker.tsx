@@ -75,7 +75,7 @@ export function DatePicker({
             <Button
               variant="outline"
               className={cn(
-                "w-full justify-start text-left font-normal border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-all",
+                "w-full justify-start text-left font-normal bg-white border-gray-300 hover:bg-gray-50 hover:border-primary/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 shadow-sm",
                 !checkInDate && "text-gray-500",
                 "h-12"
               )}
@@ -84,7 +84,10 @@ export function DatePicker({
               {checkInDate ? formatDate(checkInDate) : t("booking.selectDate")}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
+          <PopoverContent
+            className="w-auto p-0 border border-gray-200 shadow-lg"
+            align="start"
+          >
             <Calendar
               mode="single"
               selected={checkInDate}
@@ -108,7 +111,7 @@ export function DatePicker({
                 date < new Date(new Date().setHours(0, 0, 0, 0))
               }
               initialFocus
-              className="rounded-md border border-gray-200"
+              className="rounded-md border-0"
             />
           </PopoverContent>
         </Popover>
@@ -123,7 +126,7 @@ export function DatePicker({
             <Button
               variant="outline"
               className={cn(
-                "w-full justify-start text-left font-normal border-gray-200 hover:bg-gray-50 hover:border-gray-300 transition-all",
+                "w-full justify-start text-left font-normal bg-white border-gray-300 hover:bg-gray-50 hover:border-primary/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 shadow-sm",
                 !checkOutDate && "text-gray-500",
                 "h-12"
               )}
@@ -135,7 +138,10 @@ export function DatePicker({
                 : t("booking.selectDate")}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
+          <PopoverContent
+            className="w-auto p-0 border border-gray-200 shadow-lg"
+            align="start"
+          >
             <Calendar
               mode="single"
               selected={checkOutDate}
@@ -148,7 +154,7 @@ export function DatePicker({
                 (minCheckoutDate ? date < minCheckoutDate : false)
               }
               initialFocus
-              className="rounded-md border border-gray-200"
+              className="rounded-md border-0"
             />
           </PopoverContent>
         </Popover>
