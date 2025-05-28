@@ -11,6 +11,7 @@ import { useLanguage } from "@/lib/i18n/context";
 import { toast } from "@/hooks/use-toast";
 import { Steps, Step } from "./steps";
 import { motion } from "framer-motion";
+import { CalendarDays } from "lucide-react";
 
 export function BookingForm() {
   const { t } = useLanguage();
@@ -22,6 +23,15 @@ export function BookingForm() {
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   const [roomPrice, setRoomPrice] = useState(0); // API返回的总价
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // 计算住宿天数
+  const calculateNights = () => {
+    if (!checkInDate || !checkOutDate) return 0;
+    const diffTime = checkOutDate.getTime() - checkInDate.getTime();
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  };
+
+  const nights = calculateNights();
 
   // 处理房间选择，price是API返回的总价
   const handleRoomSelect = (roomId: string, price: number) => {
@@ -92,6 +102,34 @@ export function BookingForm() {
                           onCheckInChange={setCheckInDate}
                           onCheckOutChange={setCheckOutDate}
                         />
+
+                        {/* 显示选择的天数和晚数 */}
+                        {checkInDate && checkOutDate && nights > 0 && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="mt-4 p-4 bg-primary/5 border border-primary/20 rounded-lg"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="bg-primary/10 rounded-full p-2">
+                                <CalendarDays className="h-4 w-4 text-primary" />
+                              </div>
+                              <div>
+                                <p className="text-sm font-medium text-gray-800">
+                                  {nights + 1} 天 {nights}{" "}
+                                  {nights === 1
+                                    ? t("booking.night")
+                                    : t("booking.nights")}
+                                </p>
+                                <p className="text-xs text-gray-600">
+                                  {checkInDate.toLocaleDateString()} -{" "}
+                                  {checkOutDate.toLocaleDateString()}
+                                </p>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
                       </div>
                       <div className="p-6 bg-gray-50/50 rounded-lg border border-gray-200">
                         <GuestSelector
