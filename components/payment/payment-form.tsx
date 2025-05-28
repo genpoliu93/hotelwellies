@@ -99,7 +99,23 @@ export function PaymentForm({
           const script = document.createElement("script");
           script.id = "square-script";
           script.src = "https://web.squarecdn.com/v1/square.js";
-          script.onload = () => initializeSquare();
+          script.crossOrigin = "anonymous";
+
+          script.onload = () => {
+            console.log("Square SDK loaded successfully");
+            initializeSquare();
+          };
+
+          script.onerror = (error) => {
+            console.error("Failed to load Square SDK:", error);
+            setIsLoading(false);
+            toast({
+              title: t("payment.loadingError"),
+              description: t("payment.squareLoadError"),
+              variant: "destructive",
+            });
+          };
+
           document.body.appendChild(script);
         } else {
           initializeSquare();
@@ -107,6 +123,11 @@ export function PaymentForm({
       } catch (error) {
         console.error("Failed to load Square Web Payments SDK:", error);
         setIsLoading(false);
+        toast({
+          title: t("payment.loadingError"),
+          description: t("payment.squareLoadError"),
+          variant: "destructive",
+        });
       }
     };
 

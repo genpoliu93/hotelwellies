@@ -275,6 +275,8 @@ export const zh = {
     completeBooking: "完成预订",
     processing: "支付处理中...",
     loadingPayment: "正在加载支付表单...",
+    loadingError: "加载错误",
+    squareLoadError: "支付系统加载失败，请检查网络连接后重试。",
     squareNotInitialized: "支付系统正在初始化，请稍候...",
     paymentSuccessful: "支付成功",
     confirmationSent: "确认邮件已发送至您的电子邮箱",

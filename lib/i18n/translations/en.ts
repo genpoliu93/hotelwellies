@@ -293,6 +293,9 @@ export const en = {
     completeBooking: "Complete Booking",
     processing: "Processing payment...",
     loadingPayment: "Loading payment form...",
+    loadingError: "Loading Error",
+    squareLoadError:
+      "Failed to load payment system. Please check your network connection and try again.",
     squareNotInitialized: "Payment system is initializing. Please wait...",
     paymentSuccessful: "Payment Successful",
     confirmationSent:

@@ -290,6 +290,9 @@ export const ja = {
     completeBooking: "予約を完了する",
     processing: "決済処理中...",
     loadingPayment: "決済フォームを読み込んでいます...",
+    loadingError: "読み込みエラー",
+    squareLoadError:
+      "決済システムの読み込みに失敗しました。ネットワーク接続を確認して再度お試しください。",
     squareNotInitialized:
       "決済システムを初期化中です。しばらくお待ちください...",
     paymentSuccessful: "お支払い完了",
