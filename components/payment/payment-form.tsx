@@ -153,7 +153,44 @@ export function PaymentForm({
       return;
     }
 
+    // 等待DOM元素渲染
+    const waitForElement = (selector: string, timeout = 5000) => {
+      return new Promise<HTMLElement>((resolve, reject) => {
+        const element = document.querySelector(selector) as HTMLElement;
+        if (element) {
+          resolve(element);
+          return;
+        }
+
+        const observer = new MutationObserver(() => {
+          const element = document.querySelector(selector) as HTMLElement;
+          if (element) {
+            observer.disconnect();
+            resolve(element);
+          }
+        });
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+        });
+
+        setTimeout(() => {
+          observer.disconnect();
+          reject(
+            new Error(`Element ${selector} not found within ${timeout}ms`)
+          );
+        }, timeout);
+      });
+    };
+
     try {
+      // 先设置loading为false，让DOM元素渲染
+      setIsLoading(false);
+
+      // 等待card-container元素出现
+      await waitForElement("#card-container");
+
       // 从环境变量获取Square配置
       const appId =
         process.env.NEXT_PUBLIC_SQUARE_APP_ID ||
@@ -167,10 +204,14 @@ export function PaymentForm({
       await card.attach("#card-container");
       setCard(card);
       setSquareInitialized(true);
-      setIsLoading(false);
     } catch (error) {
       console.error("Failed to initialize Square:", error);
       setIsLoading(false);
+      toast({
+        title: t("payment.loadingError"),
+        description: t("payment.squareLoadError"),
+        variant: "destructive",
+      });
     }
   };
 
@@ -347,9 +388,12 @@ export function PaymentForm({
             ) : (
               <>
                 <div id="card-container" className="mb-6"></div>
-                {!squareInitialized && (
-                  <div className="text-amber-600 text-sm mt-2">
-                    {t("payment.squareNotInitialized")}
+                {!squareInitialized && !isLoading && (
+                  <div className="flex items-center justify-center py-8">
+                    <div className="animate-spin h-6 w-6 border-4 border-primary border-t-transparent rounded-full"></div>
+                    <span className="ml-3 text-amber-600 text-sm">
+                      {t("payment.squareNotInitialized")}
+                    </span>
                   </div>
                 )}
               </>
