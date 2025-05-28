@@ -172,6 +172,7 @@ export function GuestInfoForm({
   // 获取国际化的国家列表
   const getCountries = () => {
     const countryKeys = [
+      // 原有国家
       "jp",
       "cn",
       "us",
@@ -184,6 +185,42 @@ export function GuestInfoForm({
       "kr",
       "sg",
       "th",
+      // 亚洲国家
+      "in",
+      "id",
+      "my",
+      "ph",
+      "vn",
+      "tw",
+      "hk",
+      "mo",
+      // 欧洲国家
+      "es",
+      "nl",
+      "ch",
+      "at",
+      "be",
+      "se",
+      "no",
+      "dk",
+      "fi",
+      "ru",
+      "pl",
+      "cz",
+      // 美洲国家
+      "mx",
+      "br",
+      "ar",
+      "cl",
+      // 中东和非洲
+      "ae",
+      "sa",
+      "za",
+      "eg",
+      // 大洋洲
+      "nz",
+      // 其他选项
+      "other",
     ];
 
     // 直接从translations对象中获取当前语言的countries
@@ -197,7 +234,13 @@ export function GuestInfoForm({
           value: key,
           label: key.toUpperCase(),
         }))
-        .sort((a, b) => a.label.localeCompare(b.label, locale));
+        .sort((a, b) => {
+          // "其他"选项始终排在最后
+          if (a.value === "other") return 1;
+          if (b.value === "other") return -1;
+          // 其他国家按字母顺序排序
+          return a.label.localeCompare(b.label, locale);
+        });
     }
 
     return countryKeys
@@ -205,7 +248,13 @@ export function GuestInfoForm({
         value: key,
         label: countries[key] || key.toUpperCase(),
       }))
-      .sort((a, b) => a.label.localeCompare(b.label, locale));
+      .sort((a, b) => {
+        // "其他"选项始终排在最后
+        if (a.value === "other") return 1;
+        if (b.value === "other") return -1;
+        // 其他国家按字母顺序排序
+        return a.label.localeCompare(b.label, locale);
+      });
   };
 
   const countries = getCountries();
