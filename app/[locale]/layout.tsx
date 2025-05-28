@@ -30,18 +30,5 @@ export default async function LocaleLayout({
 }) {
   const { locale } = params as { locale: Locale };
 
-  return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <LanguageProvider initialLocale={locale}>{children}</LanguageProvider>
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+  return <LanguageProvider initialLocale={locale}>{children}</LanguageProvider>;
 }

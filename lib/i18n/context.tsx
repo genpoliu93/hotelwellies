@@ -51,11 +51,10 @@ export function LanguageProvider({
       console.log(`[I18N] Current pathname: ${pathname}`);
     }
 
-    // 设置HTML语言属性
-    document.documentElement.lang = locale;
-
     // 保存语言偏好到localStorage
-    localStorage.setItem("locale", locale);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("locale", locale);
+    }
   }, [locale, pathname]);
 
   // 设置语言并更新路由

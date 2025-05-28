@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/lib/i18n/context";
+import { HtmlLangSetter } from "@/components/html-lang-setter";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,7 +23,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
@@ -30,7 +31,10 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LanguageProvider>{children}</LanguageProvider>
+          <LanguageProvider>
+            <HtmlLangSetter />
+            {children}
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
