@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,6 +30,16 @@ export function DatePicker({
   const { t, locale } = useLanguage();
   const [isCheckInOpen, setIsCheckInOpen] = useState(false);
   const [isCheckOutOpen, setIsCheckOutOpen] = useState(false);
+  const [checkOutCalendarMonth, setCheckOutCalendarMonth] = useState<
+    Date | undefined
+  >(undefined);
+
+  // 当チェックイン日期改变时，更新チェックアウト日历的默认显示月份
+  useEffect(() => {
+    if (checkInDate) {
+      setCheckOutCalendarMonth(new Date(checkInDate));
+    }
+  }, [checkInDate]);
 
   // 根据当前语言获取date-fns locale
   const getDateLocale = () => {
@@ -63,6 +73,10 @@ export function DatePicker({
   if (minCheckoutDate) {
     minCheckoutDate.setDate(minCheckoutDate.getDate() + 1);
   }
+
+  // 今天的日期（用于禁用过去的日期）
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   return (
     <div className="flex flex-col sm:flex-row gap-4">
@@ -107,9 +121,7 @@ export function DatePicker({
                   }
                 }
               }}
-              disabled={(date) =>
-                date < new Date(new Date().setHours(0, 0, 0, 0))
-              }
+              disabled={(date) => date < today}
               initialFocus
               className="rounded-md border-0"
             />
@@ -149,10 +161,16 @@ export function DatePicker({
                 onCheckOutChange(date);
                 setIsCheckOutOpen(false);
               }}
-              disabled={(date) =>
-                date < new Date(new Date().setHours(0, 0, 0, 0)) ||
-                (minCheckoutDate ? date < minCheckoutDate : false)
-              }
+              disabled={(date) => {
+                // 禁用今天之前的日期
+                if (date < today) return true;
+
+                // 禁用チェックイン日期及之前的所有日期
+                if (checkInDate && date <= checkInDate) return true;
+
+                return false;
+              }}
+              defaultMonth={checkOutCalendarMonth}
               initialFocus
               className="rounded-md border-0"
             />
