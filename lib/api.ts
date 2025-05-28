@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { PaymentRequest, PaymentResponse } from "./types/payment";
 
 // API响应类型定义
 export interface ApiResponse<T> {
@@ -112,4 +113,30 @@ export async function fetchAvailableRooms(
   return fetchApi<RoomQueryResult>(
     `/api/room_occupancy/available-rooms?${queryParams.toString()}`
   );
+}
+
+// 处理支付
+export async function processPayment(
+  paymentRequest: PaymentRequest
+): Promise<PaymentResponse> {
+  try {
+    const response = await fetch(`${API_CONFIG.baseURL}/api/payment/charge`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(paymentRequest),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || `支付请求失败: ${response.status}`);
+    }
+
+    return data as PaymentResponse;
+  } catch (error) {
+    console.error("支付处理错误:", error);
+    throw error;
+  }
 }

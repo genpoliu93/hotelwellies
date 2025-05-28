@@ -298,6 +298,10 @@ export const ja = {
     backToHome: "ホームに戻る",
     paymentFailed: "お支払い失敗",
     tryAgain: "カード情報を確認して再試行してください",
+    validationError: "データ検証に失敗しました",
+    networkError:
+      "ネットワーク接続エラーです。しばらくしてから再度お試しください",
+    serverError: "サーバーエラーです。カスタマーサービスにお問い合わせください",
     name: "お名前",
     confirmationTitle: "予約確認",
     bookingCompleted: "予約が完了しました",

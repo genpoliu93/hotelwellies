@@ -7,6 +7,14 @@ import { CreditCard, CheckCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { BookingConfirmation } from "./booking-confirmation";
+import { processPayment } from "@/lib/api";
+import {
+  buildBookingInfo,
+  buildCustomerInfo,
+  buildPaymentRequest,
+  validatePaymentData,
+  generateBookingReference,
+} from "@/lib/utils/payment";
 
 interface PaymentFormProps {
   price: number;
@@ -125,10 +133,12 @@ export function PaymentForm({
     }
 
     try {
-      // 这里使用的是Square的测试应用ID和位置ID
-      // 在生产环境中需要替换为实际的ID
-      const appId = "sq0idp-cw6HsX87fmoRJWJ3X3yi2A"; // 替换为实际ID
-      const locationId = "LOCATION_ID"; // 替换为实际ID
+      // 从环境变量获取Square配置
+      const appId =
+        process.env.NEXT_PUBLIC_SQUARE_APP_ID ||
+        "sq0idp-vHpcsRYlmu4NS9oIvzPh1A";
+      const locationId =
+        process.env.NEXT_PUBLIC_SQUARE_LOCATION_ID || "L30PM4WEJ0WAK";
 
       const payments = window.Square.payments(appId, locationId);
       const card = await payments.card();
@@ -150,59 +160,109 @@ export function PaymentForm({
     setIsProcessing(true);
 
     try {
+      // 1. 验证支付数据
+      const validation = validatePaymentData(
+        checkInDate,
+        checkOutDate,
+        firstName,
+        lastName,
+        email,
+        phone,
+        specialRequests
+      );
+
+      if (!validation.isValid) {
+        throw new Error(validation.errors.join(", "));
+      }
+
+      // 2. 获取支付令牌
       const result = await card.tokenize();
 
-      if (result.status === "OK") {
-        // 这里应该调用后端API处理实际支付
-        // 示例中使用模拟成功的方式
-        // await processPayment(result.token);
-
-        // 模拟成功支付
-        setTimeout(() => {
-          // 生成随机预订参考号
-          const reference = generateBookingReference();
-          setBookingReference(reference);
-
-          // 生成随机支付ID
-          const payId = generatePaymentId();
-          setPaymentId(payId);
-
-          setPaymentSuccess(true);
-          setIsProcessing(false);
-
-          toast({
-            title: t("payment.paymentSuccessful"),
-            description: t("payment.confirmationSent"),
-          });
-        }, 2000);
-      } else {
+      if (result.status !== "OK") {
         throw new Error("支付卡信息处理失败");
+      }
+
+      // 3. 构建支付请求数据
+      const totalPrice = price * 1.1; // 包含税费
+      const bookingInfo = buildBookingInfo(
+        roomId,
+        checkInDate,
+        checkOutDate,
+        adults,
+        children,
+        totalPrice
+      );
+
+      const customerInfo = buildCustomerInfo(
+        firstName,
+        lastName,
+        email,
+        phone,
+        country,
+        specialRequests
+      );
+
+      const paymentRequest = buildPaymentRequest(
+        result.token,
+        totalPrice,
+        bookingInfo,
+        customerInfo,
+        getDomain()
+      );
+
+      // 4. 调用后端支付API
+      const paymentResponse = await processPayment(paymentRequest);
+
+      if (paymentResponse.success) {
+        // 支付成功
+        const reference = generateBookingReference();
+        setBookingReference(reference);
+        setPaymentId(paymentResponse.paymentId || "");
+        setPaymentSuccess(true);
+
+        toast({
+          title: t("payment.paymentSuccessful"),
+          description: t("payment.confirmationSent"),
+        });
+      } else {
+        throw new Error(paymentResponse.message || "支付处理失败");
       }
     } catch (error) {
       console.error("Payment failed:", error);
-      setIsProcessing(false);
+
+      let errorTitle = t("payment.paymentFailed");
+      let errorMessage = t("payment.tryAgain");
+
+      if (error instanceof Error) {
+        const message = error.message.toLowerCase();
+
+        if (message.includes("validation") || message.includes("验证")) {
+          errorTitle = t("payment.validationError");
+          errorMessage = error.message;
+        } else if (message.includes("network") || message.includes("fetch")) {
+          errorTitle = t("payment.networkError");
+          errorMessage = t("payment.networkError");
+        } else if (message.includes("server") || message.includes("500")) {
+          errorTitle = t("payment.serverError");
+          errorMessage = t("payment.serverError");
+        } else {
+          errorMessage = error.message;
+        }
+      }
 
       toast({
-        title: t("payment.paymentFailed"),
-        description: t("payment.tryAgain"),
+        title: errorTitle,
+        description: errorMessage,
         variant: "destructive",
       });
+    } finally {
+      setIsProcessing(false);
     }
   };
 
-  // 生成预订参考号
-  const generateBookingReference = () => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let result = "";
-    for (let i = 0; i < 8; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-  };
-
-  // 生成支付ID
-  const generatePaymentId = () => {
-    return `pay_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+  // 获取域名配置（可以从环境变量或配置中获取）
+  const getDomain = () => {
+    return process.env.NEXT_PUBLIC_PAYMENT_DOMAIN || "hotelwellies.jp";
   };
 
   if (paymentSuccess) {
