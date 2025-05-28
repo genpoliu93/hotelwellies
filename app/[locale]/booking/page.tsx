@@ -10,12 +10,12 @@ export function generateStaticParams() {
   return [{ locale: "en" }, { locale: "ja" }, { locale: "zh" }];
 }
 
-export default function BookingPage({
+export default async function BookingPage({
   params,
 }: {
-  params: { locale: Locale };
+  params: Promise<{ locale: Locale }>;
 }) {
-  const { locale } = params;
+  const { locale } = await params;
   const t = translations[locale];
   const booking = t.booking as any;
 
