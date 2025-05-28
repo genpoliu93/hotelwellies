@@ -7,7 +7,7 @@ import {
   translations,
   type TranslationObject,
 } from "./translations/index";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type LanguageContextType = {
   locale: Locale;
@@ -33,6 +33,17 @@ export function LanguageProvider({
   const router = useRouter();
   const pathname = usePathname();
 
+  // 安全地获取searchParams，避免SSR问题
+  let searchParams: URLSearchParams | null = null;
+  try {
+    searchParams = useSearchParams();
+  } catch (error) {
+    // 在某些情况下useSearchParams可能会失败，我们使用fallback
+    if (typeof window !== "undefined") {
+      searchParams = new URLSearchParams(window.location.search);
+    }
+  }
+
   // 输出初始化信息
   useEffect(() => {
     if (DEBUG_I18N) {
@@ -55,10 +66,22 @@ export function LanguageProvider({
 
     setLocaleState(newLocale);
 
-    // 更新URL路径中的语言部分
+    // 更新URL路径中的语言部分，同时保留查询参数和hash
     const currentPathWithoutLocale =
       pathname.split("/").slice(2).join("/") || "";
-    const newPath = `/${newLocale}/${currentPathWithoutLocale}`;
+
+    // 构建新的路径
+    let newPath = `/${newLocale}/${currentPathWithoutLocale}`;
+
+    // 保留查询参数
+    if (searchParams && searchParams.toString()) {
+      newPath += `?${searchParams.toString()}`;
+    }
+
+    // 保留hash（如果有的话）
+    if (typeof window !== "undefined" && window.location.hash) {
+      newPath += window.location.hash;
+    }
 
     // 使用 replace 而不是 push，并禁用自动滚动
     router.replace(newPath, { scroll: false });

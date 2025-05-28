@@ -4,6 +4,8 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/context";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import { PaymentSummary } from "@/components/payment/payment-summary";
 import { CustomerInfo } from "@/components/payment/customer-info";
 import { PaymentForm } from "@/components/payment/payment-form";
@@ -26,6 +28,7 @@ function PaymentContent() {
     email: string;
     phone: string;
     country: string;
+    arrivalTime: string;
     specialRequests?: string;
   }>({
     checkInDate: null,
@@ -39,6 +42,7 @@ function PaymentContent() {
     email: "",
     phone: "",
     country: "",
+    arrivalTime: "",
   });
 
   useEffect(() => {
@@ -59,6 +63,7 @@ function PaymentContent() {
         email: searchParams.get("email") || "",
         phone: searchParams.get("phone") || "",
         country: searchParams.get("country") || "jp", // 默认日本
+        arrivalTime: searchParams.get("arrivalTime") || "",
         specialRequests: searchParams.get("specialRequests") || undefined,
       });
 
@@ -108,6 +113,7 @@ function PaymentContent() {
         email={paymentData.email}
         phone={paymentData.phone}
         country={paymentData.country}
+        arrivalTime={paymentData.arrivalTime}
         specialRequests={paymentData.specialRequests}
       />
 
@@ -122,36 +128,42 @@ export default function PaymentPage() {
   const { t } = useLanguage();
 
   return (
-    <div className="py-16 bg-[#f8f9fa]">
-      <div className="container">
-        {/* 页面标题 */}
-        <div className="relative h-60 rounded-xl overflow-hidden mb-10">
-          <Image
-            src="/images/payment-banner.jpg"
-            alt={t("payment.title")}
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-            <h1 className="text-4xl font-bold text-white">
-              {t("payment.title")}
-            </h1>
+    <main className="min-h-screen bg-[#f8f9fa]">
+      <Header />
+
+      <div className="py-16">
+        <div className="container">
+          {/* 页面标题 */}
+          <div className="relative h-60 rounded-xl overflow-hidden mb-10">
+            <Image
+              src="/images/payment-banner.jpg"
+              alt={t("payment.title")}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+              <h1 className="text-4xl font-bold text-white">
+                {t("payment.title")}
+              </h1>
+            </div>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <Suspense
+              fallback={
+                <div className="text-center py-10">
+                  <div className="animate-spin h-10 w-10 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
+                  <p>{t("payment.loading")}</p>
+                </div>
+              }
+            >
+              <PaymentContent />
+            </Suspense>
           </div>
         </div>
-
-        <div className="max-w-4xl mx-auto">
-          <Suspense
-            fallback={
-              <div className="text-center py-10">
-                <div className="animate-spin h-10 w-10 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
-                <p>{t("payment.loading")}</p>
-              </div>
-            }
-          >
-            <PaymentContent />
-          </Suspense>
-        </div>
       </div>
-    </div>
+
+      <Footer />
+    </main>
   );
 }

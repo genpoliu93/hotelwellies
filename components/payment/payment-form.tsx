@@ -20,6 +20,7 @@ interface PaymentFormProps {
   email: string;
   phone: string;
   country: string;
+  arrivalTime: string;
   specialRequests?: string;
 }
 
@@ -41,6 +42,7 @@ export function PaymentForm({
   email,
   phone,
   country,
+  arrivalTime,
   specialRequests,
 }: PaymentFormProps) {
   const { t, locale } = useLanguage();

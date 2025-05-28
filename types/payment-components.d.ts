@@ -35,6 +35,7 @@ declare module "@/components/payment/payment-form" {
     email: string;
     phone: string;
     country: string;
+    arrivalTime: string;
     specialRequests?: string;
   }
 

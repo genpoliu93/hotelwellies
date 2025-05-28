@@ -155,7 +155,14 @@ export function GuestInfoForm({
           lastName: formData.lastName,
           email: formData.email,
           phone: formData.phone,
+          country: formData.country,
+          arrivalTime: formData.arrivalTime,
         });
+
+        // 如果有特殊要求，也添加到参数中
+        if (formData.specialRequests.trim()) {
+          params.append("specialRequests", formData.specialRequests);
+        }
 
         router.push(`/${locale}/payment?${params.toString()}`);
       }
