@@ -57,15 +57,15 @@ export const zenTextKeysEN = {
   },
   testimonials: {
     quote1:
-      "The Japanese-inspired design creates such a peaceful atmosphere. I felt like I was in a traditional ryokan but with all the modern comforts. The tea ceremony experience was unforgettable!",
+      "It's a fantastic experience in the hotel. Thanksfor Chris 's Pick up at the station.He is ahumorous and romantic guy ,so are the things inthe hotel. everything is so beautiful-the finecollection from an British boy. even if it's rainingyou can explore Weill in the hotel for fun. Musicand food is also great.This is a place where youwant to come back. Everyone l met here is sonice.Thanks again!",
     person1Name: "Emma Thompson",
     person1Location: "London, UK",
     quote2:
-      "Absolutely breathtaking views and impeccable service. The combination of British hospitality and Japanese aesthetics is unique. I particularly enjoyed the morning meditation in the zen garden.",
+      "Istaved for three days and two nights, and theentire trip was incredibly comfortable, From themoment we arrived, the staff welcomed uswarmly, offering refreshments and bicyclerentals. One night, when l got injured, Judykindly helped treat my wound. The next dayafterllost some belongings, Chris graciouslyarranged to have them sent to my next hotelTheir genuine hospitality filled my heart withgratitude for Japan, Karuizawa, and Wellies.",
     person2Name: "Takashi Yamamoto",
     person2Location: "Tokyo, Japan",
     quote3:
-      "We stayed in the Traditional Japanese Room and it exceeded our expectations. The attention to detail in every aspect of the hotel design and service was remarkable.",
+      "an incredible experience. The entire Britishatmosphere including the meals make you feelike you are in a little England. The kindness ancgood humor of the entire team is contagious.felt so good and relaxed. the rooms are supercomfortable and clean, the shower has excellentpressure,The English breakfast is delicious andvery well prepared, next time l will try dinner tooThanks for the Wellies team, see you again",
     person3Name: "Michael Chen",
     person3Location: "San Francisco, USA",
   },
@@ -107,13 +107,13 @@ export const zenTextKeysJA = {
   rooms: {
     description:
       "伝統的な日本の美意識とモダンな快適さを兼ね備えた、丁寧にデザインされた客室です",
-    room1Name: "シングルベッドルーム",
+    room1Name: "デラックス　ダブルルーム",
     room1Description: "庭園を望む本格的な畳の間とミニマルなデザイン",
     room1Price: "¥32,000",
-    room2Name: "ダブルベッドルーム",
+    room2Name: "スタンダードダブルルーム",
     room2Description: "現代的な家具を備えた広々とした洋室",
     room2Price: "¥38,000",
-    room3Name: "ファミリールーム",
+    room3Name: "スタンダード　トリプルルーム",
     room3Description: "和と洋を融合させた最高級の宿泊施設",
     room3Price: "¥45,000",
     feature1: "深い浴槽付きの専用バスルーム",
@@ -124,15 +124,15 @@ export const zenTextKeysJA = {
   },
   testimonials: {
     quote1:
-      "日本風のデザインが非常に心地よい雰囲気を作り出しています。伝統的な旅館にいるような感覚でありながら、現代的な快適さも兼ね備えています。お茶の体験は忘れられない思い出になりました。",
+      "本当に良い体験でした。軽井沢駅でのピックアップに感謝します。彼は面白い人で、ホテルのものも面白いです。ホテルのものはすべて美しい。英国の男のコレクションです。雨でも楽しめるウェリーズで遊びましょう。音楽も食事も素晴らしいです。ここに来たいと思う場所です。ここで会った人はすべて素敵です。またお会いしましょう。",
     person1Name: "エマ・トンプソン",
     person1Location: "イギリス・ロンドン",
     quote2:
-      "息を呑むような景色と完璧なサービス。イギリスのおもてなしと日本の美学の組み合わせは唯一無二です。特に禅庭での朝の瞑想が気に入りました。",
+      "私は3日間2泊しましたが、滞在は非常に快適でした。到着したときから、スタッフは温かいものを提供し、自転車のレンタルを提供してくれました。1日、私が怪我をしたとき、ジュディさんは私の傷を治してくれました。次の日、私が物を失った後、クリスは私の次のホテルに物を送るようにしてくれました。日本、軽井沢、ウェリーズのおもてなしは、私の心に感謝の気持ちを抱かせました。",
     person2Name: "山本 隆",
     person2Location: "日本・東京",
     quote3:
-      "伝統的な和室に宿泊しましたが、期待を上回るものでした。ホテルのデザインとサービスのあらゆる面における細部へのこだわりは素晴らしいものでした。",
+      "信じられないような経験。食事も含め、イギリス全体の雰囲気が、まるで小さなイギリスにいるような気分にさせてくれる。部屋は超快適で清潔、シャワーの水圧は最高、イングリッシュブレックファーストは美味しく、とてもよく準備されている。次回はディナーにも挑戦したいです。ウェリーズチームに感謝します。またお会いしましょう。",
     person3Name: "マイケル・チェン",
     person3Location: "アメリカ・サンフランシスコ",
   },
@@ -141,7 +141,7 @@ export const zenTextKeysJA = {
 export const zenTextKeysZH = {
   about: {
     paragraph1:
-      "Wellies酒店于2013年7月在治愈系山区度假胜地轻井泽开业，作为一个欧式风格的隐秘住所，距离东京乘火车约一小时。我们致力于帮助您创造愉快、友好和轻松的回忆。",
+      "一次非常棒的体验。感谢Chris的接站。他是一个有趣的人，酒店的很多东西都很棒。英国男孩的收藏品。即使下雨，你也可以在Wellies里玩得很开心。音乐和食物也很棒。这是一个你想来的地方。这里遇到的人都很棒。再次感谢。",
     paragraph2:
       "在这里，您可以品尝一杯茶，在酒吧小酌，体验日本中的英国风情。1984年来到日本的英国老板克里斯会用英语和略显特别的日语与您交流。酒店在过去几年进行了时尚翻新，每个房间都像精品酒店一样独特设计。",
   },
@@ -171,7 +171,7 @@ export const zenTextKeysZH = {
   },
   rooms: {
     description: "在我们精心设计的房间中体验传统日式美学与现代舒适",
-    room1Name: "大床房",
+    room1Name: "高级山景房",
     room1Description: "正宗榻榻米房间，极简设计，可欣赏花园景观",
     room1Price: "¥32,000",
     room2Name: "双床房",
@@ -188,15 +188,15 @@ export const zenTextKeysZH = {
   },
   testimonials: {
     quote1:
-      "日式设计营造出如此宁静的氛围。我感觉自己身处传统日式旅馆，同时又享受着所有现代舒适设施。茶道体验令人难忘！",
+      "ホテルでの素晴らしい経験です。クリスが駅まで迎えに来てくれてありがとう。彼はユーモラスでロマンチックな人で、ホテル内の物もそうです。音楽も食事も最高で、また来たくなる場所です。ここで出会った人たちはみんな素敵な人たちばかり！",
     person1Name: "艾玛·汤普森",
     person1Location: "英国伦敦",
     quote2:
-      "绝对令人惊叹的景色和无可挑剔的服务。英国式热情好客与日本美学的结合独一无二。我特别喜欢在禅意花园中的晨间冥想。",
+      "我住了3天2夜，整个旅程非常舒适。从我们到达的那一刻起，工作人员就热情地欢迎我们，提供茶和自行车租赁。有一天，当我受伤时，朱迪帮助治疗了我的伤口。第二天，当我丢失了一些物品时，克里斯非常慷慨地安排将它们送到我的下一个酒店。日本、轻井泽、Wellies的款待让我心存感激。",
     person2Name: "山本隆",
     person2Location: "日本东京",
     quote3:
-      "我们入住了传统日式房间，体验超出了我们的期望。酒店设计和服务各方面的细节关注令人印象深刻。",
+      "难以置信的体验。包括食物在内的整个英国氛围让你感觉就像在小小的英国。整个团队的友好和幽默是传染性的，感觉很好很放松。房间超级舒适和干净，淋浴的水压很好，英国早餐很好吃，准备得很好。下次我想尝试晚餐。感谢Wellies团队，再见。",
     person3Name: "迈克尔·陈",
     person3Location: "美国旧金山",
   },
