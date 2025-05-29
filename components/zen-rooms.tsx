@@ -58,7 +58,7 @@ export function ZenRooms() {
   return (
     <section
       id="rooms"
-      className="py-24 bg-gradient-to-br from-stone-50 via-slate-50 to-stone-100 relative overflow-hidden"
+      className="py-4 bg-gradient-to-br from-stone-50 via-slate-50 to-stone-100 relative overflow-hidden"
     >
       {/* 背景装饰元素 */}
       <div className="absolute inset-0 opacity-5">
@@ -159,63 +159,12 @@ export function ZenRooms() {
                 </div>
 
                 {/* 价格标签 */}
-                <div className="absolute top-6 right-6 bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-sm text-sm font-light opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">
+                {/*    <div className="absolute top-6 right-6 bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-sm text-sm font-light opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">
                   {room.price}
                 </div>
-
+ */}
                 {/* 边框光效 */}
                 <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-lg transition-all duration-500"></div>
-              </div>
-
-              {/* 房间信息 */}
-              <div className="p-6 bg-white space-y-4 relative">
-                {/* 装饰性日语符号 */}
-                <div className="absolute -top-2 -right-2 text-4xl text-stone-100 font-light opacity-50">
-                  {room.japaneseLabel.charAt(0)}
-                </div>
-
-                <div className="flex justify-between items-start">
-                  <h3 className="text-xl font-light text-stone-800 group-hover:text-stone-900 transition-colors duration-300">
-                    {room.name}
-                  </h3>
-                  <div className="text-stone-600 font-light bg-stone-50 px-2 py-1 rounded text-sm">
-                    {room.price}
-                  </div>
-                </div>
-
-                <p className="text-stone-600 font-light leading-relaxed">
-                  {room.description}
-                </p>
-
-                {/* 房间特色 */}
-                <div className="pt-2 space-y-2">
-                  {room.features.map((feature, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center text-sm text-stone-600 transition-all duration-300 hover:text-stone-800"
-                    >
-                      <div className="h-1.5 w-1.5 bg-gradient-to-r from-stone-400 to-stone-500 rounded-full mr-3"></div>
-                      <div>{feature}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* 预订按钮 */}
-                <div className="pt-4">
-                  <Button
-                    variant="outline"
-                    className="border-stone-300 text-stone-700 hover:bg-gradient-to-r hover:from-stone-100 hover:to-stone-200 hover:text-stone-900 font-light w-full transition-all duration-300 group-hover:border-stone-400"
-                    asChild
-                  >
-                    <Link href={`/${locale}/booking?room=${room.id}`}>
-                      {t("common.selectRoom")}
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </Link>
-                  </Button>
-                </div>
-
-                {/* 底部装饰线 */}
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-stone-300 to-stone-400 group-hover:w-16 transition-all duration-500"></div>
               </div>
             </motion.div>
           ))}

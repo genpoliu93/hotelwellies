@@ -129,7 +129,7 @@ export function ZenTestimonials() {
   return (
     <section
       id="testimonials"
-      className="py-24 overflow-hidden bg-gradient-to-br from-stone-50 via-slate-50 to-stone-100 relative"
+      className="py-1 overflow-hidden bg-gradient-to-br from-stone-50 via-slate-50 to-stone-100 relative"
     >
       {/* 背景装饰元素 */}
       <div className="absolute inset-0 opacity-5">
