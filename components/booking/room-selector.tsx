@@ -180,11 +180,11 @@ export function RoomSelector({
                         className="object-cover"
                         onError={() => handleImageError(room.roomCode)}
                       />
-                      {room.availableCount < 3 && (
+                      {/*       {room.availableCount < 3 && (
                         <Badge className="absolute top-3 right-3 bg-orange-500 text-white font-medium px-3 py-1">
                           {t("rooms.almostSoldOut")}
                         </Badge>
-                      )}
+                      )} */}
                     </div>
 
                     <div className="p-6 md:col-span-2">
