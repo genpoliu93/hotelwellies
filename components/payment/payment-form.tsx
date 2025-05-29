@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/lib/i18n/context";
 import { Button } from "@/components/ui/button";
 import { CreditCard, CheckCircle } from "lucide-react";
@@ -63,6 +63,10 @@ export function PaymentForm({
   const [card, setCard] = useState<any>(null);
   const [paymentId, setPaymentId] = useState<string>("");
 
+  // 使用ref来防止重复初始化
+  const isInitializing = useRef(false);
+  const hasInitialized = useRef(false);
+
   // 获取房间名称
   const getRoomName = () => {
     switch (roomId) {
@@ -91,35 +95,60 @@ export function PaymentForm({
 
   // 加载Square JS库
   useEffect(() => {
+    // 如果已经初始化过，直接返回
+    if (hasInitialized.current) {
+      return;
+    }
+
     const loadSquare = async () => {
       setIsLoading(true);
 
       try {
-        if (!document.getElementById("square-script")) {
-          const script = document.createElement("script");
+        // 检查脚本是否存在
+        let script = document.getElementById(
+          "square-script"
+        ) as HTMLScriptElement;
+        const isNewScript = !script;
+
+        if (!script) {
+          // 创建新脚本
+          script = document.createElement("script");
           script.id = "square-script";
           script.src = "https://web.squarecdn.com/v1/square.js";
           script.crossOrigin = "anonymous";
-
-          script.onload = () => {
-            console.log("Square SDK loaded successfully");
-            initializeSquare();
-          };
-
-          script.onerror = (error) => {
-            console.error("Failed to load Square SDK:", error);
-            setIsLoading(false);
-            toast({
-              title: t("payment.loadingError"),
-              description: t("payment.squareLoadError"),
-              variant: "destructive",
-            });
-          };
-
           document.body.appendChild(script);
-        } else {
-          initializeSquare();
         }
+
+        // 等待脚本加载完成
+        await new Promise<void>((resolve, reject) => {
+          if (window.Square) {
+            resolve();
+            return;
+          }
+
+          if (isNewScript) {
+            // 如果是新创建的脚本，监听加载事件
+            script.onload = () => resolve();
+            script.onerror = () =>
+              reject(new Error("Failed to load Square SDK"));
+          } else {
+            // 如果脚本已存在，轮询检查Square对象
+            const checkSquare = () => {
+              if (window.Square) {
+                resolve();
+              } else {
+                setTimeout(checkSquare, 100);
+              }
+            };
+            checkSquare();
+          }
+
+          // 超时处理
+          setTimeout(() => reject(new Error("Square SDK load timeout")), 10000);
+        });
+
+        // 初始化Square
+        await initializeSquare();
       } catch (error) {
         console.error("Failed to load Square Web Payments SDK:", error);
         setIsLoading(false);
@@ -142,18 +171,29 @@ export function PaymentForm({
           console.error("Failed to destroy card instance:", error);
         }
       }
+      // 重置状态
+      isInitializing.current = false;
+      hasInitialized.current = false;
     };
   }, []);
 
   // 初始化Square支付
   const initializeSquare = async () => {
+    // 使用ref进行更强的防护
+    if (isInitializing.current || hasInitialized.current) {
+      console.log("Square initialization already in progress or completed");
+      return;
+    }
+
     if (!window.Square) {
       console.error("Square library not loaded");
       setIsLoading(false);
       return;
     }
 
-    // 等待DOM元素渲染
+    isInitializing.current = true;
+
+    // 等待DOM元素渲染的函数
     const waitForElement = (selector: string, timeout = 5000) => {
       return new Promise<HTMLElement>((resolve, reject) => {
         const element = document.querySelector(selector) as HTMLElement;
@@ -185,11 +225,16 @@ export function PaymentForm({
     };
 
     try {
+      console.log("Starting Square initialization...");
+
       // 先设置loading为false，让DOM元素渲染
       setIsLoading(false);
 
       // 等待card-container元素出现
-      await waitForElement("#card-container");
+      const cardContainer = await waitForElement("#card-container");
+
+      // 清空容器内容
+      cardContainer.innerHTML = "";
 
       // 从环境变量获取Square配置
       const appId =
@@ -199,11 +244,15 @@ export function PaymentForm({
         process.env.NEXT_PUBLIC_SQUARE_LOCATION_ID || "L30PM4WEJ0WAK";
 
       const payments = window.Square.payments(appId, locationId);
-      const card = await payments.card();
+      const newCard = await payments.card();
 
-      await card.attach("#card-container");
-      setCard(card);
+      await newCard.attach("#card-container");
+
+      setCard(newCard);
       setSquareInitialized(true);
+      hasInitialized.current = true;
+
+      console.log("Square initialized successfully");
     } catch (error) {
       console.error("Failed to initialize Square:", error);
       setIsLoading(false);
@@ -212,6 +261,8 @@ export function PaymentForm({
         description: t("payment.squareLoadError"),
         variant: "destructive",
       });
+    } finally {
+      isInitializing.current = false;
     }
   };
 
