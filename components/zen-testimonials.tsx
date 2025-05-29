@@ -16,7 +16,7 @@ export function ZenTestimonials() {
   const testimonials = [
     {
       id: 1,
-      image: "/images/lobby.webp", // 使用场景图片而不是头像
+      image: "/images/lobby.jpg", // 使用场景图片而不是头像
       name: t("testimonials.person1Name"),
       location: t("testimonials.person1Location"),
       quote: t("testimonials.quote1"),
@@ -26,7 +26,7 @@ export function ZenTestimonials() {
     },
     {
       id: 2,
-      image: "/images/lounge.webp",
+      image: "/images/lounge.jpg",
       name: t("testimonials.person2Name"),
       location: t("testimonials.person2Location"),
       quote: t("testimonials.quote2"),
@@ -36,7 +36,7 @@ export function ZenTestimonials() {
     },
     {
       id: 3,
-      image: "/images/entrance.webp",
+      image: "/images/entrance.jpg",
       name: t("testimonials.person3Name"),
       location: t("testimonials.person3Location"),
       quote: t("testimonials.quote3"),

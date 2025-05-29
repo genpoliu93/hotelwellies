@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Facebook, Instagram, Twitter } from "lucide-react"
-import { useLanguage } from "@/lib/i18n/context"
+import Link from "next/link";
+import { Facebook, Instagram, Twitter } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/context";
 
 export function Footer() {
-  const { t } = useLanguage()
+  const { t } = useLanguage();
 
   return (
     <footer className="bg-muted py-12">
@@ -13,17 +13,28 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Hotel Wellies</h3>
-            <p className="text-sm text-muted-foreground">{t("footer.description")}</p>
+            <p className="text-sm text-muted-foreground">
+              {t("footer.description")}
+            </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-muted-foreground hover:text-primary">
+              <Link
+                href="#"
+                className="text-muted-foreground hover:text-primary"
+              >
                 <Facebook className="h-5 w-5" />
                 <span className="sr-only">Facebook</span>
               </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary">
+              <Link
+                href="#"
+                className="text-muted-foreground hover:text-primary"
+              >
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
               </Link>
-              <Link href="#" className="text-muted-foreground hover:text-primary">
+              <Link
+                href="#"
+                className="text-muted-foreground hover:text-primary"
+              >
                 <Twitter className="h-5 w-5" />
                 <span className="sr-only">Twitter</span>
               </Link>
@@ -34,27 +45,42 @@ export function Footer() {
             <h3 className="text-lg font-semibold">{t("footer.quickLinks")}</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/" className="text-muted-foreground hover:text-primary">
+                <Link
+                  href="/"
+                  className="text-muted-foreground hover:text-primary"
+                >
                   {t("common.home")}
                 </Link>
               </li>
               <li>
-                <Link href="#rooms" className="text-muted-foreground hover:text-primary">
+                <Link
+                  href="#rooms"
+                  className="text-muted-foreground hover:text-primary"
+                >
                   {t("common.rooms")}
                 </Link>
               </li>
               <li>
-                <Link href="#features" className="text-muted-foreground hover:text-primary">
+                <Link
+                  href="#features"
+                  className="text-muted-foreground hover:text-primary"
+                >
                   {t("common.features")}
                 </Link>
               </li>
               <li>
-                <Link href="#gallery" className="text-muted-foreground hover:text-primary">
+                <Link
+                  href="#gallery"
+                  className="text-muted-foreground hover:text-primary"
+                >
                   {t("common.gallery")}
                 </Link>
               </li>
               <li>
-                <Link href="#contact" className="text-muted-foreground hover:text-primary">
+                <Link
+                  href="#contact"
+                  className="text-muted-foreground hover:text-primary"
+                >
                   {t("common.contact")}
                 </Link>
               </li>
@@ -65,31 +91,45 @@ export function Footer() {
             <h3 className="text-lg font-semibold">{t("footer.policies")}</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
+                <Link
+                  href="#"
+                  className="text-muted-foreground hover:text-primary"
+                >
                   {t("footer.bookingPolicy")}
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
+                <Link
+                  href="#"
+                  className="text-muted-foreground hover:text-primary"
+                >
                   {t("footer.cancellationPolicy")}
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
+                <Link
+                  href="#"
+                  className="text-muted-foreground hover:text-primary"
+                >
                   {t("footer.privacyPolicy")}
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-primary">
+                <Link
+                  href="#"
+                  className="text-muted-foreground hover:text-primary"
+                >
                   {t("footer.faq")}
                 </Link>
               </li>
             </ul>
           </div>
 
-          <div className="space-y-4">
+          {/*      <div className="space-y-4">
             <h3 className="text-lg font-semibold">{t("footer.newsletter")}</h3>
-            <p className="text-sm text-muted-foreground">{t("footer.newsletterDesc")}</p>
+            <p className="text-sm text-muted-foreground">
+              {t("footer.newsletterDesc")}
+            </p>
             <form className="flex space-x-2">
               <input
                 type="email"
@@ -101,15 +141,16 @@ export function Footer() {
                 {t("common.subscribe")}
               </button>
             </form>
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
           <p>
-            © {new Date().getFullYear()} Hotel Wellies. {t("footer.allRightsReserved")}
+            © {new Date().getFullYear()} Hotel Wellies.{" "}
+            {t("footer.allRightsReserved")}
           </p>
         </div>
       </div>
     </footer>
-  )
+  );
 }
