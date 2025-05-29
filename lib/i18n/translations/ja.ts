@@ -130,7 +130,7 @@ export const ja = {
     hours: "9:00 - 19:00",
     address: "住所: 〒389-0111長野県北佐久郡軽井沢町長倉2350-160 ",
     getInTouch: "お問い合わせ",
-    phone: "電話 0265-82-1111",
+    phone: "電話 +81-265-82-1111",
     email: "メール:chris@hotelwellies.jp",
     frontDeskHours: "フロント営業時間",
     sendMessage: "メッセージを送信",

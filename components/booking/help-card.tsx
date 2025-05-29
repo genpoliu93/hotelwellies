@@ -34,10 +34,10 @@ export function HelpCard() {
             <div>
               <p className="text-sm text-gray-500">{t("contact.phone")}</p>
               <a
-                href="tel:+81-267-46-1670"
+                href="tel:+81-265-82-1111"
                 className="font-medium text-gray-800 hover:text-primary"
               >
-                +81-267-46-1670
+                +81-265-82-1111
               </a>
             </div>
           </div>
@@ -49,10 +49,10 @@ export function HelpCard() {
             <div>
               <p className="text-sm text-gray-500">{t("contact.email")}</p>
               <a
-                href="mailto:info@hotelwellies.jp"
+                href="mailto:chris@hotelwellies.jp"
                 className="font-medium text-gray-800 hover:text-primary"
               >
-                info@hotelwellies.jp
+                chris@hotelwellies.jp
               </a>
             </div>
           </div>
