@@ -20,6 +20,9 @@ export const zh = {
     title: "清新舒适的度假体验",
     subtitle:
       "在Hotel Wellies，我们提供宁静、舒适的住宿环境，让您远离喧嚣，享受宁静。",
+    cardTitle1: "自然",
+    cardTitle2: "和谐",
+    cardTitle3: "宁静",
     convenientLocation: "便捷位置",
     convenientLocationDesc: "位于轻井泽，从东京乘火车仅需一小时。",
     comfortableRooms: "舒适客房",

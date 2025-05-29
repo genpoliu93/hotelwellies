@@ -1,17 +1,34 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { CalendarIcon } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
-import Link from "next/link";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
+import { CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+
+// 轮播图片配置
+const carouselImages = [
+  {
+    src: "/images/hotel-exterior.webp",
+    alt: "Hotel Wellies in Karuizawa",
+  },
+  {
+    src: "/images/hero2.jpg",
+    alt: "Hotel Wellies Interior",
+  },
+];
 
 // 定义卡片属性类型
 type InfoCardProps = {
-  titleKey: string; // Will be direct Japanese text
-  descKey: string; // Will be translation key
+  titleKey: string; // 翻译键
+  descKey: string; // 翻译键
   // Removed initialDelay as animation is now parent-controlled for scroll effect
 };
 
@@ -30,7 +47,7 @@ const InfoCard = ({ titleKey, descKey }: InfoCardProps) => {
         className="h-full flex flex-col justify-around items-center text-center"
       >
         <h3 className="text-white text-lg md:text-xl font-light writing-vertical">
-          {titleKey}
+          {t(titleKey)}
         </h3>
         <hr className="w-1/2 border-white/30 my-2" />
         <p
@@ -47,9 +64,35 @@ const InfoCard = ({ titleKey, descKey }: InfoCardProps) => {
 export function ZenHero() {
   const { t, locale } = useLanguage();
   const { scrollY } = useScroll();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const backgroundScale = useTransform(scrollY, [0, 800], [1, 1.15]);
   const backgroundBrightness = useTransform(scrollY, [0, 400], [0.85, 0.7]);
+
+  // 自动轮播
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % carouselImages.length);
+    }, 5000); // 每5秒切换一次
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // 手动切换到指定图片
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  // 上一张/下一张
+  const goToPrevious = () => {
+    setCurrentIndex(
+      (prev) => (prev - 1 + carouselImages.length) % carouselImages.length
+    );
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % carouselImages.length);
+  };
 
   // Helper for card animation properties
   const cardAnimationProps = (delay: number) => ({
@@ -64,7 +107,7 @@ export function ZenHero() {
       className="relative h-screen overflow-hidden flex flex-col"
       id="hero"
     >
-      {/* 背景图片 - 占据整个区域 */}
+      {/* 轮播背景图片 */}
       <motion.div
         className="absolute inset-0 z-0"
         style={{
@@ -75,15 +118,60 @@ export function ZenHero() {
           ),
         }}
       >
-        <Image
-          src="/images/hotel-exterior.webp"
-          alt="Hotel Wellies in Karuizawa"
-          fill
-          priority
-          className="object-cover"
-        />
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={carouselImages[currentIndex].src}
+              alt={carouselImages[currentIndex].alt}
+              fill
+              priority
+              className="object-cover"
+            />
+          </motion.div>
+        </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/25 to-transparent" />
       </motion.div>
+
+      {/* 轮播控制按钮 */}
+      <div className="absolute top-1/2 left-4 z-30 transform -translate-y-1/2">
+        <button
+          onClick={goToPrevious}
+          className="p-2 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm border border-white/20 text-white transition-all duration-200"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+      </div>
+
+      <div className="absolute top-1/2 right-4 z-30 transform -translate-y-1/2">
+        <button
+          onClick={goToNext}
+          className="p-2 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm border border-white/20 text-white transition-all duration-200"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
+      </div>
+
+      {/* 轮播指示器 */}
+      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
+        {carouselImages.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              index === currentIndex
+                ? "bg-white"
+                : "bg-white/40 hover:bg-white/60"
+            }`}
+          />
+        ))}
+      </div>
 
       {/* 主要内容容器 - 占据剩余空间，并让内容垂直居中, 分为左右两栏 */}
       <div className="relative z-10 flex-grow flex items-stretch justify-between container px-6 md:px-10 py-10 md:py-16">
@@ -154,7 +242,7 @@ export function ZenHero() {
         <motion.div className="flex flex-row space-x-4 md:space-x-5 items-end justify-center relative z-20">
           <motion.div {...cardAnimationProps(0.7)}>
             <InfoCard
-              titleKey="自然" // Direct Japanese text
+              titleKey="hero.cardTitle1"
               descKey="hero.convenientLocationDesc"
             />
           </motion.div>
@@ -162,13 +250,13 @@ export function ZenHero() {
             {" "}
             {/* Middle card higher */}
             <InfoCard
-              titleKey="調和" // Direct Japanese text
+              titleKey="hero.cardTitle2"
               descKey="hero.comfortableRoomsDesc"
             />
           </motion.div>
           <motion.div {...cardAnimationProps(1.0)}>
             <InfoCard
-              titleKey="寧静" // Direct Japanese text
+              titleKey="hero.cardTitle3"
               descKey="hero.attentiveServiceDesc"
             />
           </motion.div>

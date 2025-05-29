@@ -73,7 +73,7 @@ export function ZenAbout() {
               {/* 次要图片 */}
               <div className="col-span-4 relative self-end h-[300px]">
                 <Image
-                  src="/images/garden-detail.webp"
+                  src="/images/garden-detail.jpg"
                   alt="Hotel Wellies garden detail"
                   className="object-cover rounded-sm"
                   fill

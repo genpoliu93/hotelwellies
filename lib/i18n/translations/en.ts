@@ -21,6 +21,9 @@ export const en = {
     title: "Comfortable and Relaxing Stay",
     subtitle:
       "At Hotel Wellies, we provide a peaceful and comfortable accommodation environment, away from the hustle and bustle.",
+    cardTitle1: "Nature",
+    cardTitle2: "Harmony",
+    cardTitle3: "Serenity",
     convenientLocation: "Convenient Location",
     convenientLocationDesc:
       "Located in Karuizawa, just an hour from Tokyo by train.",

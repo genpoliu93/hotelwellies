@@ -20,6 +20,9 @@ export const ja = {
     title: "心地よい滞在体験",
     subtitle:
       "ホテルウェリーズでは、喧騒から離れた静かで快適な宿泊環境を提供しています。",
+    cardTitle1: "自然",
+    cardTitle2: "調和",
+    cardTitle3: "寧静",
     convenientLocation: "便利なロケーション",
     convenientLocationDesc: "東京から電車で約1時間の軽井沢に位置しています。",
     comfortableRooms: "快適な客室",
