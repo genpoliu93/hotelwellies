@@ -87,7 +87,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             <h3 className="text-lg font-semibold">{t("footer.policies")}</h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -123,7 +123,7 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/*      <div className="space-y-4">
             <h3 className="text-lg font-semibold">{t("footer.newsletter")}</h3>
