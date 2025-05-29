@@ -37,15 +37,15 @@ export const zenTextKeysEN = {
   rooms: {
     description:
       "Experience traditional Japanese aesthetics with modern comfort in our carefully designed rooms",
-    room1Name: "Traditional Japanese Room",
+    room1Name: "Single Bed Room",
     room1Description:
       "Authentic tatami room with minimalist design and garden view",
     room1Price: "¥32,000",
-    room2Name: "Modern Western Suite",
+    room2Name: "Double Bed Room",
     room2Description:
       "Spacious western-style room with contemporary furnishings",
     room2Price: "¥38,000",
-    room3Name: "Premium Zen Suite",
+    room3Name: "Family Room",
     room3Description:
       "Our finest accommodation combining Japanese and Western elements",
     room3Price: "¥45,000",
@@ -107,13 +107,13 @@ export const zenTextKeysJA = {
   rooms: {
     description:
       "伝統的な日本の美意識とモダンな快適さを兼ね備えた、丁寧にデザインされた客室です",
-    room1Name: "和室",
+    room1Name: "シングルベッドルーム",
     room1Description: "庭園を望む本格的な畳の間とミニマルなデザイン",
     room1Price: "¥32,000",
-    room2Name: "モダン洋室スイート",
+    room2Name: "ダブルベッドルーム",
     room2Description: "現代的な家具を備えた広々とした洋室",
     room2Price: "¥38,000",
-    room3Name: "プレミアム禅スイート",
+    room3Name: "ファミリールーム",
     room3Description: "和と洋を融合させた最高級の宿泊施設",
     room3Price: "¥45,000",
     feature1: "深い浴槽付きの専用バスルーム",
@@ -171,13 +171,13 @@ export const zenTextKeysZH = {
   },
   rooms: {
     description: "在我们精心设计的房间中体验传统日式美学与现代舒适",
-    room1Name: "传统日式房间",
+    room1Name: "大床房",
     room1Description: "正宗榻榻米房间，极简设计，可欣赏花园景观",
     room1Price: "¥32,000",
-    room2Name: "现代西式套房",
+    room2Name: "双床房",
     room2Description: "宽敞的西式房间，配有现代家具",
     room2Price: "¥38,000",
-    room3Name: "高级禅意套房",
+    room3Name: "家庭套房",
     room3Description: "我们最优质的住宿，结合日式和西式元素",
     room3Price: "¥45,000",
     feature1: "带深浸泡浴缸的私人浴室",
