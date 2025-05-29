@@ -9,6 +9,12 @@ import { LocationMap } from "@/components/location-map";
 export function ZenContact() {
   const { t } = useLanguage();
 
+  const handleContactClick = () => {
+    const subject = encodeURIComponent(t("contact.defaultSubject"));
+    const mailtoLink = `mailto:chrisprice@hotelwellies.jp?subject=${subject}`;
+    window.location.href = mailtoLink;
+  };
+
   return (
     <section id="contact" className="py-24 bg-stone-100">
       <div className="container">
@@ -115,6 +121,7 @@ export function ZenContact() {
               <Button
                 className="bg-stone-800 hover:bg-stone-700 text-white font-light"
                 size="lg"
+                onClick={handleContactClick}
               >
                 {t("contact.getInTouch")}
               </Button>
