@@ -243,12 +243,23 @@ export function RoomSelector({
                             <div className="text-2xl font-bold text-gray-900">
                               {formatPrice(calculatePricePerNight(room.price))}
                               <span className="text-sm font-normal text-gray-500 ml-1">
-                                / {t("rooms.perNight")}
+                                {t("rooms.perNight")}
                               </span>
                             </div>
-                            <div className="text-sm text-gray-600 mt-1">
-                              {t("booking.totalForStay")}:{" "}
-                              {formatPrice(room.price)}
+                            <div className="mt-2 text-right">
+                              <div className="text-xs text-gray-500 mb-1">
+                                {nights}{" "}
+                                {nights === 1
+                                  ? t("booking.night")
+                                  : t("booking.nights")}{" "}
+                                × {adults} {t("booking.adults")}
+                                {children > 0 &&
+                                  `, ${children} ${t("booking.children")}`}
+                              </div>
+                              <div className="text-base font-semibold text-gray-900">
+                                {t("booking.totalForStay")}:{" "}
+                                {formatPrice(room.price)}
+                              </div>
                             </div>
                           </div>
 
