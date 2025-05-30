@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# 站点地图位置
+Sitemap: https://hotel-wellies.com/sitemap.xml
+
+# 禁止访问的目录（如果有）
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/ 
