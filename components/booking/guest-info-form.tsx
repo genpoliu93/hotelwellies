@@ -28,6 +28,7 @@ interface GuestInfoFormProps {
   roomPrice?: number;
   adults?: number;
   children?: number;
+  selectedPackageCode?: string;
 }
 
 export interface GuestFormData {
@@ -50,6 +51,7 @@ export function GuestInfoForm({
   roomPrice,
   adults,
   children,
+  selectedPackageCode,
 }: GuestInfoFormProps) {
   const { t, locale } = useLanguage();
   const router = (Navigation as any).useRouter();

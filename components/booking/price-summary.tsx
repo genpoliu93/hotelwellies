@@ -9,10 +9,11 @@ import { ja, enUS, zhCN } from "date-fns/locale";
 interface PriceSummaryProps {
   checkInDate: Date | undefined;
   checkOutDate: Date | undefined;
-  roomPrice: number; // API返回的总价
+  roomPrice: number; // 选中套餐的总价
   roomId: string | null;
   adults: number;
   children: number;
+  selectedPackageCode?: string; // 新增：选中的套餐代码
 }
 
 export function PriceSummary({
@@ -22,6 +23,7 @@ export function PriceSummary({
   roomId,
   adults,
   children,
+  selectedPackageCode = "ROOM_ONLY",
 }: PriceSummaryProps) {
   const { t, locale } = useLanguage();
 

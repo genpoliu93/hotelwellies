@@ -8,6 +8,16 @@ export interface ApiResponse<T> {
   data: T;
 }
 
+// 套餐信息接口
+export interface Package {
+  packageCode: string;
+  packageName: string;
+  totalPrice: number;
+  averageNightlyPrice: number;
+  adjustmentType: string;
+  adjustmentValue: number;
+}
+
 // 房间信息接口
 export interface Room {
   roomCode: string;
@@ -16,6 +26,10 @@ export interface Room {
   category: string;
   price: number;
   discountPrice: number | null;
+  originalPrice: number;
+  nightsCount: number;
+  totalOccupants: number;
+  pricePerPersonPerNight: number;
   maxOccupancy: number;
   maxChildren: number;
   size: number;
@@ -26,6 +40,7 @@ export interface Room {
   images: string[];
   isAvailable: boolean;
   availableCount: number;
+  packages: Package[];
 }
 
 // 房间查询结果接口

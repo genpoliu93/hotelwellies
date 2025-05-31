@@ -22,14 +22,20 @@ import { useLanguage } from "@/lib/i18n/context";
 import { motion } from "framer-motion";
 import { useApi } from "@/hooks/use-api";
 import { fetchAvailableRooms, type Room } from "@/lib/api";
+import { PackageSelector } from "./package-selector";
 
 interface RoomSelectorProps {
   checkInDate: Date | undefined;
   checkOutDate: Date | undefined;
   adults: number;
   children: number;
-  onRoomSelect: (roomId: string, price: number) => void;
+  onRoomAndPackageSelect: (
+    roomId: string,
+    packageCode: string,
+    price: number
+  ) => void;
   selectedRoomId: string | null;
+  selectedPackageCode: string;
 }
 
 export function RoomSelector({
@@ -37,12 +43,16 @@ export function RoomSelector({
   checkOutDate,
   adults,
   children,
-  onRoomSelect,
+  onRoomAndPackageSelect,
   selectedRoomId,
+  selectedPackageCode,
 }: RoomSelectorProps) {
   const { t, locale } = useLanguage();
   const [expandedRoomId, setExpandedRoomId] = useState<string | null>(null);
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
+  const [roomPackageSelections, setRoomPackageSelections] = useState<
+    Record<string, string>
+  >({});
 
   // 计算住宿天数
   const calculateNights = () => {
@@ -72,10 +82,36 @@ export function RoomSelector({
     ).format(price);
   };
 
-  // 计算每晚单价（API返回的是总价，需要除以住宿天数和人数得到单价）
-  const calculatePricePerNight = (totalPrice: number) => {
-    if (nights <= 0 || totalGuests <= 0) return 0;
-    return Math.round(totalPrice / nights / totalGuests);
+  // 获取房间当前选中的套餐
+  const getRoomSelectedPackage = (room: Room) => {
+    const selectedPackageCode =
+      roomPackageSelections[room.roomType] || "ROOM_ONLY";
+    return (
+      room.packages.find((pkg) => pkg.packageCode === selectedPackageCode) ||
+      room.packages[0]
+    );
+  };
+
+  // 处理套餐选择
+  const handlePackageSelect = (
+    roomType: string,
+    packageCode: string,
+    totalPrice: number
+  ) => {
+    setRoomPackageSelections((prev) => ({
+      ...prev,
+      [roomType]: packageCode,
+    }));
+  };
+
+  // 处理房间选择
+  const handleRoomSelect = (room: Room) => {
+    const selectedPackage = getRoomSelectedPackage(room);
+    onRoomAndPackageSelect(
+      room.roomType,
+      selectedPackage.packageCode,
+      selectedPackage.totalPrice
+    );
   };
 
   // 检查房间是否可用（基于客人数量）
@@ -133,26 +169,26 @@ export function RoomSelector({
   };
 
   return (
-    <div className="space-y-6">
-      <h3 className="text-xl font-semibold text-gray-800">
+    <div className="space-y-4">
+      <h3 className="text-lg font-semibold text-gray-800">
         {t("booking.availableRooms")}
       </h3>
 
       {nights > 0 ? (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {isLoading && (
-            <div className="flex items-center justify-center p-10">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              <span className="ml-2 text-gray-600">
+            <div className="flex items-center justify-center p-8">
+              <Loader2 className="h-6 w-6 animate-spin text-primary" />
+              <span className="ml-2 text-gray-600 text-sm">
                 {t("booking.loadingRooms")}
               </span>
             </div>
           )}
 
           {error && (
-            <div className="bg-red-50 text-red-600 p-4 rounded-lg">
-              <p>{t("booking.errorLoadingRooms")}</p>
-              <p className="text-sm mt-1">{error.message}</p>
+            <div className="bg-red-50 text-red-600 p-3 rounded-lg">
+              <p className="text-sm">{t("booking.errorLoadingRooms")}</p>
+              <p className="text-xs mt-1">{error.message}</p>
             </div>
           )}
 
@@ -165,89 +201,190 @@ export function RoomSelector({
                 transition={{ duration: 0.4, delay: index * 0.1 }}
               >
                 <div
-                  className={`bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border ${
+                  className={`bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 border ${
                     selectedRoomId === room.roomType
-                      ? "border-primary ring-1 ring-primary"
-                      : "border-gray-100"
+                      ? "border-primary shadow-primary/10"
+                      : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-                    <div className="relative h-60 md:h-full">
-                      <Image
-                        src={getImageSrc(room)}
-                        alt={room.roomName}
-                        fill
-                        className="object-cover"
-                        onError={() => handleImageError(room.roomCode)}
-                      />
-                      {/*       {room.availableCount < 3 && (
-                        <Badge className="absolute top-3 right-3 bg-orange-500 text-white font-medium px-3 py-1">
-                          {t("rooms.almostSoldOut")}
-                        </Badge>
-                      )} */}
+                  {/* 房间图片区域 - 缩小高度 */}
+                  <div className="relative h-48 overflow-hidden">
+                    <Image
+                      src={getImageSrc(room)}
+                      alt={room.roomName}
+                      fill
+                      className="object-cover transition-transform duration-300 hover:scale-105"
+                      onError={() => handleImageError(room.roomCode)}
+                    />
+
+                    {/* 房间状态标签 */}
+                    <div className="absolute top-3 left-3">
+                      <Badge className="bg-black/70 text-white border-0 backdrop-blur-sm text-xs px-2 py-1">
+                        {room.availableCount} {t("booking.available")}
+                      </Badge>
                     </div>
 
-                    <div className="p-6 md:col-span-2">
-                      <div className="flex flex-col md:flex-row justify-between gap-6">
-                        <div className="flex-1">
-                          <h4 className="text-xl font-semibold text-gray-800">
+                    {/* 选中状态指示器 */}
+                    {selectedRoomId === room.roomType && (
+                      <div className="absolute top-3 right-3">
+                        <div className="bg-primary text-white rounded-full p-1.5 shadow-lg">
+                          <Check className="h-4 w-4" />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* 渐变遮罩 */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                  </div>
+
+                  {/* 房间信息区域 - 缩小padding */}
+                  <div className="p-4">
+                    {/* 房间标题和基本信息 */}
+                    <div className="mb-4">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-lg font-bold text-gray-900 mb-1 truncate">
                             {room.roomName}
-                          </h4>
-                          <p className="text-gray-600 mt-2">{room.roomType}</p>
-
-                          <div className="flex items-center gap-2 mt-4">
-                            <Badge
-                              variant="outline"
-                              className="text-xs border-gray-200 text-gray-700 font-normal px-2"
-                            >
-                              {t("booking.maxCapacity")}: {room.maxOccupancy}{" "}
-                              {t("booking.adults")}, {room.maxChildren}{" "}
-                              {t("booking.children")}
-                            </Badge>
-
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="h-6 px-2 text-xs text-primary hover:text-primary/80 hover:bg-primary/5"
-                              onClick={() => toggleRoomDetails(room.roomType)}
-                            >
-                              {expandedRoomId === room.roomType
-                                ? t("booking.hideDetails")
-                                : t("booking.showDetails")}
-                            </Button>
-                          </div>
-
-                          {expandedRoomId === room.roomType && (
-                            <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2">
-                              {mapAmenities(room.amenities).map(
-                                (amenity, index) => (
-                                  <div
-                                    key={index}
-                                    className="flex items-center gap-2 text-gray-700"
-                                  >
-                                    <span className="text-primary">
-                                      {amenity.icon}
-                                    </span>
-                                    <span className="text-sm">
-                                      {amenity.label}
-                                    </span>
-                                  </div>
-                                )
-                              )}
-                            </div>
-                          )}
+                          </h3>
+                          <p className="text-sm text-gray-600 truncate">
+                            {room.roomType}
+                          </p>
                         </div>
 
-                        <div className="flex flex-col items-end justify-between">
-                          <div className="text-right">
-                            <div className="text-2xl font-bold text-gray-900">
-                              {formatPrice(calculatePricePerNight(room.price))}
-                              <span className="text-sm font-normal text-gray-500 ml-1">
-                                {t("rooms.perNight")}
-                              </span>
+                        {(() => {
+                          const selectedPackage = getRoomSelectedPackage(room);
+                          return (
+                            <div className="text-right ml-3">
+                              <div className="text-xl font-bold text-primary">
+                                {formatPrice(
+                                  selectedPackage.averageNightlyPrice
+                                )}
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                / {t("booking.night")}
+                              </div>
                             </div>
-                            <div className="mt-2 text-right">
-                              <div className="text-xs text-gray-500 mb-1">
+                          );
+                        })()}
+                      </div>
+
+                      {/* 房间容量信息 - 更紧凑 */}
+                      <div className="flex flex-wrap items-center gap-2 mb-3">
+                        <div className="flex items-center gap-1.5 bg-gray-50 rounded-full px-2.5 py-1">
+                          <svg
+                            className="h-3.5 w-3.5 text-gray-600"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          <span className="text-xs text-gray-700">
+                            {room.maxOccupancy} {t("booking.adults")}
+                          </span>
+                        </div>
+
+                        {room.maxChildren > 0 && (
+                          <div className="flex items-center gap-1.5 bg-gray-50 rounded-full px-2.5 py-1">
+                            <svg
+                              className="h-3.5 w-3.5 text-gray-600"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM18 10a2 2 0 11-4 0 2 2 0 014 0zM10 12a2 2 0 100-4 2 2 0 000 4z" />
+                            </svg>
+                            <span className="text-xs text-gray-700">
+                              {room.maxChildren} {t("booking.children")}
+                            </span>
+                          </div>
+                        )}
+
+                        <div className="flex items-center gap-1.5 bg-gray-50 rounded-full px-2.5 py-1">
+                          <svg
+                            className="h-3.5 w-3.5 text-gray-600"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.84L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.84l-7-3z" />
+                          </svg>
+                          <span className="text-xs text-gray-700">
+                            {room.size} {room.sizeUnit}
+                          </span>
+                        </div>
+
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 text-xs text-primary hover:text-primary/80 hover:bg-primary/10 rounded-full px-2"
+                          onClick={() => toggleRoomDetails(room.roomType)}
+                        >
+                          {expandedRoomId === room.roomType
+                            ? t("booking.hideDetails")
+                            : t("booking.showDetails")}
+                        </Button>
+                      </div>
+
+                      {/* 房间设施 - 可展开，更紧凑 */}
+                      {expandedRoomId === room.roomType && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="mb-4 p-3 bg-gray-50 rounded-lg"
+                        >
+                          <h5 className="font-medium text-gray-800 mb-2 text-sm">
+                            {t("booking.amenities")}
+                          </h5>
+                          <div className="grid grid-cols-2 gap-2">
+                            {mapAmenities(room.amenities).map(
+                              (amenity, idx) => (
+                                <div
+                                  key={idx}
+                                  className="flex items-center gap-1.5"
+                                >
+                                  <span className="text-primary">
+                                    {amenity.icon}
+                                  </span>
+                                  <span className="text-xs text-gray-700">
+                                    {amenity.label}
+                                  </span>
+                                </div>
+                              )
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+                    </div>
+
+                    {/* 套餐选择区域 */}
+                    <div className="mb-4">
+                      <PackageSelector
+                        packages={room.packages}
+                        selectedPackageCode={
+                          roomPackageSelections[room.roomType] || "ROOM_ONLY"
+                        }
+                        onPackageSelect={(packageCode, totalPrice) =>
+                          handlePackageSelect(
+                            room.roomType,
+                            packageCode,
+                            totalPrice
+                          )
+                        }
+                        nights={nights}
+                      />
+                    </div>
+
+                    {/* 价格汇总和选择按钮 - 更紧凑 */}
+                    <div className="border-t pt-4">
+                      {(() => {
+                        const selectedPackage = getRoomSelectedPackage(room);
+                        return (
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-xs text-gray-600 mb-1">
                                 {nights}{" "}
                                 {nights === 1
                                   ? t("booking.night")
@@ -256,59 +393,52 @@ export function RoomSelector({
                                 {children > 0 &&
                                   `, ${children} ${t("booking.children")}`}
                               </div>
-                              <div className="text-base font-semibold text-gray-900">
+                              <div className="text-lg font-bold text-gray-900">
                                 {t("booking.totalForStay")}:{" "}
-                                {formatPrice(room.price)}
+                                {formatPrice(selectedPackage.totalPrice)}
                               </div>
                             </div>
-                          </div>
 
-                          <div className="mt-6">
                             <Button
-                              onClick={() =>
-                                onRoomSelect(room.roomType, room.price)
-                              }
-                              variant={
+                              onClick={() => handleRoomSelect(room)}
+                              size="default"
+                              className={`px-6 py-2 rounded-lg font-medium transition-all duration-200 ${
                                 selectedRoomId === room.roomType
-                                  ? "default"
-                                  : "outline"
-                              }
-                              className={`px-6 ${
-                                selectedRoomId === room.roomType
-                                  ? "bg-primary hover:bg-primary/90 text-white gap-2"
-                                  : "border-gray-200 hover:bg-gray-50 text-gray-800"
+                                  ? "bg-primary hover:bg-primary/90 text-white shadow-md shadow-primary/20"
+                                  : "bg-white border border-primary text-primary hover:bg-primary hover:text-white"
                               }`}
-                              size="lg"
                             >
-                              {selectedRoomId === room.roomType && (
-                                <Check className="h-4 w-4" />
+                              {selectedRoomId === room.roomType ? (
+                                <div className="flex items-center gap-1.5">
+                                  <Check className="h-4 w-4" />
+                                  {t("booking.selected")}
+                                </div>
+                              ) : (
+                                t("booking.selectRoom")
                               )}
-                              {selectedRoomId === room.roomType
-                                ? t("booking.selected")
-                                : t("booking.selectRoom")}
                             </Button>
                           </div>
-                        </div>
-                      </div>
+                        );
+                      })()}
                     </div>
                   </div>
                 </div>
               </motion.div>
             ))
           ) : !isLoading && !error ? (
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-              <div className="flex items-center gap-3 text-gray-600">
-                <Info className="h-5 w-5 text-yellow-500" />
-                <p>{t("booking.noRoomsAvailable")}</p>
+            <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+              <div className="flex items-center gap-2 text-gray-600">
+                <Info className="h-4 w-4 text-yellow-500" />
+                <p className="text-sm">{t("booking.noRoomsAvailable")}</p>
               </div>
             </div>
           ) : null}
         </div>
       ) : (
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-          <div className="flex items-center gap-3 text-gray-600">
-            <Info className="h-5 w-5 text-primary" />
-            <p>{t("booking.selectDatesToSeeRooms")}</p>
+        <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+          <div className="flex items-center gap-2 text-gray-600">
+            <Info className="h-4 w-4 text-primary" />
+            <p className="text-sm">{t("booking.selectDatesToSeeRooms")}</p>
           </div>
         </div>
       )}

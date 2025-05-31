@@ -21,7 +21,9 @@ export function BookingForm() {
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
-  const [roomPrice, setRoomPrice] = useState(0); // API返回的总价
+  const [selectedPackageCode, setSelectedPackageCode] =
+    useState<string>("ROOM_ONLY");
+  const [roomPrice, setRoomPrice] = useState(0); // 选中套餐的总价
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 计算住宿天数
@@ -33,9 +35,14 @@ export function BookingForm() {
 
   const nights = calculateNights();
 
-  // 处理房间选择，price是API返回的总价
-  const handleRoomSelect = (roomId: string, price: number) => {
+  // 处理房间和套餐选择
+  const handleRoomAndPackageSelect = (
+    roomId: string,
+    packageCode: string,
+    price: number
+  ) => {
     setSelectedRoomId(roomId);
+    setSelectedPackageCode(packageCode);
     setRoomPrice(price);
 
     if (currentStep === 1) {
@@ -65,6 +72,7 @@ export function BookingForm() {
       setAdults(2);
       setChildren(0);
       setSelectedRoomId(null);
+      setSelectedPackageCode("ROOM_ONLY");
       setRoomPrice(0);
     }, 2000);
   };
@@ -147,8 +155,9 @@ export function BookingForm() {
                     checkOutDate={checkOutDate}
                     adults={adults}
                     children={children}
-                    onRoomSelect={handleRoomSelect}
+                    onRoomAndPackageSelect={handleRoomAndPackageSelect}
                     selectedRoomId={selectedRoomId}
+                    selectedPackageCode={selectedPackageCode}
                   />
                 </>
               ) : (
@@ -161,6 +170,7 @@ export function BookingForm() {
                   roomPrice={roomPrice}
                   adults={adults}
                   children={children}
+                  selectedPackageCode={selectedPackageCode}
                 />
               )}
             </div>
@@ -173,6 +183,7 @@ export function BookingForm() {
                 roomId={selectedRoomId}
                 adults={adults}
                 children={children}
+                selectedPackageCode={selectedPackageCode}
               />
 
               <HelpCard />

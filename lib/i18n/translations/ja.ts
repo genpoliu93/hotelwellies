@@ -260,6 +260,21 @@ export const ja = {
     needHelp: "サポートが必要ですか？",
     contactUsForAssistance:
       "予約に関するサポートが必要な場合は、予約チームにお問い合わせください",
+    selectPackage: "プランを選択",
+    recommended: "おすすめ",
+    available: "利用可能",
+    perNight: "1泊あたり",
+    extraPerNight: "追加料金",
+    packages: {
+      roomOnly: "素泊まり",
+      breakfast: "朝食付き",
+      dinner: "夕食付き",
+      breakfastDinner: "朝夕食付き",
+      roomOnlyDesc: "素泊まり（食事なし）",
+      breakfastDesc: "朝食付き",
+      dinnerDesc: "夕食付き",
+      breakfastDinnerDesc: "朝夕食付き",
+    },
     guestDetails: "ゲスト詳細",
     errors: {
       required: "このフィールドは必須です",

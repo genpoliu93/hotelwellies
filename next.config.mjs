@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["leaflet"],
-  output: "export", // 生成静态HTML输出，适用于静态网站托管
-  distDir: "out", // 更改为标准输出目录名
-  trailingSlash: true, // 添加尾随斜杠，更好地支持静态托管
+  // 移除 output: "export" - 改为服务器端渲染以支持middleware和动态功能
+  // distDir: "out", // 使用默认的.next目录
+  trailingSlash: true, // 保持尾随斜杠
   images: {
-    unoptimized: true, // Azure Static Web Apps不支持Next.js的图像优化
+    unoptimized: true, // 禁用图片优化以确保图片正常显示
     domains: ["unpkg.com"],
     remotePatterns: [
       {

@@ -97,12 +97,6 @@ export function DatePicker({
   const handleCheckInSelect = (date: Date | undefined) => {
     setTempCheckIn(date);
     if (date) {
-      // 如果没有退房日期或退房日期无效，自动设置为3天后
-      if (!tempCheckOut || tempCheckOut <= date) {
-        const defaultCheckOut = new Date(date);
-        defaultCheckOut.setDate(date.getDate() + 3);
-        setTempCheckOut(defaultCheckOut);
-      }
       setActiveStep("checkout");
     }
   };
@@ -181,7 +175,7 @@ export function DatePicker({
           side="bottom"
           sideOffset={8}
         >
-          <div className="bg-white rounded-lg overflow-hidden w-auto max-w-[320px]">
+          <div className="bg-white rounded-lg overflow-hidden w-auto min-w-[300px]">
             {/* 头部 - 简化 */}
             <div className="p-3 border-b border-gray-100 bg-gray-50">
               <div className="flex items-center justify-between">
@@ -263,9 +257,16 @@ export function DatePicker({
                         {t("booking.selectCheckIn")}
                       </p>
                       <Calendar
-                        mode="single"
-                        selected={tempCheckIn}
-                        onSelect={handleCheckInSelect}
+                        mode="range"
+                        selected={{
+                          from: tempCheckIn,
+                          to: tempCheckOut,
+                        }}
+                        onSelect={(range) => {
+                          if (range?.from) {
+                            handleCheckInSelect(range.from);
+                          }
+                        }}
                         disabled={(date) => date < today}
                         locale={dateLocale}
                         className="rounded-md border-0 w-full"
@@ -285,15 +286,19 @@ export function DatePicker({
                           head_cell:
                             "text-muted-foreground rounded-md flex-1 font-normal text-[0.8rem] text-center",
                           row: "flex w-full mt-1",
-                          cell: "flex-1 text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-                          day: "h-8 w-full p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md",
+                          cell: "flex-1 text-center text-sm p-0 relative focus-within:relative focus-within:z-20",
+                          day: "h-8 w-full p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md transition-colors",
                           day_selected:
-                            "bg-primary text-white hover:bg-primary/90",
+                            "bg-primary text-white hover:bg-primary/90 rounded-md",
                           day_today: "bg-primary/10 text-primary font-semibold",
                           day_outside: "text-muted-foreground opacity-50",
                           day_disabled: "text-muted-foreground opacity-50",
+                          day_range_start:
+                            "bg-primary text-white hover:bg-primary/90 rounded-l-md rounded-r-none shadow-md",
+                          day_range_end:
+                            "bg-primary text-white hover:bg-primary/90 rounded-r-md rounded-l-none shadow-md",
                           day_range_middle:
-                            "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                            "bg-primary/15 text-primary hover:bg-primary/25 rounded-none border-y border-primary/10",
                           day_hidden: "invisible",
                         }}
                       />
@@ -304,9 +309,18 @@ export function DatePicker({
                         {t("booking.selectCheckOut")}
                       </p>
                       <Calendar
-                        mode="single"
-                        selected={tempCheckOut}
-                        onSelect={handleCheckOutSelect}
+                        mode="range"
+                        selected={{
+                          from: tempCheckIn,
+                          to: tempCheckOut,
+                        }}
+                        onSelect={(range) => {
+                          if (range?.to && tempCheckIn) {
+                            handleCheckOutSelect(range.to);
+                          } else if (range?.from && !tempCheckIn) {
+                            handleCheckInSelect(range.from);
+                          }
+                        }}
                         disabled={(date) => {
                           if (date < today) return true;
                           if (tempCheckIn && date <= tempCheckIn) return true;
@@ -331,15 +345,19 @@ export function DatePicker({
                           head_cell:
                             "text-muted-foreground rounded-md flex-1 font-normal text-[0.8rem] text-center",
                           row: "flex w-full mt-1",
-                          cell: "flex-1 text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-                          day: "h-8 w-full p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md",
+                          cell: "flex-1 text-center text-sm p-0 relative focus-within:relative focus-within:z-20",
+                          day: "h-8 w-full p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md transition-colors",
                           day_selected:
-                            "bg-primary text-white hover:bg-primary/90",
+                            "bg-primary text-white hover:bg-primary/90 rounded-md",
                           day_today: "bg-primary/10 text-primary font-semibold",
                           day_outside: "text-muted-foreground opacity-50",
                           day_disabled: "text-muted-foreground opacity-50",
+                          day_range_start:
+                            "bg-primary text-white hover:bg-primary/90 rounded-l-md rounded-r-none shadow-md",
+                          day_range_end:
+                            "bg-primary text-white hover:bg-primary/90 rounded-r-md rounded-l-none shadow-md",
                           day_range_middle:
-                            "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                            "bg-primary/15 text-primary hover:bg-primary/25 rounded-none border-y border-primary/10",
                           day_hidden: "invisible",
                         }}
                       />

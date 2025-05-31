@@ -6,10 +6,13 @@ export const config = {
      * 匹配所有路径，除了:
      * - API 路由 (/api/*)
      * - 静态文件 (例如: /static/*)
-     * - 下一个公共文件 (例如: /favicon.ico, /sitemap.xml, /robots.txt)
-     * - 媒体文件 (例如: /media/*)
+     * - Next.js 内部文件 (_next/*)
+     * - 图片文件 (/images/*)
+     * - 样式文件 (/styles/*)
+     * - 公共文件 (favicon, logo, manifest等)
+     * - 静态资源文件扩展名
      */
-    "/((?!api|static|media|_next/static|_next/image|favicon.ico).*)",
+    "/((?!api|static|media|images|styles|_next|favicon|logo|android-chrome|apple-touch-icon|site\\.webmanifest|\\.ico|\\.png|\\.jpg|\\.jpeg|\\.gif|\\.svg|\\.webp|\\.css|\\.js|\\.woff|\\.woff2|\\.ttf|\\.eot).*)",
   ],
 };
 

@@ -266,6 +266,21 @@ export const en = {
     needHelp: "Need Help?",
     contactUsForAssistance:
       "Contact our reservation team for assistance with your booking",
+    selectPackage: "Select Package",
+    recommended: "Recommended",
+    available: "available",
+    perNight: "per night",
+    extraPerNight: "extra per night",
+    packages: {
+      roomOnly: "Room Only",
+      breakfast: "Breakfast",
+      dinner: "Dinner",
+      breakfastDinner: "Breakfast & Dinner",
+      roomOnlyDesc: "Room only, no meals included",
+      breakfastDesc: "Includes daily breakfast",
+      dinnerDesc: "Includes daily dinner",
+      breakfastDinnerDesc: "Includes daily breakfast and dinner",
+    },
     guestDetails: "Guest Details",
     errors: {
       required: "This field is required",
@@ -286,6 +301,9 @@ export const en = {
     secureBooking: "Secure Booking",
     acceptedPaymentMethods: "Accepted Payment Methods",
     faq: "Frequently Asked Questions",
+    loadingRooms: "Loading rooms",
+    errorLoadingRooms: "Error loading rooms",
+    noRoomsAvailable: "No rooms available for selected dates",
   },
   payment: {
     title: "Payment",
