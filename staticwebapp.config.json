@@ -16,17 +16,22 @@
       "statusCode": 200
     },
     {
+      "route": "/",
+      "serve": "/ja/index.html",
+      "statusCode": 301
+    },
+    {
       "route": "/*",
-      "serve": "/en/index.html",
+      "serve": "/ja/index.html",
       "statusCode": 200
     }
   ],
   "navigationFallback": {
-    "rewrite": "/en/index.html"
+    "rewrite": "/ja/index.html"
   },
   "responseOverrides": {
     "404": {
-      "rewrite": "/en/404/index.html",
+      "rewrite": "/ja/404/index.html",
       "statusCode": 404
     }
   },
