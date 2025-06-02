@@ -21,7 +21,7 @@ import {
 import { useLanguage } from "@/lib/i18n/context";
 import { motion } from "framer-motion";
 import { useApi } from "@/hooks/use-api";
-import { fetchAvailableRooms, type Room } from "@/lib/api";
+import { fetchAvailableRooms, type Room, type Package } from "@/lib/api";
 import { PackageSelector } from "./package-selector";
 
 interface RoomSelectorProps {
@@ -82,7 +82,7 @@ export function RoomSelector({
     ).format(price);
   };
 
-  // 获取房间当前选中的套餐
+  // 获取房间当前选中的套餐 - 直接使用后台数据
   const getRoomSelectedPackage = (room: Room) => {
     const selectedPackageCode =
       roomPackageSelections[room.roomType] || "ROOM_ONLY";
@@ -374,6 +374,8 @@ export function RoomSelector({
                           )
                         }
                         nights={nights}
+                        adults={adults}
+                        children={children}
                       />
                     </div>
 

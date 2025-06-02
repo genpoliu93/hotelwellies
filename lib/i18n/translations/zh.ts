@@ -276,6 +276,7 @@ export const zh = {
     available: "可用",
     perNight: "每晚",
     extraPerNight: "额外费用",
+    mealPricing: "餐饮费用",
     packages: {
       roomOnly: "仅住宿",
       breakfast: "含早餐",
@@ -285,6 +286,12 @@ export const zh = {
       breakfastDesc: "包含每日早餐",
       dinnerDesc: "包含每日晚餐",
       breakfastDinnerDesc: "包含每日早餐和晚餐",
+      breakfastPricing: "早餐费用",
+      dinnerPricing: "晚餐费用",
+      breakfastDinnerPricing: "早晚餐费用",
+      flexibleDining: "可自由选择用餐",
+      budgetFriendly: "经济实惠",
+      flexibleSchedule: "时间灵活",
     },
   },
   payment: {

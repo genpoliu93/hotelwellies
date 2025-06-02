@@ -12,10 +12,10 @@ export interface ApiResponse<T> {
 export interface Package {
   packageCode: string;
   packageName: string;
-  totalPrice: number;
-  averageNightlyPrice: number;
+  totalPrice: number; // 后台计算的套餐总价
+  averageNightlyPrice: number; // 后台计算的套餐平均每晚价格
   adjustmentType: string;
-  adjustmentValue: number;
+  adjustmentValue: number; // 后台计算的套餐调整金额（总额）
 }
 
 // 房间信息接口
@@ -125,9 +125,11 @@ export async function fetchAvailableRooms(
   });
 
   // 发送请求
-  return fetchApi<RoomQueryResult>(
+  const result = await fetchApi<RoomQueryResult>(
     `/api/room_occupancy/available-rooms?${queryParams.toString()}`
   );
+
+  return result;
 }
 
 // 处理支付
