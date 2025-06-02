@@ -262,12 +262,13 @@ export function GuestInfoForm({
   const countries = getCountries();
 
   const arrivalTimes = [
-    { value: "12-14", label: "12:00 - 14:00" },
-    { value: "14-16", label: "14:00 - 16:00" },
-    { value: "16-18", label: "16:00 - 18:00" },
-    { value: "18-20", label: "18:00 - 20:00" },
-    { value: "20-22", label: "20:00 - 22:00" },
-    { value: "after-22", label: t("booking.after22") },
+    { value: "15-16", label: "15:00 - 16:00" },
+    { value: "16-17", label: "16:00 - 17:00" },
+    { value: "17-18", label: "17:00 - 18:00" },
+    { value: "18-19", label: "18:00 - 19:00" },
+    { value: "19-20", label: "19:00 - 20:00" },
+    { value: "20-21", label: "20:00 - 21:00" },
+    { value: "21-22", label: "21:00 - 22:00" },
   ];
 
   return (

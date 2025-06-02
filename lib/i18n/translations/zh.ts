@@ -234,7 +234,7 @@ export const zh = {
     terms: {
       cancellation:
         "到达前7天以上免费取消，3-7天前取消退还50%，3天内取消不予退款",
-      checkInOut: "入住：15:00-22:00，退房：11:00",
+      checkInOut: "入住：15:00-22:00，退房：10:00",
       payment: "预订确认时需要付款",
       damages: "客人需对酒店财产的任何损坏负责",
     },

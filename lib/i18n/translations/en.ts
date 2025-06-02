@@ -251,7 +251,7 @@ export const en = {
     terms: {
       cancellation:
         "Free cancellation up to 7 days before arrival, 50% refund for 3-7 days, no refund within 3 days",
-      checkInOut: "Check-in: 15:00-22:00, Check-out: 11:00",
+      checkInOut: "Check-in: 15:00-22:00, Check-out: 10:00",
       payment: "Payment is required at the time of booking confirmation",
       damages: "Guests are responsible for any damages to hotel property",
     },

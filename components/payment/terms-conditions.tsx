@@ -96,7 +96,7 @@ export function TermsConditions() {
                   <p className="font-medium text-gray-700 mb-1">
                     {t("payment.checkOut")}
                   </p>
-                  <p>{t("payment.before")} 11:00</p>
+                  <p>{t("payment.before")} 10:00</p>
                 </div>
               </div>
             </AccordionContent>
