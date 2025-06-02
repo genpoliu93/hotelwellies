@@ -25,6 +25,12 @@ import { useApi } from "@/hooks/use-api";
 import { fetchAvailableRooms, type Room, type Package } from "@/lib/api";
 import { PackageSelector } from "./package-selector";
 import { toast } from "@/hooks/use-toast";
+import {
+  getRoomTypeTranslationKey,
+  isMountainView,
+  isDeluxeRoom,
+  isFamilyRoom,
+} from "@/lib/utils/room-mapping";
 
 interface RoomSelectorProps {
   checkInDate: Date | undefined;
@@ -94,7 +100,7 @@ export function RoomSelector({
     );
   };
 
-  // 处理套餐选择
+  // 处理套餐选择 - 基于房型
   const handlePackageSelect = (
     roomType: string,
     packageCode: string,
@@ -106,24 +112,28 @@ export function RoomSelector({
     }));
   };
 
-  // 处理房间选择
+  // 处理房间选择 - 基于房型
   const handleRoomSelect = (room: Room) => {
     const selectedPackage = getRoomSelectedPackage(room);
     onRoomAndPackageSelect(
-      room.roomType,
+      room.roomType, // 使用房型作为选择标识
       selectedPackage.packageCode,
       selectedPackage.totalPrice
     );
   };
 
-  // 检查房间是否可用（基于客人数量）
+  // 检查房间是否可用（基于房型容量和可用数量）
   const isRoomAvailable = (room: Room) => {
-    return adults <= room.maxOccupancy && children <= (room.maxChildren || 0);
+    return (
+      adults <= room.maxOccupancy &&
+      children <= (room.maxChildren || 0) &&
+      room.availableCount > 0 // 检查房型是否有可用房间
+    );
   };
 
-  // 切换房间详情展开状态
-  const toggleRoomDetails = (roomId: string) => {
-    setExpandedRoomId(expandedRoomId === roomId ? null : roomId);
+  // 切换房间详情展开状态 - 基于房型
+  const toggleRoomDetails = (roomType: string) => {
+    setExpandedRoomId(expandedRoomId === roomType ? null : roomType);
   };
 
   // 获取房间设施图标
@@ -157,14 +167,14 @@ export function RoomSelector({
   // 过滤出真正可用的房间（基于客人数量）
   const filteredAvailableRooms = availableRooms.filter(isRoomAvailable);
 
-  // 处理图片加载错误
-  const handleImageError = (roomCode: string) => {
-    setImageErrors((prev) => new Set(prev).add(roomCode));
+  // 处理图片加载错误 - 基于房型
+  const handleImageError = (roomType: string) => {
+    setImageErrors((prev) => new Set(prev).add(roomType));
   };
 
-  // 获取图片源，如果加载失败则使用默认图片
+  // 获取图片源，如果加载失败则使用默认图片 - 基于房型
   const getImageSrc = (room: Room) => {
-    if (imageErrors.has(room.roomCode) || !room.images[0]) {
+    if (imageErrors.has(room.roomType) || !room.images[0]) {
       return "/placeholder.svg";
     }
     return room.images[0];
@@ -177,6 +187,18 @@ export function RoomSelector({
       title: t("booking.refreshSuccess"),
       description: t("booking.refreshSuccessDesc"),
     });
+  };
+
+  // 获取美化的房型名称
+  const getFormattedRoomName = (room: Room) => {
+    const translationKey = getRoomTypeTranslationKey(room.roomType);
+    // 尝试获取翻译，如果没有则使用原始名称
+    const translatedName = t(translationKey);
+    // 如果翻译键不存在或翻译为空，会返回键本身，这种情况下使用原始名称
+    if (!translatedName || translatedName === translationKey) {
+      return room.roomName;
+    }
+    return translatedName;
   };
 
   return (
@@ -225,7 +247,7 @@ export function RoomSelector({
           {filteredAvailableRooms.length > 0 ? (
             filteredAvailableRooms.map((room: Room, index: number) => (
               <motion.div
-                key={room.roomCode}
+                key={room.roomType}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -244,19 +266,52 @@ export function RoomSelector({
                       alt={room.roomName}
                       fill
                       className="object-cover transition-transform duration-300 hover:scale-105"
-                      onError={() => handleImageError(room.roomCode)}
+                      onError={() => handleImageError(room.roomType)}
                     />
 
-                    {/* 房间状态标签 */}
+                    {/* 房型可用数量标签 */}
                     <div className="absolute top-3 left-3">
                       <Badge className="bg-black/70 text-white border-0 backdrop-blur-sm text-xs px-2 py-1">
-                        {room.availableCount} {t("booking.available")}
+                        {room.availableCount} {t("booking.roomsAvailable")}
                       </Badge>
                     </div>
 
+                    {/* 房型特色标签 */}
+                    <div className="absolute top-3 right-3 flex flex-col gap-1">
+                      {isMountainView(room.roomType) && (
+                        <Badge className="bg-green-500/90 text-white border-0 backdrop-blur-sm text-xs px-2 py-1">
+                          🏔️ {t("booking.roomFeatures.mountainView")}
+                        </Badge>
+                      )}
+                      {isDeluxeRoom(room.roomType) && (
+                        <Badge className="bg-purple-500/90 text-white border-0 backdrop-blur-sm text-xs px-2 py-1">
+                          ✨ {t("booking.roomFeatures.deluxe")}
+                        </Badge>
+                      )}
+                      {isFamilyRoom(room.roomType) && (
+                        <Badge className="bg-blue-500/90 text-white border-0 backdrop-blur-sm text-xs px-2 py-1">
+                          👨‍👩‍👧‍👦 {t("booking.roomFeatures.family")}
+                        </Badge>
+                      )}
+                    </div>
+
+                    {/* 可用房间号显示（如果有） */}
+                    {room.availableRoomCodes &&
+                      room.availableRoomCodes.length > 0 && (
+                        <div className="absolute bottom-3 left-3">
+                          <Badge
+                            variant="secondary"
+                            className="bg-white/90 text-gray-700 text-xs px-2 py-1"
+                          >
+                            {room.availableRoomCodes.slice(0, 3).join(", ")}
+                            {room.availableRoomCodes.length > 3 && "..."}
+                          </Badge>
+                        </div>
+                      )}
+
                     {/* 选中状态指示器 */}
                     {selectedRoomId === room.roomType && (
-                      <div className="absolute top-3 right-3">
+                      <div className="absolute bottom-3 right-3">
                         <div className="bg-primary text-white rounded-full p-1.5 shadow-lg">
                           <Check className="h-4 w-4" />
                         </div>
@@ -274,7 +329,7 @@ export function RoomSelector({
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex-1 min-w-0">
                           <h3 className="text-lg font-bold text-gray-900 mb-1 truncate">
-                            {room.roomName}
+                            {getFormattedRoomName(room)}
                           </h3>
                           <p className="text-sm text-gray-600 truncate">
                             {room.roomType}
@@ -363,27 +418,53 @@ export function RoomSelector({
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
-                          className="mb-4 p-3 bg-gray-50 rounded-lg"
+                          className="mb-4 space-y-3"
                         >
-                          <h5 className="font-medium text-gray-800 mb-2 text-sm">
-                            {t("booking.amenities")}
-                          </h5>
-                          <div className="grid grid-cols-2 gap-2">
-                            {mapAmenities(room.amenities).map(
-                              (amenity, idx) => (
-                                <div
-                                  key={idx}
-                                  className="flex items-center gap-1.5"
-                                >
-                                  <span className="text-primary">
-                                    {amenity.icon}
-                                  </span>
-                                  <span className="text-xs text-gray-700">
-                                    {amenity.label}
-                                  </span>
+                          {/* 可用房间号详情 */}
+                          {room.availableRoomCodes &&
+                            room.availableRoomCodes.length > 0 && (
+                              <div className="p-3 bg-blue-50 rounded-lg">
+                                <h5 className="font-medium text-blue-800 mb-2 text-sm">
+                                  {t("booking.availableRoomNumbers")}
+                                </h5>
+                                <div className="flex flex-wrap gap-1">
+                                  {room.availableRoomCodes.map(
+                                    (roomCode, idx) => (
+                                      <Badge
+                                        key={idx}
+                                        variant="secondary"
+                                        className="bg-blue-100 text-blue-700 text-xs"
+                                      >
+                                        {roomCode}
+                                      </Badge>
+                                    )
+                                  )}
                                 </div>
-                              )
+                              </div>
                             )}
+
+                          {/* 房间设施 */}
+                          <div className="p-3 bg-gray-50 rounded-lg">
+                            <h5 className="font-medium text-gray-800 mb-2 text-sm">
+                              {t("booking.amenities")}
+                            </h5>
+                            <div className="grid grid-cols-2 gap-2">
+                              {mapAmenities(room.amenities).map(
+                                (amenity, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="flex items-center gap-1.5"
+                                  >
+                                    <span className="text-primary">
+                                      {amenity.icon}
+                                    </span>
+                                    <span className="text-xs text-gray-700">
+                                      {amenity.label}
+                                    </span>
+                                  </div>
+                                )
+                              )}
+                            </div>
                           </div>
                         </motion.div>
                       )}

@@ -39,8 +39,9 @@ export interface Room {
   amenities: string[];
   images: string[];
   isAvailable: boolean;
-  availableCount: number;
+  availableCount: number; // 房型可用房间数量
   packages: Package[];
+  availableRoomCodes?: string[]; // 可用房间号列表（可选）
 }
 
 // 房间查询结果接口
@@ -118,12 +119,14 @@ export async function fetchAvailableRooms(
   const formattedCheckIn = format(checkInDate, "yyyy-MM-dd");
   const formattedCheckOut = format(checkOutDate, "yyyy-MM-dd");
 
-  // 构建查询参数
+  // 构建查询参数 - 默认使用房型聚合模式
   const queryParams = new URLSearchParams({
     CheckInDate: formattedCheckIn,
     CheckOutDate: formattedCheckOut,
     Adults: adults.toString(),
     Children: children.toString(),
+    GroupByRoomType: "true", // 默认使用房型聚合模式
+    IncludePackages: "true", // 包含套餐信息
   });
 
   // 发送请求

@@ -322,6 +322,21 @@ export const en = {
     refreshError: "Refresh failed",
     refreshErrorDesc:
       "Unable to get latest room information, please try again later",
+    roomsAvailable: "rooms available",
+    roomType: "Room Type",
+    availableRoomNumbers: "Available Room Numbers",
+    roomTypes: {
+      standard_twin: "Standard Twin Room",
+      standard_twin_mountain: "Standard Twin Room (Mountain View)",
+      family_room: "Family Room (2nd Floor)",
+      deluxe_double: "Deluxe Double Room",
+      standard_double_mountain: "Standard Double Room (Mountain View)",
+    },
+    roomFeatures: {
+      mountainView: "Mountain View",
+      deluxe: "Deluxe",
+      family: "Family",
+    },
   },
   payment: {
     title: "Payment",

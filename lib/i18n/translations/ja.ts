@@ -313,6 +313,21 @@ export const ja = {
     refreshError: "更新に失敗しました",
     refreshErrorDesc:
       "最新の客室情報を取得できませんでした。しばらくしてから再度お試しください",
+    roomsAvailable: "室利用可能",
+    roomType: "客室タイプ",
+    availableRoomNumbers: "利用可能な客室番号",
+    roomTypes: {
+      standard_twin: "スタンダードツインルーム",
+      standard_twin_mountain: "スタンダードツインルーム（マウンテンビュー）",
+      family_room: "ファミリールーム（2階）",
+      deluxe_double: "デラックスダブルルーム",
+      standard_double_mountain: "スタンダードダブルルーム（マウンテンビュー）",
+    },
+    roomFeatures: {
+      mountainView: "マウンテンビュー",
+      deluxe: "デラックス",
+      family: "ファミリー",
+    },
   },
   payment: {
     title: "お支払い",

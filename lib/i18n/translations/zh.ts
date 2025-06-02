@@ -300,6 +300,21 @@ export const zh = {
     refreshSuccessDesc: "已成功获取最新的房间可用性信息",
     refreshError: "刷新失败",
     refreshErrorDesc: "无法获取最新房间信息，请稍后重试",
+    roomsAvailable: "间可用",
+    roomType: "房型",
+    availableRoomNumbers: "可用房间号",
+    roomTypes: {
+      standard_twin: "标准双床房",
+      standard_twin_mountain: "标准双床房（山景）",
+      family_room: "家庭房（二层）",
+      deluxe_double: "豪华双人房",
+      standard_double_mountain: "标准双人房（山景）",
+    },
+    roomFeatures: {
+      mountainView: "山景",
+      deluxe: "豪华",
+      family: "家庭",
+    },
   },
   payment: {
     title: "支付",
