@@ -49,10 +49,10 @@ export function HelpCard() {
             <div>
               <p className="text-sm text-gray-500">{t("contact.email")}</p>
               <a
-                href="mailto:chris@hotelwellies.jp"
+                href="mailto:info@hotelwellies.jp"
                 className="font-medium text-gray-800 hover:text-primary"
               >
-                chris@hotelwellies.jp
+                info@hotelwellies.jp
               </a>
             </div>
           </div>

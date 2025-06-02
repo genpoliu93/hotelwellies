@@ -137,7 +137,7 @@ export const en = {
     address:
       "Address 2350-160 Nagakura, Karuizawa, Kitasaku District, Nagano 389-0111",
     phone: "Phone +81-265-82-1111",
-    email: "Email: chris@hotelwellies.jp",
+    email: "Email: info@hotelwellies.jp",
     frontDeskHours: "Front Desk Hours",
     sendMessage: "Send Message",
     name: "Name",
@@ -314,6 +314,14 @@ export const en = {
     loadingRooms: "Loading rooms",
     errorLoadingRooms: "Error loading rooms",
     noRoomsAvailable: "No rooms available for selected dates",
+    refreshRooms: "Refresh Rooms",
+    refreshing: "Refreshing...",
+    refreshRoomsTooltip: "Get the latest room availability information",
+    refreshSuccess: "Room information updated",
+    refreshSuccessDesc: "Successfully retrieved the latest room availability",
+    refreshError: "Refresh failed",
+    refreshErrorDesc:
+      "Unable to get latest room information, please try again later",
   },
   payment: {
     title: "Payment",

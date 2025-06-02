@@ -131,7 +131,7 @@ export const ja = {
     address: "住所: 〒389-0111長野県北佐久郡軽井沢町長倉2350-160 ",
     getInTouch: "お問い合わせ",
     phone: "電話 +81-265-82-1111",
-    email: "メール:chris@hotelwellies.jp",
+    email: "メール:info@hotelwellies.jp",
     frontDeskHours: "フロント営業時間",
     sendMessage: "メッセージを送信",
     name: "お名前",
@@ -305,6 +305,14 @@ export const ja = {
     loadingRooms: "客室を読み込み中",
     errorLoadingRooms: "客室の読み込み中にエラーが発生しました",
     noRoomsAvailable: "選択された日付で利用可能な客室がありません",
+    refreshRooms: "客室を更新",
+    refreshing: "更新中...",
+    refreshRoomsTooltip: "最新の客室利用状況を取得します",
+    refreshSuccess: "客室情報が更新されました",
+    refreshSuccessDesc: "最新の客室利用状況を取得しました",
+    refreshError: "更新に失敗しました",
+    refreshErrorDesc:
+      "最新の客室情報を取得できませんでした。しばらくしてから再度お試しください",
   },
   payment: {
     title: "お支払い",

@@ -17,12 +17,14 @@ import {
   UtensilsCrossed,
   Baby,
   Loader2,
+  RotateCcw,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
 import { motion } from "framer-motion";
 import { useApi } from "@/hooks/use-api";
 import { fetchAvailableRooms, type Room, type Package } from "@/lib/api";
 import { PackageSelector } from "./package-selector";
+import { toast } from "@/hooks/use-toast";
 
 interface RoomSelectorProps {
   checkInDate: Date | undefined;
@@ -65,10 +67,10 @@ export function RoomSelector({
   const totalGuests = adults + children;
 
   // 使用API获取房间数据
-  const { data, isLoading, error } = useApi(() => {
+  const { data, isLoading, error, refetch } = useApi(() => {
     if (!checkInDate || !checkOutDate) return null;
-    return fetchAvailableRooms(checkInDate, checkOutDate, adults);
-  }, [checkInDate, checkOutDate, adults]);
+    return fetchAvailableRooms(checkInDate, checkOutDate, adults, children);
+  }, [checkInDate, checkOutDate, adults, children]);
 
   // 格式化价格
   const formatPrice = (price: number) => {
@@ -168,11 +170,39 @@ export function RoomSelector({
     return room.images[0];
   };
 
+  // 处理刷新房间数据
+  const handleRefresh = () => {
+    refetch();
+    toast({
+      title: t("booking.refreshSuccess"),
+      description: t("booking.refreshSuccessDesc"),
+    });
+  };
+
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-gray-800">
-        {t("booking.availableRooms")}
-      </h3>
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold text-gray-800">
+          {t("booking.availableRooms")}
+        </h3>
+
+        {/* 刷新按钮 - 只在有日期时显示 */}
+        {checkInDate && checkOutDate && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleRefresh}
+            disabled={isLoading}
+            title={t("booking.refreshRoomsTooltip")}
+            className="flex items-center gap-2 text-xs hover:bg-primary/5 hover:border-primary/20 transition-colors"
+          >
+            <RotateCcw
+              className={`h-3.5 w-3.5 ${isLoading ? "animate-spin" : ""}`}
+            />
+            {isLoading ? t("booking.refreshing") : t("booking.refreshRooms")}
+          </Button>
+        )}
+      </div>
 
       {nights > 0 ? (
         <div className="space-y-4">

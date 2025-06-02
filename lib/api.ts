@@ -111,7 +111,8 @@ async function fetchApi<T>(
 export async function fetchAvailableRooms(
   checkInDate: Date,
   checkOutDate: Date,
-  adults: number
+  adults: number,
+  children: number = 0
 ): Promise<ApiResponse<RoomQueryResult>> {
   // 格式化日期为 YYYY-MM-DD 格式
   const formattedCheckIn = format(checkInDate, "yyyy-MM-dd");
@@ -122,6 +123,7 @@ export async function fetchAvailableRooms(
     CheckInDate: formattedCheckIn,
     CheckOutDate: formattedCheckOut,
     Adults: adults.toString(),
+    Children: children.toString(),
   });
 
   // 发送请求
