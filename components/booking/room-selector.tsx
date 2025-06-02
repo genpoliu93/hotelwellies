@@ -140,25 +140,142 @@ export function RoomSelector({
   const getAmenityIcon = (name: string) => {
     const icons: Record<string, JSX.Element> = {
       wifi: <Wifi className="h-4 w-4" />,
+      internet: <Wifi className="h-4 w-4" />,
       breakfast: <Coffee className="h-4 w-4" />,
       ac: <Wind className="h-4 w-4" />,
+      heating: <Wind className="h-4 w-4" />,
       tv: <Tv className="h-4 w-4" />,
       bathroom: <Bath className="h-4 w-4" />,
       minibar: <Wine className="h-4 w-4" />,
+      refrigerator: <Wine className="h-4 w-4" />,
       workspace: <Briefcase className="h-4 w-4" />,
       kitchenette: <UtensilsCrossed className="h-4 w-4" />,
+      microwave: <UtensilsCrossed className="h-4 w-4" />,
       childrenFacilities: <Baby className="h-4 w-4" />,
+      childrenfacilities: <Baby className="h-4 w-4" />, // 处理可能的拼写变体
+      balcony: <Info className="h-4 w-4" />,
+      iron: <Info className="h-4 w-4" />,
+      safe: <Info className="h-4 w-4" />,
+      telephone: <Info className="h-4 w-4" />,
+      dryer: <Info className="h-4 w-4" />,
+      towels: <Bath className="h-4 w-4" />,
+      slippers: <Info className="h-4 w-4" />,
+      toiletries: <Bath className="h-4 w-4" />,
+      shampoo: <Bath className="h-4 w-4" />,
+      bodysoap: <Bath className="h-4 w-4" />,
+      tea: <Coffee className="h-4 w-4" />,
+      coffee: <Coffee className="h-4 w-4" />,
+      kettle: <Coffee className="h-4 w-4" />,
+      view: <Info className="h-4 w-4" />,
+      parking: <Info className="h-4 w-4" />,
+      elevator: <Info className="h-4 w-4" />,
+      nonsmoking: <Info className="h-4 w-4" />,
     };
 
     return icons[name] || <Info className="h-4 w-4" />;
   };
 
+  // 规范化设施名称，将API返回的设施名称映射到标准键
+  const normalizeAmenityName = (amenity: string): string => {
+    const normalized = amenity.toLowerCase().trim();
+
+    // 设施名称映射表，处理可能的变体
+    const amenityMapping: Record<string, string> = {
+      wifi: "wifi",
+      "wi-fi": "wifi",
+      wireless: "wifi",
+      internet: "internet",
+      network: "internet",
+      breakfast: "breakfast",
+      "morning meal": "breakfast",
+      "air conditioning": "ac",
+      airconditioning: "ac",
+      ac: "ac",
+      aircon: "ac",
+      heating: "heating",
+      heater: "heating",
+      television: "tv",
+      tv: "tv",
+      "flat-screen tv": "tv",
+      bathroom: "bathroom",
+      "private bathroom": "bathroom",
+      minibar: "minibar",
+      "mini bar": "minibar",
+      "mini-bar": "minibar",
+      refrigerator: "refrigerator",
+      fridge: "refrigerator",
+      workspace: "workspace",
+      "work desk": "workspace",
+      desk: "workspace",
+      kitchenette: "kitchenette",
+      kitchen: "kitchenette",
+      "small kitchen": "kitchenette",
+      microwave: "microwave",
+      "microwave oven": "microwave",
+      "children facilities": "childrenFacilities",
+      childrenfacilities: "childrenFacilities",
+      "children's facilities": "childrenFacilities",
+      "kids facilities": "childrenFacilities",
+      balcony: "balcony",
+      terrace: "balcony",
+      iron: "iron",
+      ironing: "iron",
+      safe: "safe",
+      "safety box": "safe",
+      telephone: "telephone",
+      phone: "telephone",
+      dryer: "dryer",
+      "hair dryer": "dryer",
+      hairdryer: "dryer",
+      towels: "towels",
+      towel: "towels",
+      slippers: "slippers",
+      slipper: "slippers",
+      toiletries: "toiletries",
+      amenities: "toiletries",
+      shampoo: "shampoo",
+      bodysoap: "bodysoap",
+      "body soap": "bodysoap",
+      tea: "tea",
+      "tea making": "tea",
+      "tea facilities": "tea",
+      coffee: "coffee",
+      "coffee making": "coffee",
+      kettle: "kettle",
+      "electric kettle": "kettle",
+      "water kettle": "kettle",
+      view: "view",
+      "scenic view": "view",
+      parking: "parking",
+      "car park": "parking",
+      elevator: "elevator",
+      lift: "elevator",
+      nonsmoking: "nonsmoking",
+      "non-smoking": "nonsmoking",
+      "no smoking": "nonsmoking",
+    };
+
+    return amenityMapping[normalized] || normalized;
+  };
+
   // 将API返回的设施转换为UI显示格式
   const mapAmenities = (amenities: string[]) => {
-    return amenities.map((amenity) => ({
-      icon: getAmenityIcon(amenity.toLowerCase()),
-      label: t(`booking.amenities.${amenity.toLowerCase()}`) || amenity,
-    }));
+    return amenities.map((amenity) => {
+      const normalizedName = normalizeAmenityName(amenity);
+      const translationKey = `booking.amenities.${normalizedName}`;
+      const translatedLabel = t(translationKey);
+
+      // 如果翻译存在且不等于翻译键本身，使用翻译；否则使用原始名称
+      const label =
+        translatedLabel && translatedLabel !== translationKey
+          ? translatedLabel
+          : amenity;
+
+      return {
+        icon: getAmenityIcon(normalizedName),
+        label,
+      };
+    });
   };
 
   // 获取可用房间列表
@@ -446,7 +563,7 @@ export function RoomSelector({
                           {/* 房间设施 */}
                           <div className="p-3 bg-gray-50 rounded-lg">
                             <h5 className="font-medium text-gray-800 mb-2 text-sm">
-                              {t("booking.amenities")}
+                              {t("rooms.amenities")}
                             </h5>
                             <div className="grid grid-cols-2 gap-2">
                               {mapAmenities(room.amenities).map(
