@@ -152,6 +152,18 @@ export const ja = {
       "下のボタンをクリックするか、直接 info@hotelwellies.jp までご連絡ください",
     orClickBelow: "または下のボタンをクリックして直接メールアプリを開く",
     openEmailApp: "メールアプリを開く",
+    nearbySpots: "周辺スポット",
+    nearbySubtitle: "ホテル周辺の主要スポット",
+    walkingTime: "徒歩",
+    distance: "距離",
+    spots: {
+      nakakaruizawaStation: "中軽井沢駅",
+      lawsonStore: "Lawson 中軽井沢駅前店",
+      harunireTerrace: "ハルニレテラス",
+      stoneChurch: "石の教会（内村鑑三記念堂）",
+      saisonMuseum: "セゾン現代美術館",
+      kumobaPool: "雲場池",
+    },
   },
   footer: {
     description: "快適な宿泊体験を提供し、あなたの旅行をより楽しくします。",

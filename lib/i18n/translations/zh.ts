@@ -146,6 +146,18 @@ export const zh = {
     errorDesc: "请尝试点击下方按钮或直接联系我们：info@hotelwellies.jp",
     orClickBelow: "或点击下方按钮直接打开邮箱应用",
     openEmailApp: "打开邮箱应用",
+    nearbySpots: "周边景点",
+    nearbySubtitle: "酒店周围的主要景点",
+    walkingTime: "步行时间",
+    distance: "距离",
+    spots: {
+      nakakaruizawaStation: "中轻井泽站",
+      lawsonStore: "Lawson 中轻井泽站前店",
+      harunireTerrace: "榆树街小镇",
+      stoneChurch: "石之教堂（内村鉴三纪念堂）",
+      saisonMuseum: "塞松现代美术馆",
+      kumobaPool: "云场池",
+    },
   },
   footer: {
     description: "提供舒适的住宿体验，让您的旅行更加愉快。",

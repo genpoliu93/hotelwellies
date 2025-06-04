@@ -158,6 +158,18 @@ export const en = {
       "Please try clicking the button below or contact us directly at info@hotelwellies.jp",
     orClickBelow: "Or click below to open your email app directly",
     openEmailApp: "Open Email App",
+    nearbySpots: "Nearby Attractions",
+    nearbySubtitle: "Major spots around the hotel",
+    walkingTime: "Walking time",
+    distance: "Distance",
+    spots: {
+      nakakaruizawaStation: "Naka-Karuizawa Station",
+      lawsonStore: "Lawson Naka-Karuizawa Station Store",
+      harunireTerrace: "Harunire Terrace",
+      stoneChurch: "Stone Church (Uchimura Kanzo Memorial)",
+      saisonMuseum: "Sezon Museum of Modern Art",
+      kumobaPool: "Kumoba Pond",
+    },
   },
   footer: {
     description:
