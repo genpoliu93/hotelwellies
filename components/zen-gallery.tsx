@@ -129,13 +129,11 @@ export function ZenGallery() {
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
-              {/* 渐变悬停叠加层 */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${image.gradientFrom} ${image.gradientTo} opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center`}
-              >
-                <div className="text-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  <Eye className="h-8 w-8 mx-auto mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100" />
-                  <div className="font-light tracking-wide text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+              {/* 简洁的暗色覆盖层 */}
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center">
+                <div className="text-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 opacity-0 group-hover:opacity-100">
+                  <Eye className="h-8 w-8 mx-auto mb-2 transition-opacity duration-300 delay-100" />
+                  <div className="font-light tracking-wide text-lg transition-opacity duration-300 delay-200">
                     {image.category}
                   </div>
                 </div>

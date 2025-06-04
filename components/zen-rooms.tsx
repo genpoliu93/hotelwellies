@@ -136,10 +136,8 @@ export function ZenRooms() {
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
-                {/* 渐变覆盖层 */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${room.gradientFrom} ${room.gradientTo} opacity-0 group-hover:opacity-90 transition-opacity duration-500`}
-                ></div>
+                {/* 简洁的暗色覆盖层 */}
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-all duration-500"></div>
 
                 {/* 微妙的纹理覆盖层 */}
                 <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
