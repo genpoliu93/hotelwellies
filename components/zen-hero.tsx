@@ -8,10 +8,29 @@ import {
   useTransform,
   AnimatePresence,
 } from "framer-motion";
-import { CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  CalendarIcon,
+  ChevronLeft,
+  ChevronRight,
+  Users,
+  Search,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import {
+  formatDateDisplay,
+  getDateFnsLocale,
+  type SupportedLocale,
+} from "@/lib/utils/date";
 
 // 轮播图片配置
 const carouselImages = [
@@ -30,6 +49,333 @@ type InfoCardProps = {
   titleKey: string; // 翻译键
   descKey: string; // 翻译键
   // Removed initialDelay as animation is now parent-controlled for scroll effect
+};
+
+// 快速搜索组件
+const QuickSearch = () => {
+  const { t, locale } = useLanguage();
+  const router = useRouter();
+  const [checkInDate, setCheckInDate] = useState<Date | undefined>(undefined);
+  const [checkOutDate, setCheckOutDate] = useState<Date | undefined>(undefined);
+  const [tempCheckIn, setTempCheckIn] = useState<Date | undefined>(undefined);
+  const [tempCheckOut, setTempCheckOut] = useState<Date | undefined>(undefined);
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [isGuestPickerOpen, setIsGuestPickerOpen] = useState(false);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const dateLocale = getDateFnsLocale(locale as SupportedLocale);
+
+  // 计算住宿天数
+  const calculateNights = (
+    checkIn: Date | undefined,
+    checkOut: Date | undefined
+  ) => {
+    if (!checkIn || !checkOut) return 0;
+    const diffTime = checkOut.getTime() - checkIn.getTime();
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  };
+
+  const nights = calculateNights(checkInDate, checkOutDate);
+  const tempNights = calculateNights(tempCheckIn, tempCheckOut);
+
+  // 处理搜索
+  const handleSearch = () => {
+    if (!checkInDate || !checkOutDate) {
+      return;
+    }
+
+    const searchParams = new URLSearchParams({
+      checkIn: checkInDate.toISOString().split("T")[0],
+      checkOut: checkOutDate.toISOString().split("T")[0],
+      adults: adults.toString(),
+      children: children.toString(),
+    });
+
+    router.push(`/${locale}/booking?${searchParams.toString()}`);
+  };
+
+  // 格式化日期显示
+  const formatDate = (date: Date | undefined) => {
+    if (!date) return "";
+    return formatDateDisplay(date, locale as SupportedLocale, {
+      useShortFormat: true,
+    });
+  };
+
+  // 处理日期选择器打开
+  const handleDatePickerOpen = (open: boolean) => {
+    if (open) {
+      setTempCheckIn(checkInDate);
+      setTempCheckOut(checkOutDate);
+    }
+    setIsDatePickerOpen(open);
+  };
+
+  // 重置临时日期
+  const handleDateReset = () => {
+    setTempCheckIn(undefined);
+    setTempCheckOut(undefined);
+  };
+
+  // 确认日期选择
+  const handleDateConfirm = () => {
+    setCheckInDate(tempCheckIn);
+    setCheckOutDate(tempCheckOut);
+    setIsDatePickerOpen(false);
+  };
+
+  // 获取主按钮显示文本
+  const getDateButtonText = () => {
+    if (checkInDate && checkOutDate) {
+      return `${formatDate(checkInDate)} - ${formatDate(
+        checkOutDate
+      )} (${nights} ${
+        nights === 1 ? t("booking.night") : t("booking.nights")
+      })`;
+    }
+    return t("booking.selectDates");
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="bg-black/20 backdrop-blur-md border border-white/20 rounded-lg p-6 w-full max-w-4xl mx-auto"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {/* 日期选择 */}
+        <div className="md:col-span-2">
+          <Popover open={isDatePickerOpen} onOpenChange={handleDatePickerOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  "w-full justify-start text-left font-normal bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm",
+                  !checkInDate && "text-white/70"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                <div className="flex flex-col">
+                  <span className="text-xs text-white/70 mb-0.5">
+                    {t("booking.stayDates")}
+                  </span>
+                  <span className="text-sm font-medium truncate">
+                    {getDateButtonText()}
+                  </span>
+                </div>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <div className="bg-white rounded-lg overflow-hidden">
+                {/* 头部 */}
+                <div className="p-3 border-b border-gray-100 bg-gray-50">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-medium text-gray-800 text-sm">
+                      {t("booking.selectDates")}
+                    </h3>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleDateReset}
+                      className="text-gray-500 hover:text-gray-700 h-6 px-2 text-xs"
+                    >
+                      {t("booking.reset")}
+                    </Button>
+                  </div>
+                </div>
+
+                {/* 日历 */}
+                <div className="p-3">
+                  <Calendar
+                    mode="range"
+                    selected={{
+                      from: tempCheckIn,
+                      to: tempCheckOut,
+                    }}
+                    onSelect={(range) => {
+                      if (range?.from) setTempCheckIn(range.from);
+                      if (range?.to) setTempCheckOut(range.to);
+                    }}
+                    disabled={(date) => date < today}
+                    locale={dateLocale}
+                    numberOfMonths={2}
+                    className="rounded-md border-0"
+                    classNames={{
+                      months:
+                        "flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0",
+                      month: "space-y-4",
+                      caption: "flex justify-center pt-1 relative items-center",
+                      caption_label: "text-sm font-medium",
+                      nav: "space-x-1 flex items-center",
+                      nav_button:
+                        "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+                      nav_button_previous: "absolute left-1",
+                      nav_button_next: "absolute right-1",
+                      table: "w-full border-collapse space-y-1",
+                      head_row: "flex",
+                      head_cell:
+                        "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
+                      row: "flex w-full mt-2",
+                      cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                      day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
+                      day_selected:
+                        "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                      day_today: "bg-accent text-accent-foreground",
+                      day_outside: "text-muted-foreground opacity-50",
+                      day_disabled: "text-muted-foreground opacity-50",
+                      day_range_middle:
+                        "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                      day_hidden: "invisible",
+                    }}
+                  />
+
+                  {/* 当前选择预览 */}
+                  {tempCheckIn && tempCheckOut && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-3 p-3 bg-primary/5 border border-primary/20 rounded-md"
+                    >
+                      <div className="text-center">
+                        <p className="text-sm text-primary font-medium">
+                          {formatDate(tempCheckIn)} → {formatDate(tempCheckOut)}
+                        </p>
+                        <p className="text-xs text-primary/70 mt-1">
+                          {tempNights}{" "}
+                          {tempNights === 1
+                            ? t("booking.night")
+                            : t("booking.nights")}{" "}
+                          • {tempNights + 1} {t("booking.days")}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+
+                {/* 底部操作 */}
+                <div className="p-3 border-t border-gray-100 bg-gray-50">
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={() => setIsDatePickerOpen(false)}
+                      className="flex-1 h-8 text-xs"
+                    >
+                      {t("booking.back")}
+                    </Button>
+                    <Button
+                      onClick={handleDateConfirm}
+                      disabled={!tempCheckIn || !tempCheckOut}
+                      className="flex-1 h-8 text-xs bg-primary hover:bg-primary/90"
+                    >
+                      {t("booking.confirm")}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+
+        {/* 人数选择 */}
+        <div>
+          <Popover open={isGuestPickerOpen} onOpenChange={setIsGuestPickerOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="w-full justify-start text-left font-normal bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm"
+              >
+                <Users className="mr-2 h-4 w-4" />
+                {adults + children > 0
+                  ? `${adults + children} ${t("booking.guests")}`
+                  : t("booking.guests")}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80" align="start">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">{t("booking.adults")}</p>
+                    <p className="text-sm text-gray-500">
+                      {t("booking.age13Plus")}
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setAdults(Math.max(1, adults - 1))}
+                      disabled={adults <= 1}
+                    >
+                      -
+                    </Button>
+                    <span className="w-8 text-center">{adults}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setAdults(Math.min(6, adults + 1))}
+                      disabled={adults >= 6}
+                    >
+                      +
+                    </Button>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium">{t("booking.children")}</p>
+                    <p className="text-sm text-gray-500">
+                      {t("booking.age0To12")}
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setChildren(Math.max(0, children - 1))}
+                      disabled={children <= 0}
+                    >
+                      -
+                    </Button>
+                    <span className="w-8 text-center">{children}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setChildren(Math.min(4, children + 1))}
+                      disabled={children >= 4}
+                    >
+                      +
+                    </Button>
+                  </div>
+                </div>
+                <Button
+                  onClick={() => setIsGuestPickerOpen(false)}
+                  className="w-full"
+                >
+                  {t("booking.apply")}
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+
+        {/* 搜索按钮 */}
+        <div>
+          <Button
+            onClick={handleSearch}
+            disabled={!checkInDate || !checkOutDate}
+            className="w-full bg-primary hover:bg-primary/90 text-white"
+          >
+            <Search className="mr-2 h-4 w-4" />
+            {t("booking.searchRooms")}
+          </Button>
+        </div>
+      </div>
+    </motion.div>
+  );
 };
 
 // 卡片子组件 (修改为竖向文字布局)
@@ -158,8 +504,8 @@ export function ZenHero() {
         </button>
       </div>
 
-      {/* 轮播指示器 */}
-      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
+      {/* 轮播指示器 - 调整位置避免与搜索栏重叠 */}
+      <div className="absolute bottom-32 md:bottom-40 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
         {carouselImages.map((_, index) => (
           <button
             key={index}
@@ -174,7 +520,7 @@ export function ZenHero() {
       </div>
 
       {/* 主要内容容器 - 占据剩余空间，并让内容垂直居中, 分为左右两栏 */}
-      <div className="relative z-10 flex-grow flex items-stretch justify-between container px-6 md:px-10 py-10 md:py-16">
+      <div className="relative z-10 flex-grow flex items-stretch justify-between container px-6 md:px-10 py-10 md:py-16 pb-32 md:pb-40">
         {/* 左侧竖排标题/副标题 */}
         <motion.div
           // Removed absolute positioning and parallax style
@@ -261,6 +607,11 @@ export function ZenHero() {
             />
           </motion.div>
         </motion.div>
+      </div>
+
+      {/* 快速搜索栏 - 底部固定，调整位置 */}
+      <div className="absolute bottom-6 left-0 right-0 z-20 px-6 md:px-10">
+        <QuickSearch />
       </div>
 
       {/* 底部水平信息卡片 - 此区域已移除并整合到右侧 */}

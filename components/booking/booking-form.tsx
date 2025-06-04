@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DatePicker } from "./date-picker";
 import { GuestSelector } from "./guest-selector";
 import { RoomSelector } from "./room-selector";
@@ -12,9 +12,12 @@ import { toast } from "@/hooks/use-toast";
 import { Steps, Step } from "./steps";
 import { motion } from "framer-motion";
 import { CalendarDays } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 export function BookingForm() {
   const { t } = useLanguage();
+  const searchParams = useSearchParams();
+
   const [currentStep, setCurrentStep] = useState(1);
   const [checkInDate, setCheckInDate] = useState<Date | undefined>(undefined);
   const [checkOutDate, setCheckOutDate] = useState<Date | undefined>(undefined);
@@ -25,6 +28,42 @@ export function BookingForm() {
     useState<string>("ROOM_ONLY");
   const [roomPrice, setRoomPrice] = useState(0); // 选中套餐的总价
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // 从URL参数初始化数据
+  useEffect(() => {
+    const checkInParam = searchParams.get("checkIn");
+    const checkOutParam = searchParams.get("checkOut");
+    const adultsParam = searchParams.get("adults");
+    const childrenParam = searchParams.get("children");
+
+    if (checkInParam) {
+      const checkInDate = new Date(checkInParam);
+      if (!isNaN(checkInDate.getTime())) {
+        setCheckInDate(checkInDate);
+      }
+    }
+
+    if (checkOutParam) {
+      const checkOutDate = new Date(checkOutParam);
+      if (!isNaN(checkOutDate.getTime())) {
+        setCheckOutDate(checkOutDate);
+      }
+    }
+
+    if (adultsParam) {
+      const adultsCount = parseInt(adultsParam, 10);
+      if (!isNaN(adultsCount) && adultsCount > 0) {
+        setAdults(adultsCount);
+      }
+    }
+
+    if (childrenParam) {
+      const childrenCount = parseInt(childrenParam, 10);
+      if (!isNaN(childrenCount) && childrenCount >= 0) {
+        setChildren(childrenCount);
+      }
+    }
+  }, [searchParams]);
 
   // 计算住宿天数
   const calculateNights = () => {

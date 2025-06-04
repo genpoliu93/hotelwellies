@@ -35,25 +35,21 @@ export const zenTextKeysEN = {
     categoryNature: "Nature",
   },
   rooms: {
-    description:
-      "Experience traditional Japanese aesthetics with modern comfort in our carefully designed rooms",
-    room1Name: "Single Bed Room",
-    room1Description:
-      "Authentic tatami room with minimalist design and garden view",
+    description: "在我们精心设计的客房中体验传统英式魅力与现代舒适的完美融合",
+    room1Name: "高级山景房",
+    room1Description: "正宗榻榻米房间，极简设计，可欣赏花园景观",
     room1Price: "¥32,000",
-    room2Name: "Double Bed Room",
-    room2Description:
-      "Spacious western-style room with contemporary furnishings",
+    room2Name: "双床房",
+    room2Description: "宽敞的西式房间，配有现代家具",
     room2Price: "¥38,000",
-    room3Name: "Family Room",
-    room3Description:
-      "Our finest accommodation combining Japanese and Western elements",
+    room3Name: "家庭套房",
+    room3Description: "我们最优质的住宿，结合日式和西式元素",
     room3Price: "¥45,000",
-    feature1: "Private bathroom with deep soaking tub",
-    feature2: "Traditional futon bedding",
-    feature3: "Tea ceremony corner",
-    feature4: "King-sized bed with premium linens",
-    feature5: "Private balcony with mountain view",
+    feature1: "带深浸泡浴缸的私人浴室",
+    feature2: "传统蒲团卧具",
+    feature3: "茶道角落",
+    feature4: "配有高级床品的特大床",
+    feature5: "带山景的私人阳台",
   },
   testimonials: {
     quote1:
@@ -106,7 +102,7 @@ export const zenTextKeysJA = {
   },
   rooms: {
     description:
-      "伝統的な日本の美意識とモダンな快適さを兼ね備えた、丁寧にデザインされた客室です",
+      "丁寧にデザインされた客室で、伝統的な英国の魅力とモダンな快適さをご体験ください",
     room1Name: "デラックス　ダブルルーム",
     room1Description: "庭園を望む本格的な畳の間とミニマルなデザイン",
     room1Price: "¥32,000",
@@ -170,7 +166,7 @@ export const zenTextKeysZH = {
     categoryNature: "自然",
   },
   rooms: {
-    description: "在我们精心设计的房间中体验传统日式美学与现代舒适",
+    description: "在我们精心设计的客房中体验传统英式魅力与现代舒适的完美融合",
     room1Name: "高级山景房",
     room1Description: "正宗榻榻米房间，极简设计，可欣赏花园景观",
     room1Price: "¥32,000",
