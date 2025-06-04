@@ -106,7 +106,7 @@ export function ZenRooms() {
               size="lg"
               asChild
             >
-              <Link href={`/${locale}/booking`}>
+              <Link href={`/${locale}/rooms`}>
                 {t("common.viewAllRooms")}{" "}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>

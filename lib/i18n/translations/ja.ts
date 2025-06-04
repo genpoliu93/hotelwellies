@@ -88,6 +88,8 @@ export const ja = {
     title: "おすすめの客室",
     subtitle:
       "様々なゲストのニーズに応えるために、多様なタイプの客室を提供しています。",
+    galleryTitle: "客室ギャラリー",
+    gallerySubtitle: "当ホテルの客室の快適さと優雅さをご覧ください",
     standard: "スタンダードダブルルーム",
     standardDesc: "快適で実用的なダブルルーム",
     deluxe: "デラックススイート",
@@ -108,6 +110,7 @@ export const ja = {
   gallery: {
     title: "ホテルギャラリー",
     subtitle: "フォトギャラリー",
+    photos: "写真",
     categories: {
       all: "すべての写真",
       interior: "インテリア",

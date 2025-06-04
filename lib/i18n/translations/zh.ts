@@ -84,6 +84,8 @@ export const zh = {
     almostSoldOut: "几乎售罄",
     title: "精选客房",
     subtitle: "我们提供各种类型的客房，满足不同客人的需求。",
+    galleryTitle: "客房画廊",
+    gallerySubtitle: "探索我们客房的舒适与优雅",
     standard: "标准双人间",
     standardDesc: "舒适实用的双人房间",
     deluxe: "豪华套房",
@@ -104,6 +106,7 @@ export const zh = {
   gallery: {
     title: "酒店图库",
     subtitle: "照片展示",
+    photos: "照片",
     categories: {
       all: "所有照片",
       interior: "室内",

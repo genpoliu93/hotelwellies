@@ -93,6 +93,8 @@ export const en = {
     title: "Featured Rooms",
     subtitle:
       "We offer various types of rooms to meet the needs of different guests.",
+    galleryTitle: "Room Gallery",
+    gallerySubtitle: "Discover the comfort and elegance of our rooms",
     standard: "Standard Double Room",
     standardDesc: "Comfortable and practical double room",
     deluxe: "Deluxe Suite",
@@ -113,6 +115,7 @@ export const en = {
   gallery: {
     title: "Hotel Gallery",
     subtitle: "Photo Gallery",
+    photos: "Photos",
     categories: {
       all: "All Photos",
       interior: "Interior",
