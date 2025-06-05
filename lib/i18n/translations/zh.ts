@@ -123,7 +123,7 @@ export const zh = {
     subtitle: "有任何问题或需求，请随时联系我们。",
     description: "有任何问题或需求，请随时联系我们。",
     address: "地址: 〒389-0111長野県北佐久郡軽井沢町長倉2350-160 ",
-    phone: "电话 +81-265-82-1111",
+    phone: "电话 +81-267-46-1670",
     email: "邮箱:info@hotelwellies.jp",
     frontDeskHours: "前台服务时间",
     phoneTitle: "电话",

@@ -34,10 +34,10 @@ export function HelpCard() {
             <div>
               <p className="text-sm text-gray-500">{t("contact.phone")}</p>
               <a
-                href="tel:+81-265-82-1111"
+                href="tel:+81-267-46-1670"
                 className="font-medium text-gray-800 hover:text-primary"
               >
-                +81-265-82-1111
+                +81-267-46-1670
               </a>
             </div>
           </div>
