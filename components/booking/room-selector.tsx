@@ -72,9 +72,34 @@ export function RoomSelector({
   const nights = calculateNights();
   const totalGuests = adults + children;
 
+  // 禁用6月7日-8日
+  const isDateBlocked = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // getMonth()返回0-11，需要+1
+    const day = date.getDate();
+
+    // 检查是否为2025年6月7日或8日
+    return year === 2025 && month === 6 && (day === 7 || day === 8);
+  };
+
   // 使用API获取房间数据
   const { data, isLoading, error, refetch } = useApi(() => {
     if (!checkInDate || !checkOutDate) return null;
+
+    // 如果入住日期为6月7日或8日，返回空数据（没有房间）
+    if (isDateBlocked(checkInDate)) {
+      return Promise.resolve({
+        code: 200,
+        message: "No rooms available for selected dates",
+        data: {
+          rooms: [],
+          total: 0,
+          pageIndex: 0,
+          pageSize: 0,
+        },
+      });
+    }
+
     return fetchAvailableRooms(checkInDate, checkOutDate, adults, children);
   }, [checkInDate, checkOutDate, adults, children]);
 

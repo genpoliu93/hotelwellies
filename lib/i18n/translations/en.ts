@@ -139,7 +139,7 @@ export const en = {
     subtitle: "For any questions or needs, please feel free to contact us.",
     address:
       "Address 2350-160 Nagakura, Karuizawa, Kitasaku District, Nagano 389-0111",
-    phone: "Phone +81-265-82-1111",
+    phone: "Phone +81-267-46-1670",
     email: "Email: info@hotelwellies.jp",
     frontDeskHours: "Front Desk Hours",
     sendMessage: "Send Message",
