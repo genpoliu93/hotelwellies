@@ -52,31 +52,6 @@ export function DatePicker({
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // 获取默认可选的起始日期（跳过被禁用的日期）
-  const getDefaultStartDate = () => {
-    let startDate = new Date(today);
-    while (isDateBlocked(startDate) || startDate < today) {
-      startDate.setDate(startDate.getDate() + 1);
-    }
-    return startDate;
-  };
-
-  // 禁用6月7日-8日
-  const isDateBlocked = (date: Date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1; // getMonth()返回0-11，需要+1
-    const day = date.getDate();
-
-    const blocked = year === 2025 && month === 6 && (day === 7 || day === 8);
-
-    // 临时调试信息
-    if (blocked) {
-      console.log(`日期被禁用: ${year}-${month}-${day}`);
-    }
-
-    return blocked;
-  };
-
   // 获取date-fns locale对象
   const dateLocale = getDateFnsLocale(locale as SupportedLocale);
 
@@ -109,14 +84,7 @@ export function DatePicker({
 
   // 处理快捷日期选择
   const handleQuickDate = (nights: number) => {
-    let startDate = tempCheckIn || getDefaultStartDate();
-
-    // 如果起始日期被禁用，寻找下一个可用日期
-    while (isDateBlocked(startDate) || startDate < today) {
-      startDate = new Date(startDate);
-      startDate.setDate(startDate.getDate() + 1);
-    }
-
+    const startDate = tempCheckIn || today;
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + nights);
 
@@ -299,7 +267,7 @@ export function DatePicker({
                             handleCheckInSelect(range.from);
                           }
                         }}
-                        disabled={(date) => date < today || isDateBlocked(date)}
+                        disabled={(date) => date < today}
                         locale={dateLocale}
                         className="rounded-md border-0 w-full"
                         classNames={{
@@ -355,7 +323,6 @@ export function DatePicker({
                         }}
                         disabled={(date) => {
                           if (date < today) return true;
-                          if (isDateBlocked(date)) return true;
                           if (tempCheckIn && date <= tempCheckIn) return true;
                           return false;
                         }}

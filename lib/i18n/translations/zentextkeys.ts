@@ -2,10 +2,8 @@
 
 export const zenTextKeysEN = {
   about: {
-    paragraph1:
-      "Hotel Wellies opened in July 2013 as a European-style hideaway in the healing mountain resort of Karuizawa, about an hour by train from Tokyo. We are here to help you create fun, friendly and relaxed memories.",
-    paragraph2:
-      "Enjoy a cup of tea, a drink at the bar, and experience Britain in Japan. Chris, the British owner who came to Japan in 1984, will talk to you in English and slightly unusual Japanese. The hotel has been stylishly renovated over the last few years, with each room individually designed like a boutique hotel.",
+    paragraph1: "",
+    paragraph2: "",
   },
   features: {
     description:
@@ -69,10 +67,8 @@ export const zenTextKeysEN = {
 
 export const zenTextKeysJA = {
   about: {
-    paragraph1:
-      "ウェリーズは、2013年7月、癒しのマウンテンリゾート軽井沢にヨーロッパ風の隠れ家としてオープンしました‐東京から電車で一時間程度です。楽しく、フレンドリーで、リラックスした思い出作りのお手伝いをいたします。",
-    paragraph2:
-      "紅茶を飲んだり、バー（パブ）でお酒を楽しんだりして、まるで英国にいるかのような体験をしてください。１９８４年に日本に来た英国人オーナーのクリスは、英語で、また、ちょっと変わった日本語で皆様とお話します。ホテルは、ここ数年の間におしゃれに改装され、各客室はブティックのように個性的にデザインされています。",
+    paragraph1: "",
+    paragraph2: "",
   },
   features: {
     description:

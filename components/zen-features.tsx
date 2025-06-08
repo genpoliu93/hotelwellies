@@ -30,7 +30,7 @@ export function ZenFeatures() {
       gradientTo: "to-emerald-600/80",
       iconBg: "bg-green-500/20",
     },
-    {
+    /*     {
       icon: <Coffee className="h-10 w-10 text-white" />,
       title: t("features.feature3Title"),
       description: t("features.feature3Description"),
@@ -39,7 +39,7 @@ export function ZenFeatures() {
       gradientFrom: "from-amber-500/80",
       gradientTo: "to-orange-600/80",
       iconBg: "bg-amber-500/20",
-    },
+    }, */
   ];
 
   return (

@@ -29,25 +29,6 @@ export function BookingForm() {
   const [roomPrice, setRoomPrice] = useState(0); // 选中套餐的总价
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 禁用6月7日-8日的辅助函数
-  const isDateBlocked = (date: Date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return year === 2025 && month === 6 && (day === 7 || day === 8);
-  };
-
-  // 获取默认可选的起始日期（跳过被禁用的日期）
-  const getDefaultStartDate = () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    let startDate = new Date(today);
-    while (isDateBlocked(startDate) || startDate < today) {
-      startDate.setDate(startDate.getDate() + 1);
-    }
-    return startDate;
-  };
-
   // 从URL参数初始化数据
   useEffect(() => {
     const checkInParam = searchParams.get("checkIn");
@@ -60,15 +41,6 @@ export function BookingForm() {
       if (!isNaN(checkInDate.getTime())) {
         setCheckInDate(checkInDate);
       }
-    } else {
-      // 如果没有URL参数，设置默认日期为下一个可用日期（跳过7-8号）
-      const defaultDate = getDefaultStartDate();
-      setCheckInDate(defaultDate);
-
-      // 设置默认退房日期为入住日期+2天
-      const defaultCheckOut = new Date(defaultDate);
-      defaultCheckOut.setDate(defaultDate.getDate() + 2);
-      setCheckOutDate(defaultCheckOut);
     }
 
     if (checkOutParam) {

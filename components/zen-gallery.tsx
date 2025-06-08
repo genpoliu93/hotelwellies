@@ -30,7 +30,7 @@ export function ZenGallery() {
       gradientFrom: "from-green-500/70",
       gradientTo: "to-teal-600/70",
     },
-    {
+    /*  {
       id: 3,
       src: "/images/afternoon-tea.webp",
       alt: t("gallery.image3Alt"),
@@ -38,9 +38,9 @@ export function ZenGallery() {
       aspectRatio: "aspect-[1/1]",
       gradientFrom: "from-amber-500/70",
       gradientTo: "to-orange-600/70",
-    },
+    }, */
     {
-      id: 4,
+      id: 3,
       src: "/images/walking-paths.webp",
       alt: t("gallery.image4Alt"),
       category: t("gallery.categoryNature"),
@@ -49,7 +49,7 @@ export function ZenGallery() {
       gradientTo: "to-green-600/70",
     },
     {
-      id: 5,
+      id: 4,
       src: "/images/deluxe-room.webp",
       alt: t("gallery.image5Alt"),
       category: t("gallery.categoryRooms"),
@@ -57,15 +57,15 @@ export function ZenGallery() {
       gradientFrom: "from-purple-500/70",
       gradientTo: "to-violet-600/70",
     },
-    {
-      id: 6,
+    /*    {
+      id: 5,
       src: "/images/british-food.webp",
       alt: t("gallery.image6Alt"),
       category: t("gallery.categoryDining"),
       aspectRatio: "aspect-[3/4]",
       gradientFrom: "from-rose-500/70",
       gradientTo: "to-pink-600/70",
-    },
+    }, */
   ];
 
   return (
