@@ -2,8 +2,10 @@
 
 export const zenTextKeysEN = {
   about: {
-    paragraph1: "",
-    paragraph2: "",
+    paragraph1:
+      "Discover a unique British retreat in the heart of Karuizawa, where English charm meets Japanese tranquility. Just one hour from Tokyo, our boutique hotel offers an authentic taste of Britain amidst the beautiful highland scenery, creating an unforgettable sanctuary for those seeking something truly special.",
+    paragraph2:
+      "Experience the essence of British hospitality through our carefully preserved traditions - from proper afternoon tea service to cozy pub atmosphere with a warming fireplace. Every detail, from our thoughtfully curated collections to our hearty English breakfasts, reflects our dedication to bringing you the genuine warmth and elegance of British culture in this peaceful mountain setting.",
   },
   features: {
     description:
@@ -78,8 +80,10 @@ export const zenTextKeysEN = {
 
 export const zenTextKeysJA = {
   about: {
-    paragraph1: "",
-    paragraph2: "",
+    paragraph1:
+      "軽井沢の中心部で、英国の魅力と日本の静寂が出会うユニークなブリティッシュリトリートをお楽しみください。東京からわずか1時間、美しい高原の景色の中で本格的な英国の味わいを提供し、特別なものを求める方々にとって忘れられない聖域を創り出しています。",
+    paragraph2:
+      "丁寧に保たれた伝統を通じて英国式おもてなしの真髄をご体験ください。本格的なアフタヌーンティーサービスから、暖かい暖炉のある居心地の良いパブの雰囲気まで。厳選されたコレクションから心温まる英国式朝食まで、すべての細部が、この静かな山間の環境で英国文化の真の温かさと優雅さをお届けするという私たちの献身を反映しています。",
   },
   features: {
     description:
@@ -155,9 +159,9 @@ export const zenTextKeysJA = {
 export const zenTextKeysZH = {
   about: {
     paragraph1:
-      "一次非常棒的体验。感谢Chris的接站。他是一个有趣的人，酒店的很多东西都很棒。英国男孩的收藏品。即使下雨，你也可以在Wellies里玩得很开心。音乐和食物也很棒。这是一个你想来的地方。这里遇到的人都很棒。再次感谢。",
+      "在轻井泽的中心地带发现独特的英式度假胜地，这里英国魅力与日本宁静完美相遇。距离东京仅一小时车程，我们的精品酒店在美丽的高原风景中提供正宗的英国体验，为追求特别之处的客人创造难忘的避世之所。",
     paragraph2:
-      "在这里，您可以品尝一杯茶，在酒吧小酌，体验日本中的英国风情。1984年来到日本的英国老板克里斯会用英语和略显特别的日语与您交流。酒店在过去几年进行了时尚翻新，每个房间都像精品酒店一样独特设计。",
+      "通过我们精心保持的传统体验英式酒店服务的精髓——从正宗的下午茶服务到配有温暖壁炉的舒适酒吧氛围。每一个细节，从我们精心策划的收藏品到丰盛的英式早餐，都体现了我们在这宁静山间环境中为您带来英国文化真正温暖与优雅的执着追求。",
   },
   features: {
     description: "我们提供各种服务，使您的住宿舒适难忘。",
