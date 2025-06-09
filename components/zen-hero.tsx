@@ -35,12 +35,28 @@ import {
 // 轮播图片配置
 const carouselImages = [
   {
-    src: "/images/hotel-exterior.webp",
-    alt: "Hotel Wellies in Karuizawa",
+    src: "/images/banner/1631749382675_.pic.jpg",
+    alt: "Hotel Wellies Banner 1",
   },
   {
-    src: "/images/hero2.jpg",
-    alt: "Hotel Wellies Interior",
+    src: "/images/banner/1641749382677_.pic.jpg",
+    alt: "Hotel Wellies Banner 2",
+  },
+  {
+    src: "/images/banner/1651749382678_.pic.jpg",
+    alt: "Hotel Wellies Banner 3",
+  },
+  {
+    src: "/images/banner/1661749382679_.pic.jpg",
+    alt: "Hotel Wellies Banner 4",
+  },
+  {
+    src: "/images/banner/1671749382679_.pic.jpg",
+    alt: "Hotel Wellies Banner 5",
+  },
+  {
+    src: "/images/banner/1691749382681_.pic.jpg",
+    alt: "Hotel Wellies Banner 6",
   },
 ];
 

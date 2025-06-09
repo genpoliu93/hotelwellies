@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { useLanguage } from "@/lib/i18n/context"
-import { motion, AnimatePresence } from "framer-motion"
-import { cn } from "@/lib/utils"
-import { LocationMap } from "./location-map"
-import { MapPin, Phone, Mail } from "lucide-react"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { useLanguage } from "@/lib/i18n/context";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { LocationMap } from "./location-map";
+import { MapPin, Phone, Mail } from "lucide-react";
 
 export function Gallery() {
-  const { t } = useLanguage()
-  const [activeCategory, setActiveCategory] = useState("all")
-  const [activeImage, setActiveImage] = useState<number | null>(null)
+  const { t } = useLanguage();
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [activeImage, setActiveImage] = useState<number | null>(null);
 
   const categories = [
     { id: "all", label: t("gallery.categories.all") },
     { id: "interior", label: t("gallery.categories.interior") },
     { id: "dining", label: t("gallery.categories.dining") },
     { id: "exterior", label: t("gallery.categories.exterior") },
-  ]
+  ];
 
   const galleryImages = [
     {
@@ -61,47 +61,54 @@ export function Gallery() {
       alt: "酒店周边散步路线",
       category: "exterior",
     },
-  ]
+  ];
 
-  const filteredImages = galleryImages.filter((image) => activeCategory === "all" || image.category === activeCategory)
+  const filteredImages = galleryImages.filter(
+    (image) => activeCategory === "all" || image.category === activeCategory
+  );
 
   const closeModal = () => {
-    setActiveImage(null)
-    document.body.style.overflow = "auto"
-  }
+    setActiveImage(null);
+    document.body.style.overflow = "auto";
+  };
 
   const openModal = (index: number) => {
-    setActiveImage(index)
-    document.body.style.overflow = "hidden"
-  }
+    setActiveImage(index);
+    document.body.style.overflow = "hidden";
+  };
 
   const navigateImage = (direction: number) => {
-    if (activeImage === null) return
+    if (activeImage === null) return;
 
-    const newIndex = (activeImage + direction + filteredImages.length) % filteredImages.length
-    setActiveImage(newIndex)
-  }
+    const newIndex =
+      (activeImage + direction + filteredImages.length) % filteredImages.length;
+    setActiveImage(newIndex);
+  };
 
   // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (activeImage === null) return
+      if (activeImage === null) return;
 
-      if (e.key === "ArrowLeft") navigateImage(-1)
-      if (e.key === "ArrowRight") navigateImage(1)
-      if (e.key === "Escape") closeModal()
-    }
+      if (e.key === "ArrowLeft") navigateImage(-1);
+      if (e.key === "ArrowRight") navigateImage(1);
+      if (e.key === "Escape") closeModal();
+    };
 
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [activeImage])
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeImage]);
 
   return (
     <section id="gallery" className="py-20 bg-white">
       <div className="container px-4 mx-auto">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight mb-4">{t("gallery.title")}</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t("gallery.subtitle")}</p>
+          <h2 className="text-4xl font-bold tracking-tight mb-4">
+            {t("gallery.title")}
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            {t("gallery.subtitle")}
+          </p>
         </div>
 
         {/* Category filters */}
@@ -114,7 +121,7 @@ export function Gallery() {
                 "px-6 py-2 rounded-full text-sm font-medium transition-all duration-300",
                 activeCategory === category.id
                   ? "bg-primary text-white shadow-md"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200",
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               )}
             >
               {category.label}
@@ -155,15 +162,20 @@ export function Gallery() {
         <div className="mt-20 bg-white rounded-2xl overflow-hidden shadow-lg">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
             <div className="p-8 md:p-12 flex flex-col justify-center">
-              <h3 className="text-2xl font-bold mb-6">{t("gallery.locationTitle")}</h3>
+              <h3 className="text-2xl font-bold mb-6">
+                {t("gallery.locationTitle")}
+              </h3>
 
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <MapPin className="h-6 w-6 text-primary shrink-0 mt-1" />
                   <div>
-                    <h4 className="font-semibold mb-1">{t("contact.address")}</h4>
+                    <h4 className="font-semibold mb-1">
+                      {t("contact.address")}
+                    </h4>
                     <p className="text-muted-foreground">
-                      〒389-0111 Nagano, Kitasaku District, Karuizawa, Nagakura, 2350-160
+                      〒389-0111 Nagano, Kitasaku District, Karuizawa, Nagakura,
+                      2350-160
                     </p>
                   </div>
                 </div>
@@ -173,7 +185,10 @@ export function Gallery() {
                   <div>
                     <h4 className="font-semibold mb-1">{t("contact.phone")}</h4>
                     <p className="text-muted-foreground">
-                      <a href="tel:+81-267-46-1670" className="hover:text-primary transition-colors">
+                      <a
+                        href="tel:+81-267-46-1670"
+                        className="hover:text-primary transition-colors"
+                      >
                         +81-267-46-1670
                       </a>
                     </p>
@@ -185,14 +200,19 @@ export function Gallery() {
                   <div>
                     <h4 className="font-semibold mb-1">{t("contact.email")}</h4>
                     <p className="text-muted-foreground">
-                      <a href="mailto:info@hotelwellies.jp" className="hover:text-primary transition-colors">
+                      <a
+                        href="mailto:info@hotelwellies.jp"
+                        className="hover:text-primary transition-colors"
+                      >
                         info@hotelwellies.jp
                       </a>
                     </p>
                   </div>
                 </div>
 
-                <p className="text-sm text-muted-foreground pt-4">{t("about.locationInfo")}</p>
+                <p className="text-sm text-muted-foreground pt-4">
+                  {t("about.locationInfo")}
+                </p>
               </div>
             </div>
 
@@ -245,8 +265,8 @@ export function Gallery() {
               <button
                 className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 transition-colors"
                 onClick={(e) => {
-                  e.stopPropagation()
-                  navigateImage(-1)
+                  e.stopPropagation();
+                  navigateImage(-1);
                 }}
               >
                 <svg
@@ -267,8 +287,8 @@ export function Gallery() {
               <button
                 className="absolute right-4 top-1/2 -translate-y-1/2 z-10 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 transition-colors"
                 onClick={(e) => {
-                  e.stopPropagation()
-                  navigateImage(1)
+                  e.stopPropagation();
+                  navigateImage(1);
                 }}
               >
                 <svg
@@ -298,12 +318,14 @@ export function Gallery() {
               </div>
 
               <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white p-4 text-center">
-                <p className="text-lg font-medium">{filteredImages[activeImage].alt}</p>
+                <p className="text-lg font-medium">
+                  {filteredImages[activeImage].alt}
+                </p>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
     </section>
-  )
+  );
 }
