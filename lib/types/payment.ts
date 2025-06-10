@@ -30,6 +30,10 @@ export interface BookingInfo {
   capacity: number;
   /** 总价格 */
   totalPrice: number;
+  /** 套餐代码 */
+  packageCode?: string;
+  /** 套餐名称 */
+  packageName?: string;
 }
 
 export interface CustomerInfo {

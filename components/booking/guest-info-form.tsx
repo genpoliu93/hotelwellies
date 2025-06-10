@@ -159,6 +159,7 @@ export function GuestInfoForm({
           phone: formData.phone,
           country: formData.country,
           arrivalTime: formData.arrivalTime,
+          selectedPackageCode: selectedPackageCode || "ROOM_ONLY",
         });
 
         // 如果有特殊要求，也添加到参数中

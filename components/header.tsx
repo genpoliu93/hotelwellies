@@ -167,9 +167,9 @@ export function Header() {
         <div className="hidden md:flex items-center gap-4">
           <LanguageSwitcher />
 
-          {/*   <Button size="sm" asChild>
+          <Button size="sm" asChild>
             <Link href={`/${locale}/booking`}>{t("common.bookNow")}</Link>
-          </Button> */}
+          </Button>
         </div>
 
         <button

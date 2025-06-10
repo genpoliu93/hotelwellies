@@ -6,6 +6,7 @@ declare module "@/components/payment/payment-summary" {
     price: number;
     adults: number;
     children: number;
+    selectedPackageCode?: string;
   }
 
   export function PaymentSummary(props: PaymentSummaryProps): JSX.Element;
@@ -37,6 +38,7 @@ declare module "@/components/payment/payment-form" {
     country: string;
     arrivalTime: string;
     specialRequests?: string;
+    selectedPackageCode?: string;
   }
 
   export function PaymentForm(props: PaymentFormProps): JSX.Element;

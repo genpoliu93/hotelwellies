@@ -29,6 +29,7 @@ function PaymentContent() {
     phone: string;
     country: string;
     arrivalTime: string;
+    selectedPackageCode: string;
     specialRequests?: string;
   }>({
     checkInDate: null,
@@ -43,6 +44,7 @@ function PaymentContent() {
     phone: "",
     country: "",
     arrivalTime: "",
+    selectedPackageCode: "ROOM_ONLY",
   });
 
   useEffect(() => {
@@ -64,6 +66,8 @@ function PaymentContent() {
         phone: searchParams.get("phone") || "",
         country: searchParams.get("country") || "jp", // 默认日本
         arrivalTime: searchParams.get("arrivalTime") || "",
+        selectedPackageCode:
+          searchParams.get("selectedPackageCode") || "ROOM_ONLY",
         specialRequests: searchParams.get("specialRequests") || undefined,
       });
 
@@ -90,6 +94,7 @@ function PaymentContent() {
         price={paymentData.price}
         adults={paymentData.adults}
         children={paymentData.children}
+        selectedPackageCode={paymentData.selectedPackageCode}
       />
 
       {/* 客人信息 */}
@@ -115,6 +120,7 @@ function PaymentContent() {
         country={paymentData.country}
         arrivalTime={paymentData.arrivalTime}
         specialRequests={paymentData.specialRequests}
+        selectedPackageCode={paymentData.selectedPackageCode}
       />
 
       {/* 条款和条件 */}

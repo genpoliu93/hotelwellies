@@ -34,6 +34,24 @@ export function getRoomTypeName(roomId: string | null): string {
 }
 
 /**
+ * 获取套餐名称（英文）
+ */
+export function getPackageName(packageCode: string): string {
+  switch (packageCode) {
+    case "ROOM_ONLY":
+      return "Room Only";
+    case "BREAKFAST":
+      return "Room with Breakfast";
+    case "DINNER":
+      return "Room with Dinner";
+    case "BREAKFAST_DINNER":
+      return "Room with Breakfast & Dinner";
+    default:
+      return "Room Only";
+  }
+}
+
+/**
  * 构建预订信息
  */
 export function buildBookingInfo(
@@ -42,9 +60,11 @@ export function buildBookingInfo(
   checkOutDate: Date | null,
   adults: number,
   children: number,
-  totalPrice: number
+  totalPrice: number,
+  packageCode?: string
 ): BookingInfo {
   const totalGuests = adults + children;
+  const selectedPackage = packageCode || "ROOM_ONLY";
 
   return {
     roomTypeCode: getRoomTypeCode(roomId),
@@ -54,6 +74,8 @@ export function buildBookingInfo(
     guests: `${totalGuests}`,
     capacity: totalGuests, // 使用客人总数作为容量
     totalPrice: Math.round(totalPrice), // 确保价格为整数
+    packageCode: selectedPackage,
+    packageName: getPackageName(selectedPackage),
   };
 }
 

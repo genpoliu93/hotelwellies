@@ -30,6 +30,7 @@ interface PaymentFormProps {
   country: string;
   arrivalTime: string;
   specialRequests?: string;
+  selectedPackageCode?: string;
 }
 
 declare global {
@@ -52,6 +53,7 @@ export function PaymentForm({
   country,
   arrivalTime,
   specialRequests,
+  selectedPackageCode = "ROOM_ONLY",
 }: PaymentFormProps) {
   const { t, locale } = useLanguage();
   const router = useRouter();
@@ -303,7 +305,8 @@ export function PaymentForm({
         checkOutDate,
         adults,
         children,
-        totalPrice
+        totalPrice,
+        selectedPackageCode
       );
 
       const customerInfo = buildCustomerInfo(

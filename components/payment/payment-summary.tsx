@@ -1,7 +1,14 @@
 "use client";
 
 import { useLanguage } from "@/lib/i18n/context";
-import { CalendarDays, Users } from "lucide-react";
+import {
+  CalendarDays,
+  Users,
+  Package,
+  Coffee,
+  UtensilsCrossed,
+  Home,
+} from "lucide-react";
 import { format } from "date-fns";
 import { ja, enUS, zhCN } from "date-fns/locale";
 
@@ -12,6 +19,7 @@ interface PaymentSummaryProps {
   price: number;
   adults: number;
   children: number;
+  selectedPackageCode?: string; // 套餐代码，可选属性
 }
 
 export function PaymentSummary({
@@ -21,6 +29,7 @@ export function PaymentSummary({
   price,
   adults,
   children,
+  selectedPackageCode = "ROOM_ONLY",
 }: PaymentSummaryProps) {
   const { t, locale } = useLanguage();
 
@@ -43,6 +52,42 @@ export function PaymentSummary({
         maximumFractionDigits: 0,
       }
     ).format(price);
+  };
+
+  // 获取套餐信息
+  const getPackageInfo = () => {
+    switch (selectedPackageCode) {
+      case "ROOM_ONLY":
+        return {
+          name: t("booking.packages.roomOnly"),
+          description: t("booking.packages.roomOnlyDesc"),
+          icon: <Home className="h-4 w-4" />,
+        };
+      case "BREAKFAST":
+        return {
+          name: t("booking.packages.breakfast"),
+          description: t("booking.packages.breakfastDesc"),
+          icon: <Coffee className="h-4 w-4" />,
+        };
+      case "DINNER":
+        return {
+          name: t("booking.packages.dinner"),
+          description: t("booking.packages.dinnerDesc"),
+          icon: <UtensilsCrossed className="h-4 w-4" />,
+        };
+      case "BREAKFAST_DINNER":
+        return {
+          name: t("booking.packages.breakfastDinner"),
+          description: t("booking.packages.breakfastDinnerDesc"),
+          icon: <UtensilsCrossed className="h-4 w-4" />,
+        };
+      default:
+        return {
+          name: t("booking.packages.roomOnly"),
+          description: t("booking.packages.roomOnlyDesc"),
+          icon: <Home className="h-4 w-4" />,
+        };
+    }
   };
 
   // 根据当前语言获取date-fns locale
@@ -90,6 +135,7 @@ export function PaymentSummary({
   // 计算税费（10%）
   const tax = price * 0.1;
   const totalPrice = price + tax;
+  const packageInfo = getPackageInfo();
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -129,6 +175,20 @@ export function PaymentSummary({
                 {adults} {t("booking.adults")}, {children}{" "}
                 {t("booking.children")}
               </p>
+            </div>
+          </div>
+
+          {/* 套餐信息 */}
+          <div className="flex items-start gap-3 pb-4 border-b border-gray-100">
+            <div className="bg-primary/10 rounded-full p-2">
+              <Package className="h-5 w-5 text-primary" />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-2">
+                {packageInfo.icon}
+                <p className="font-medium text-gray-800">{packageInfo.name}</p>
+              </div>
+              <p className="text-sm text-gray-600">{packageInfo.description}</p>
             </div>
           </div>
 

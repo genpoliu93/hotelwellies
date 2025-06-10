@@ -2,7 +2,16 @@
 
 import { useLanguage } from "@/lib/i18n/context";
 import { motion } from "framer-motion";
-import { CalendarDays, Users, CreditCard, ShieldCheck } from "lucide-react";
+import {
+  CalendarDays,
+  Users,
+  CreditCard,
+  ShieldCheck,
+  Package,
+  Coffee,
+  UtensilsCrossed,
+  Home,
+} from "lucide-react";
 import { format } from "date-fns";
 import { ja, enUS, zhCN } from "date-fns/locale";
 
@@ -49,10 +58,77 @@ export function PriceSummary({
     ).format(price);
   };
 
+  // 获取套餐信息
+  const getPackageInfo = () => {
+    switch (selectedPackageCode) {
+      case "ROOM_ONLY":
+        return {
+          name: t("booking.packages.roomOnly"),
+          description: t("booking.packages.roomOnlyDesc"),
+          icon: <Home className="h-4 w-4" />,
+          basePrice: roomPrice,
+          extraPrice: 0,
+          features: [
+            t("booking.packages.roomOnlyFeature1"),
+            t("booking.packages.roomOnlyFeature2"),
+          ],
+        };
+      case "BREAKFAST":
+        return {
+          name: t("booking.packages.withBreakfast"),
+          description: t("booking.packages.withBreakfastDesc"),
+          icon: <Coffee className="h-4 w-4" />,
+          basePrice: roomPrice * 0.85, // 假设套餐加价15%
+          extraPrice: roomPrice * 0.15,
+          features: [
+            t("booking.packages.breakfastFeature1"),
+            t("booking.packages.breakfastFeature2"),
+            t("booking.packages.breakfastFeature3"),
+          ],
+        };
+      case "DINNER":
+        return {
+          name: t("booking.packages.withDinner"),
+          description: t("booking.packages.withDinnerDesc"),
+          icon: <UtensilsCrossed className="h-4 w-4" />,
+          basePrice: roomPrice * 0.75, // 假设套餐加价25%
+          extraPrice: roomPrice * 0.25,
+          features: [
+            t("booking.packages.dinnerFeature1"),
+            t("booking.packages.dinnerFeature2"),
+            t("booking.packages.dinnerFeature3"),
+          ],
+        };
+      case "BREAKFAST_DINNER":
+        return {
+          name: t("booking.packages.breakfastDinner"),
+          description: t("booking.packages.breakfastDinnerDesc"),
+          icon: <UtensilsCrossed className="h-4 w-4" />,
+          basePrice: roomPrice * 0.65, // 假设套餐加价35%
+          extraPrice: roomPrice * 0.35,
+          features: [
+            t("booking.packages.fullBoardFeature1"),
+            t("booking.packages.fullBoardFeature2"),
+            t("booking.packages.fullBoardFeature3"),
+            t("booking.packages.fullBoardFeature4"),
+          ],
+        };
+      default:
+        return {
+          name: t("booking.packages.roomOnly"),
+          description: t("booking.packages.roomOnlyDesc"),
+          icon: <Home className="h-4 w-4" />,
+          basePrice: roomPrice,
+          extraPrice: 0,
+          features: [t("booking.packages.roomOnlyFeature1")],
+        };
+    }
+  };
+
   // 计算每晚单价
   const calculatePricePerNight = () => {
-    if (nights <= 0 || totalGuests <= 0) return 0;
-    return Math.round(roomPrice / nights / totalGuests);
+    if (nights <= 0) return 0;
+    return Math.round(roomPrice / nights);
   };
 
   // 计算税费（假设10%）
@@ -107,7 +183,7 @@ export function PriceSummary({
     }
   };
 
-  // API返回的总价已经是住宿总价
+  const packageInfo = getPackageInfo();
   const roomSubtotal = roomPrice;
   const tax = calculateTax(roomSubtotal);
   const total = calculateTotal(roomSubtotal);
@@ -129,6 +205,7 @@ export function PriceSummary({
       {nights > 0 && roomId ? (
         <div className="p-6">
           <div className="space-y-6">
+            {/* 日期信息 */}
             <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
               <div className="bg-primary/10 rounded-full p-2">
                 <CalendarDays className="h-5 w-5 text-primary" />
@@ -147,6 +224,7 @@ export function PriceSummary({
               </div>
             </div>
 
+            {/* 客人信息 */}
             <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
               <div className="bg-primary/10 rounded-full p-2">
                 <Users className="h-5 w-5 text-primary" />
@@ -160,20 +238,69 @@ export function PriceSummary({
               </div>
             </div>
 
+            {/* 套餐信息 */}
+            <div className="flex items-start gap-3 pb-4 border-b border-gray-100">
+              <div className="bg-primary/10 rounded-full p-2">
+                <Package className="h-5 w-5 text-primary" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-2">
+                  {packageInfo.icon}
+                  <p className="font-medium text-gray-800">
+                    {packageInfo.name}
+                  </p>
+                </div>
+                <p className="text-sm text-gray-600 mb-3">
+                  {packageInfo.description}
+                </p>
+                <div className="space-y-1">
+                  {packageInfo.features.map((feature, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                      <p className="text-xs text-gray-500">{feature}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* 房间和价格明细 */}
             <div className="pb-4 border-b border-gray-100">
               <div className="flex justify-between mb-2">
                 <p className="text-gray-700">{getRoomName()}</p>
-                <p className="font-medium text-gray-800">
-                  {formatPrice(pricePerNight)} x {nights} {t("booking.nights")}{" "}
-                  x {totalGuests} {t("booking.guests")}
+                <p className="text-sm text-gray-600">
+                  {formatPrice(pricePerNight)} x {nights} {t("booking.nights")}
                 </p>
               </div>
 
               <div className="space-y-2 mt-4">
+                {/* 基础房费 */}
                 <div className="flex justify-between">
+                  <p className="text-gray-600">{t("booking.baseRoomRate")}</p>
+                  <p className="text-gray-800">
+                    {formatPrice(packageInfo.basePrice)}
+                  </p>
+                </div>
+
+                {/* 套餐加价（如果有） */}
+                {packageInfo.extraPrice > 0 && (
+                  <div className="flex justify-between">
+                    <p className="text-gray-600">
+                      {t("booking.packageSupplement")}
+                    </p>
+                    <p className="text-gray-800">
+                      {formatPrice(packageInfo.extraPrice)}
+                    </p>
+                  </div>
+                )}
+
+                {/* 小计 */}
+                <div className="flex justify-between pt-2 border-t border-gray-100">
                   <p className="text-gray-600">{t("booking.roomSubtotal")}</p>
                   <p className="text-gray-800">{formatPrice(roomSubtotal)}</p>
                 </div>
+
+                {/* 税费 */}
                 <div className="flex justify-between">
                   <p className="text-gray-600">{t("booking.taxesAndFees")}</p>
                   <p className="text-gray-800">{formatPrice(tax)}</p>
@@ -181,11 +308,13 @@ export function PriceSummary({
               </div>
             </div>
 
+            {/* 总价 */}
             <div className="flex justify-between pt-2 font-bold">
-              <p className="text-gray-900">{t("booking.totalPrice")}</p>
-              <p className="text-gray-900">{formatPrice(total)}</p>
+              <p className="text-xl text-gray-900">{t("booking.totalPrice")}</p>
+              <p className="text-xl text-primary">{formatPrice(total)}</p>
             </div>
 
+            {/* 安全提示 */}
             <div className="mt-6 bg-gray-50 p-4 rounded-lg">
               <div className="flex items-start gap-3">
                 <ShieldCheck className="h-5 w-5 text-primary mt-0.5" />
@@ -207,6 +336,7 @@ export function PriceSummary({
         </div>
       )}
 
+      {/* 支付方式 */}
       <div className="bg-gray-50 p-6 border-t border-gray-100">
         <div className="flex items-center gap-3">
           <CreditCard className="h-5 w-5 text-primary" />
