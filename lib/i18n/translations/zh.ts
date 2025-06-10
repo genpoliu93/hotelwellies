@@ -362,9 +362,11 @@ export const zh = {
     roomTypes: {
       standard_twin: "标准双床房",
       standard_twin_mountain: "标准双床房（山景）",
-      family_room: "家庭房（二层）",
-      deluxe_double: "豪华双人房",
+      standard_double: "标准双人房",
       standard_double_mountain: "标准双人房（山景）",
+      family_room: "家庭房",
+      family_room_2f: "家庭房（二层）",
+      deluxe_double: "豪华双人房",
     },
     roomFeatures: {
       mountainView: "山景",

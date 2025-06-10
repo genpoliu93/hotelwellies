@@ -386,9 +386,11 @@ export const en = {
     roomTypes: {
       standard_twin: "Standard Twin Room",
       standard_twin_mountain: "Standard Twin Room (Mountain View)",
-      family_room: "Family Room (2nd Floor)",
-      deluxe_double: "Deluxe Double Room",
+      standard_double: "Standard Double Room",
       standard_double_mountain: "Standard Double Room (Mountain View)",
+      family_room: "Family Room",
+      family_room_2f: "Family Room (2nd Floor)",
+      deluxe_double: "Deluxe Double Room",
     },
     roomFeatures: {
       mountainView: "Mountain View",

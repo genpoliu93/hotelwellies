@@ -313,7 +313,8 @@ export function RoomSelector({
     const translatedName = t(translationKey);
     // 如果翻译键不存在或翻译为空，会返回键本身，这种情况下使用原始名称
     if (!translatedName || translatedName === translationKey) {
-      return room.roomName;
+      // 如果没有翻译，优先使用roomName，如果也没有则使用roomType
+      return room.roomName || room.roomType;
     }
     return translatedName;
   };

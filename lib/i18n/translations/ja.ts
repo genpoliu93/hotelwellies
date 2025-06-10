@@ -375,9 +375,11 @@ export const ja = {
     roomTypes: {
       standard_twin: "スタンダードツインルーム",
       standard_twin_mountain: "スタンダードツインルーム（マウンテンビュー）",
-      family_room: "ファミリールーム（2階）",
-      deluxe_double: "デラックスダブルルーム",
+      standard_double: "スタンダードダブルルーム",
       standard_double_mountain: "スタンダードダブルルーム（マウンテンビュー）",
+      family_room: "ファミリールーム",
+      family_room_2f: "ファミリールーム（2階）",
+      deluxe_double: "デラックスダブルルーム",
     },
     roomFeatures: {
       mountainView: "マウンテンビュー",
