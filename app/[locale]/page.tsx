@@ -24,7 +24,6 @@ export default function Home() {
       <ZenAbout />
       <ZenFeatures />
       <ZenRooms />
-      <ZenTestimonials />
       <ZenGallery />
       <ZenContact />
       <Footer />
