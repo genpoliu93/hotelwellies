@@ -626,10 +626,10 @@ export function ZenHero() {
       </div>
 
       {/* 快速搜索栏 - 底部固定，调整位置 */}
-      <div className="absolute bottom-6 left-0 right-0 z-20 px-6 md:px-10">
+      {/*     <div className="absolute bottom-6 left-0 right-0 z-20 px-6 md:px-10">
         <QuickSearch />
       </div>
-
+ */}
       {/* 底部水平信息卡片 - 此区域已移除并整合到右侧 */}
     </section>
   );
