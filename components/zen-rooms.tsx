@@ -47,7 +47,7 @@ export function ZenRooms() {
       price: t("rooms.room3Price"),
       image: "/images/hotel-room.jpg",
       features: [t("rooms.feature1"), t("rooms.feature4"), t("rooms.feature5")],
-      japaneseLabel: "スタンダード　トリプルルーム",
+      japaneseLabel: "ファミリールーム",
       gradientFrom: "from-amber-500/80",
       gradientTo: "to-orange-600/80",
       iconBg: "bg-amber-500/20",

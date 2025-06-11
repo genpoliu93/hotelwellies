@@ -78,6 +78,20 @@ export const zh = {
     },
     ...zenTextKeysZH.features,
   },
+  services: {
+    title: "我们的特色服务",
+    subtitle: "酒店服务",
+    description: "体验我们精心策划的服务，让您的住宿更加难忘和舒适。",
+    welcomeTeaTitle: "迎宾茶（17:00前入住的客人）",
+    welcomeTeaDescription:
+      "我们为入住当天17:00前到达的客人提供免费迎宾茶服务。我们还准备了英国传统司康饼或柠檬蛋糕，入住后请随时向工作人员询问。",
+    diningTitle: "餐食（早餐·晚餐）",
+    diningDescription:
+      "即使没有提前预订，只要在当天或前一天联系我们，我们也可以为您准备餐食。\n• 早餐（英式自制）：每人2,000日元\n• 5道菜晚餐套餐：每人5,000日元\n开始时间：18:00~18:45 / 请在前一天预订。",
+    specialSurpriseTitle: "我们也承接特别日子的惊喜服务！",
+    specialSurpriseDescription:
+      "我们帮助您为生日、纪念日、毕业等重要日子进行特别安排。蛋糕·起泡酒·花束套装（含留言）：6,000日元（※需提前3天预订）",
+  },
   rooms: {
     almostSoldOut: "几乎售罄",
     title: "精选客房",

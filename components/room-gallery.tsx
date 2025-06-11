@@ -53,7 +53,7 @@ const roomData = {
   threebed: {
     nameKey: "rooms.room3Name",
     descriptionKey: "rooms.room3Description",
-    japaneseLabel: "スタンダード　トリプルルーム",
+    japaneseLabel: "ファミリールーム",
     gradientFrom: "from-amber-500/80",
     gradientTo: "to-orange-600/80",
     iconBg: "bg-amber-500/20",
