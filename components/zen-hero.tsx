@@ -160,7 +160,7 @@ const QuickSearch = () => {
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
+      transition={{ delay: 1.4, duration: 0.8 }}
       className="bg-black/20 backdrop-blur-md border border-white/20 rounded-lg p-6 w-full max-w-4xl mx-auto"
     >
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -461,7 +461,7 @@ export function ZenHero() {
     initial: { opacity: 0, x: 60 }, // Start off-screen to the right and transparent
     whileInView: { opacity: 1, x: 0 }, // Animate to fully visible and original position
     viewport: { once: true, amount: 0.4 }, // Trigger animation when 40% of the card is visible
-    transition: { duration: 0.9, delay, ease: "easeOut" },
+    transition: { duration: 0.9, delay },
   });
 
   return (
@@ -558,7 +558,6 @@ export function ZenHero() {
               transition={{
                 delay: 0.6,
                 duration: 1.2,
-                ease: "easeOut",
               }}
               className="text-4xl md:text-5xl font-extralight tracking-widest leading-tight"
               style={{ maxHeight: "60vh" }}
@@ -572,7 +571,6 @@ export function ZenHero() {
               transition={{
                 delay: 0.8,
                 duration: 1.2,
-                ease: "easeOut",
               }}
               className="text-base md:text-lg text-white/80 font-light max-w-[45ch]"
               style={{ maxHeight: "40vh" }}
@@ -583,7 +581,7 @@ export function ZenHero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 1, ease: "easeOut" }}
+            transition={{ delay: 1.0, duration: 1 }}
             className="mt-10"
           >
             <Button
