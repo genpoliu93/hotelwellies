@@ -11,7 +11,7 @@ export function ZenContact() {
 
   const handleContactClick = () => {
     const subject = encodeURIComponent(t("contact.defaultSubject"));
-    const mailtoLink = `mailto:chrisprice@hotelwellies.jp?subject=${subject}`;
+    const mailtoLink = `mailto:info@hotelwellies.jp?subject=${subject}`;
     window.location.href = mailtoLink;
   };
 
