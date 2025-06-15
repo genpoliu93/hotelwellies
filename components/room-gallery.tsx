@@ -29,9 +29,7 @@ const roomData = {
     iconBg: "bg-blue-500/20",
     icon: <Bed className="h-6 w-6 text-white" />,
     images: Array.from({ length: 10 }, (_, i) => {
-      const numbers = [
-        4509, 4510, 4511, 4512, 4513, 4515, 4516, 4517, 4519, 4521,
-      ];
+      const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
       return `/images/rooms/deluxe/DSCF${numbers[i]}.jpg`;
     }),
   },

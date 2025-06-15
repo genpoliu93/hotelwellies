@@ -19,7 +19,7 @@ export function ZenRooms() {
       name: t("rooms.room1Name"),
       description: t("rooms.room1Description"),
       price: t("rooms.room1Price"),
-      image: "/images/rooms/deluxe/DSCF4509.jpg",
+      image: "/images/rooms/deluxe/DSCF4.jpg",
       features: [t("rooms.feature1"), t("rooms.feature2"), t("rooms.feature3")],
       japaneseLabel: "デラックス　ダブルルーム",
       gradientFrom: "from-blue-500/80",

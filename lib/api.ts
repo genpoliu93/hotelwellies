@@ -94,6 +94,15 @@ async function fetchApi<T>(
   };
 
   try {
+    // 添加调试信息
+    console.log("API请求URL:", url);
+    console.log("请求选项:", fetchOptions);
+
+    // 检查 fetch 是否可用
+    if (typeof fetch === "undefined") {
+      throw new Error("fetch 不可用，可能需要 polyfill");
+    }
+
     const response = await fetch(url, fetchOptions);
 
     if (!response.ok) {
@@ -104,6 +113,9 @@ async function fetchApi<T>(
     return data as ApiResponse<T>;
   } catch (error) {
     console.error("API请求错误:", error);
+    console.error("请求URL:", url);
+    console.error("基础URL:", API_CONFIG.baseURL);
+    console.error("环境:", process.env.NODE_ENV);
     throw error;
   }
 }
