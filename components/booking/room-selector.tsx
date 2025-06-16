@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +18,11 @@ import {
   Baby,
   Loader2,
   RotateCcw,
+  Eye,
+  Expand,
+  X,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
 import { motion } from "framer-motion";
@@ -61,6 +66,11 @@ export function RoomSelector({
   const [roomPackageSelections, setRoomPackageSelections] = useState<
     Record<string, string>
   >({});
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [selectedRoomForImage, setSelectedRoomForImage] = useState<Room | null>(
+    null
+  );
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // 计算住宿天数
   const calculateNights = () => {
@@ -319,6 +329,69 @@ export function RoomSelector({
     return translatedName;
   };
 
+  // 处理点击查看大图
+  const handleImageClick = (room: Room, imageIndex: number = 0) => {
+    setSelectedRoomForImage(room);
+    setCurrentImageIndex(imageIndex);
+    setImageModalOpen(true);
+  };
+
+  // 关闭图片模态框
+  const handleCloseImageModal = () => {
+    setImageModalOpen(false);
+    setSelectedRoomForImage(null);
+    setCurrentImageIndex(0);
+  };
+
+  // 切换图片
+  const handlePrevImage = () => {
+    if (selectedRoomForImage && selectedRoomForImage.images.length > 1) {
+      setCurrentImageIndex((prev) =>
+        prev === 0 ? selectedRoomForImage.images.length - 1 : prev - 1
+      );
+    }
+  };
+
+  const handleNextImage = () => {
+    if (selectedRoomForImage && selectedRoomForImage.images.length > 1) {
+      setCurrentImageIndex((prev) =>
+        prev === selectedRoomForImage.images.length - 1 ? 0 : prev + 1
+      );
+    }
+  };
+
+  // 键盘事件处理
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!imageModalOpen) return;
+
+      switch (event.key) {
+        case "Escape":
+          handleCloseImageModal();
+          break;
+        case "ArrowLeft":
+          event.preventDefault();
+          handlePrevImage();
+          break;
+        case "ArrowRight":
+          event.preventDefault();
+          handleNextImage();
+          break;
+      }
+    };
+
+    if (imageModalOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+      // 防止背景滚动
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "unset";
+    };
+  }, [imageModalOpen, selectedRoomForImage]);
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -377,25 +450,47 @@ export function RoomSelector({
                       : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
-                  {/* 房间图片区域 - 缩小高度 */}
-                  <div className="relative h-48 overflow-hidden">
+                  {/* 房间图片区域 - 可点击查看大图 */}
+                  <div
+                    className="relative h-64 md:h-80 overflow-hidden cursor-pointer group"
+                    onClick={() => handleImageClick(room, 0)}
+                  >
                     <Image
                       src={getImageSrc(room)}
                       alt={room.roomName}
                       fill
-                      className="object-cover transition-transform duration-300 hover:scale-105"
+                      className="object-cover transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
                       onError={() => handleImageError(room.roomType)}
                     />
 
+                    {/* 点击查看大图的视觉提示 */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                      <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100">
+                        <div className="bg-white/95 backdrop-blur-sm rounded-full p-3 shadow-lg">
+                          <Eye className="h-6 w-6 text-gray-700" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 图片数量指示器 */}
+                    {room.images.length > 1 && (
+                      <div className="absolute top-3 left-3 z-10">
+                        <Badge className="bg-black/70 text-white border-0 backdrop-blur-sm text-xs px-2 py-1 flex items-center gap-1">
+                          <Eye className="h-3 w-3" />
+                          {room.images.length} {t("booking.photos")}
+                        </Badge>
+                      </div>
+                    )}
+
                     {/* 房型可用数量标签 */}
-                    <div className="absolute top-3 left-3">
+                    <div className="absolute top-3 right-3 z-10">
                       <Badge className="bg-black/70 text-white border-0 backdrop-blur-sm text-xs px-2 py-1">
                         {room.availableCount} {t("booking.roomsAvailable")}
                       </Badge>
                     </div>
 
                     {/* 房型特色标签 */}
-                    <div className="absolute top-3 right-3 flex flex-col gap-1">
+                    <div className="absolute bottom-16 right-3 flex flex-col gap-1 z-10">
                       {isMountainView(room.roomType) && (
                         <Badge className="bg-green-500/90 text-white border-0 backdrop-blur-sm text-xs px-2 py-1">
                           🏔️ {t("booking.roomFeatures.mountainView")}
@@ -413,10 +508,11 @@ export function RoomSelector({
                       )}
                     </div>
 
-                    {/* 可用房间号显示（如果有） */}
-                    {room.availableRoomCodes &&
-                      room.availableRoomCodes.length > 0 && (
-                        <div className="absolute bottom-3 left-3">
+                    {/* 底部信息区域 */}
+                    <div className="absolute bottom-3 left-3 right-3 flex justify-between items-end z-10">
+                      {/* 可用房间号显示（如果有） */}
+                      {room.availableRoomCodes &&
+                        room.availableRoomCodes.length > 0 && (
                           <Badge
                             variant="secondary"
                             className="bg-white/90 text-gray-700 text-xs px-2 py-1"
@@ -424,20 +520,24 @@ export function RoomSelector({
                             {room.availableRoomCodes.slice(0, 3).join(", ")}
                             {room.availableRoomCodes.length > 3 && "..."}
                           </Badge>
-                        </div>
-                      )}
+                        )}
 
-                    {/* 选中状态指示器 */}
-                    {selectedRoomId === room.roomType && (
-                      <div className="absolute bottom-3 right-3">
+                      {/* 选中状态指示器 */}
+                      {selectedRoomId === room.roomType && (
                         <div className="bg-primary text-white rounded-full p-1.5 shadow-lg">
                           <Check className="h-4 w-4" />
                         </div>
+                      )}
+
+                      {/* 点击查看大图提示 */}
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 text-xs text-gray-700 font-medium flex items-center gap-1.5">
+                        <Expand className="h-3 w-3" />
+                        {t("booking.clickToViewLargeImage")}
                       </div>
-                    )}
+                    </div>
 
                     {/* 渐变遮罩 */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
                   </div>
 
                   {/* 房间信息区域 - 缩小padding */}
@@ -670,6 +770,116 @@ export function RoomSelector({
           <div className="flex items-center gap-2 text-gray-600">
             <Info className="h-4 w-4 text-primary" />
             <p className="text-sm">{t("booking.selectDatesToSeeRooms")}</p>
+          </div>
+        </div>
+      )}
+
+      {/* 图片查看模态框 */}
+      {imageModalOpen && selectedRoomForImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
+          onClick={handleCloseImageModal}
+        >
+          <div
+            className="relative w-full h-full max-w-7xl mx-auto p-4 flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* 模态框头部 */}
+            <div className="flex items-center justify-between mb-4 text-white">
+              <div>
+                <h3 className="text-xl font-bold">
+                  {getFormattedRoomName(selectedRoomForImage)}
+                </h3>
+                <p className="text-white/70 text-sm">
+                  {selectedRoomForImage.images.length > 1 &&
+                    `${currentImageIndex + 1} / ${
+                      selectedRoomForImage.images.length
+                    }`}
+                </p>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleCloseImageModal}
+                className="text-white hover:bg-white/10 rounded-full p-2"
+              >
+                <X className="h-6 w-6" />
+              </Button>
+            </div>
+
+            {/* 主图片区域 */}
+            <div className="flex-1 relative flex items-center justify-center">
+              <div className="relative w-full h-full max-h-[80vh]">
+                <Image
+                  src={
+                    selectedRoomForImage.images[currentImageIndex] ||
+                    "/placeholder.svg"
+                  }
+                  alt={`${selectedRoomForImage.roomName} - ${
+                    currentImageIndex + 1
+                  }`}
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+
+              {/* 图片导航按钮 */}
+              {selectedRoomForImage.images.length > 1 && (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handlePrevImage}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full p-3"
+                  >
+                    <ChevronLeft className="h-6 w-6" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleNextImage}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black/20 hover:bg-black/40 backdrop-blur-sm rounded-full p-3"
+                  >
+                    <ChevronRight className="h-6 w-6" />
+                  </Button>
+                </>
+              )}
+            </div>
+
+            {/* 缩略图导航 */}
+            {selectedRoomForImage.images.length > 1 && (
+              <div className="mt-4 flex justify-center">
+                <div className="flex gap-2 max-w-full overflow-x-auto px-4">
+                  {selectedRoomForImage.images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 flex-shrink-0 ${
+                        currentImageIndex === index
+                          ? "border-white shadow-lg"
+                          : "border-white/30 hover:border-white/60"
+                      }`}
+                    >
+                      <Image
+                        src={image}
+                        alt={`${selectedRoomForImage.roomName} - ${index + 1}`}
+                        fill
+                        className="object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 键盘提示 */}
+            <div className="mt-4 text-center text-white/60 text-xs">
+              {selectedRoomForImage.images.length > 1 && (
+                <span className="mr-4">← → {t("booking.navigateImages")}</span>
+              )}
+              <span>ESC {t("booking.closeImage")}</span>
+            </div>
           </div>
         </div>
       )}
