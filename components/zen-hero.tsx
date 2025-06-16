@@ -161,9 +161,9 @@ const QuickSearch = () => {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.4, duration: 0.8 }}
-      className="bg-black/20 backdrop-blur-md border border-white/20 rounded-lg p-6 w-full max-w-4xl mx-auto"
+      className="bg-black/20 backdrop-blur-md border border-white/20 rounded-lg p-3 md:p-6 w-full max-w-4xl mx-auto"
     >
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-4">
         {/* 日期选择 */}
         <div className="md:col-span-2">
           <Popover open={isDatePickerOpen} onOpenChange={handleDatePickerOpen}>
@@ -175,12 +175,12 @@ const QuickSearch = () => {
                   !checkInDate && "text-white/70"
                 )}
               >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                <div className="flex flex-col">
+                <CalendarIcon className="mr-2 h-4 w-4 flex-shrink-0" />
+                <div className="flex flex-col min-w-0">
                   <span className="text-xs text-white/70 mb-0.5">
                     {t("booking.stayDates")}
                   </span>
-                  <span className="text-sm font-medium truncate">
+                  <span className="text-xs md:text-sm font-medium truncate">
                     {getDateButtonText()}
                   </span>
                 </div>
@@ -305,10 +305,12 @@ const QuickSearch = () => {
                 variant="outline"
                 className="w-full justify-start text-left font-normal bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm"
               >
-                <Users className="mr-2 h-4 w-4" />
-                {adults + children > 0
-                  ? `${adults + children} ${t("booking.guests")}`
-                  : t("booking.guests")}
+                <Users className="mr-2 h-4 w-4 flex-shrink-0" />
+                <span className="text-xs md:text-sm font-medium truncate">
+                  {adults + children > 0
+                    ? `${adults + children} ${t("booking.guests")}`
+                    : t("booking.guests")}
+                </span>
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-80" align="start">
@@ -386,7 +388,9 @@ const QuickSearch = () => {
             className="w-full bg-primary hover:bg-primary/90 text-white"
           >
             <Search className="mr-2 h-4 w-4" />
-            {t("booking.searchRooms")}
+            <span className="text-xs md:text-sm font-medium">
+              {t("booking.searchRooms")}
+            </span>
           </Button>
         </div>
       </div>
@@ -400,7 +404,7 @@ const InfoCard = ({ titleKey, descKey }: InfoCardProps) => {
 
   return (
     <div // This div is what gets animated by the parent motion.div
-      className="bg-black/50 backdrop-blur-md rounded-lg p-3 md:p-4 border border-white/20 shadow-lg w-28 h-64 md:w-32 md:h-72 flex flex-col items-center justify-center"
+      className="bg-black/50 backdrop-blur-md rounded-lg p-2 md:p-4 border border-white/20 shadow-lg w-20 h-48 md:w-32 md:h-72 flex flex-col items-center justify-center"
     >
       <motion.div // Inner content fade-in
         initial={{ opacity: 0 }}
@@ -408,13 +412,13 @@ const InfoCard = ({ titleKey, descKey }: InfoCardProps) => {
         transition={{ duration: 0.7, delay: 0.2 }} // Quick fade for content after card appears
         className="h-full flex flex-col justify-around items-center text-center"
       >
-        <h3 className="text-white text-lg md:text-xl font-light writing-vertical">
+        <h3 className="text-white text-sm md:text-xl font-light writing-vertical">
           {t(titleKey)}
         </h3>
-        <hr className="w-1/2 border-white/30 my-2" />
+        <hr className="w-1/2 border-white/30 my-1 md:my-2" />
         <p
           className="text-white/80 font-extralight text-xs md:text-sm leading-snug writing-vertical"
-          style={{ maxHeight: "120px", overflowY: "auto" }}
+          style={{ maxHeight: "80px", overflowY: "auto" }}
         >
           {t(descKey)}
         </p>
@@ -520,8 +524,8 @@ export function ZenHero() {
         </button>
       </div>
 
-      {/* 轮播指示器 - 调整位置避免与搜索栏重叠 */}
-      <div className="absolute bottom-32 md:bottom-40 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
+      {/* 轮播指示器 - 移动端隐藏 */}
+      <div className="hidden md:flex absolute bottom-40 left-1/2 transform -translate-x-1/2 z-30 space-x-2">
         {carouselImages.map((_, index) => (
           <button
             key={index}
@@ -537,19 +541,19 @@ export function ZenHero() {
 
       {/* 主要内容容器 - 占据剩余空间，并让内容垂直居中, 分为左右两栏 */}
       <div className="relative z-10 flex-grow flex items-stretch justify-between container px-6 md:px-10 py-10 md:py-16 pb-32 md:pb-40">
-        {/* 左侧竖排标题/副标题 */}
-        <motion.div
-          // Removed absolute positioning and parallax style
-          className="flex flex-col items-start justify-center max-w-[50vw] md:max-w-none" // Added justify-center
-        >
+        {/* 文案区域 - 移动端竖排居中，PC端竖排靠左 */}
+        <motion.div className="flex flex-col items-center md:items-start justify-center w-full md:max-w-[50vw]">
+          {/* 装饰线 - 始终保持竖直 */}
           <motion.div
             initial={{ height: 0 }}
             animate={{ height: "6rem" }}
             transition={{ delay: 1.2, duration: 1, ease: "easeOut" }}
             className="w-px bg-white/70 mb-8 overflow-hidden"
           />
+          
+          {/* 文字内容 - 移动端也使用竖排，但居中显示 */}
           <div
-            className="writing-vertical text-white space-y-8 text-right"
+            className="writing-vertical text-white space-y-8 text-center md:text-right"
             style={{ textOrientation: "mixed", whiteSpace: "normal" }}
           >
             <motion.h1
@@ -559,7 +563,7 @@ export function ZenHero() {
                 delay: 0.6,
                 duration: 1.2,
               }}
-              className="text-4xl md:text-5xl font-extralight tracking-widest leading-tight"
+              className="text-3xl md:text-4xl lg:text-5xl font-extralight tracking-wide md:tracking-widest leading-tight"
               style={{ maxHeight: "60vh" }}
             >
               {t("hero.title")}
@@ -572,7 +576,7 @@ export function ZenHero() {
                 delay: 0.8,
                 duration: 1.2,
               }}
-              className="text-base md:text-lg text-white/80 font-light max-w-[45ch]"
+              className="text-sm md:text-base lg:text-lg text-white/80 font-light max-w-[45ch]"
               style={{ maxHeight: "40vh" }}
             >
               {t("hero.subtitle")}
@@ -582,7 +586,7 @@ export function ZenHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.0, duration: 1 }}
-            className="mt-10"
+            className="mt-10 hidden md:block"
           >
             <Button
               variant="outline"
@@ -598,17 +602,15 @@ export function ZenHero() {
           </motion.div>
         </motion.div>
 
-        {/* 右侧区域: 竖排信息卡片 */}
-        <motion.div className="flex flex-row space-x-4 md:space-x-5 items-end justify-center relative z-20">
+        {/* 右侧区域: 竖排信息卡片 - 移动端隐藏 */}
+        <motion.div className="hidden md:flex flex-row space-x-5 items-end justify-center relative z-20">
           <motion.div {...cardAnimationProps(0.7)}>
             <InfoCard
               titleKey="hero.cardTitle1"
               descKey="hero.convenientLocationDesc"
             />
           </motion.div>
-          <motion.div {...cardAnimationProps(0.85)} className="mb-6 md:mb-8">
-            {" "}
-            {/* Middle card higher */}
+          <motion.div {...cardAnimationProps(0.85)} className="mb-8">
             <InfoCard
               titleKey="hero.cardTitle2"
               descKey="hero.comfortableRoomsDesc"
@@ -623,8 +625,8 @@ export function ZenHero() {
         </motion.div>
       </div>
 
-      {/* 快速搜索栏 - 底部固定，调整位置 */}
-      <div className="absolute bottom-6 left-0 right-0 z-20 px-6 md:px-10">
+      {/* 快速搜索栏 - 底部固定，移动端缩小间距 */}
+      <div className="absolute bottom-4 md:bottom-6 left-0 right-0 z-20 px-4 md:px-10">
         <QuickSearch />
       </div>
 
