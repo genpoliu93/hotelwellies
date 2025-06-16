@@ -284,6 +284,8 @@ export const en = {
       checkInOut: "Check-in: 15:00-22:00, Check-out: 10:00",
       payment: "Payment is required at the time of booking confirmation",
       damages: "Guests are responsible for any damages to hotel property",
+      systemCancellation:
+        "If we are unable to accommodate your reserved room type due to system scheduling or unforeseen circumstances, the hotel will proactively cancel your booking within 2 hours and provide a full refund to your original payment method",
     },
     privacy: {
       description:

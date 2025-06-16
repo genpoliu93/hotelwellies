@@ -517,6 +517,10 @@ export function GuestInfoForm({
                     <span className="w-1 h-1 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
                     <span>{t("booking.terms.damages")}</span>
                   </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-1 h-1 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span>{t("booking.terms.systemCancellation")}</span>
+                  </li>
                 </ul>
               </div>
 
