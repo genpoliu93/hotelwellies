@@ -60,6 +60,133 @@ const carouselImages = [
   },
 ];
 
+// 内联样式定义，确保日历固定高度（针对双月历优化）
+const quickSearchCalendarStyles = `
+  .quick-search-calendar-container {
+    min-height: 320px; /* 固定最小高度，双月历需要更高 */
+    max-height: 320px; /* 固定最大高度 */
+    overflow: hidden; /* 防止内容溢出 */
+    position: relative;
+  }
+  
+  /* 日历主体布局 */
+  .quick-search-calendar-container .rdp {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .quick-search-calendar-container .rdp-months {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .quick-search-calendar-container .rdp-month {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  
+  /* 标题区域固定高度 */
+  .quick-search-calendar-container .rdp-caption {
+    height: 40px !important;
+    min-height: 40px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+  
+  /* 导航按钮定位 */
+  .quick-search-calendar-container [class*="nav_button"] {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 10;
+  }
+  
+  .quick-search-calendar-container [class*="nav_button_previous"] {
+    left: 4px !important;
+  }
+  
+  .quick-search-calendar-container [class*="nav_button_next"] {
+    right: 4px !important;
+  }
+  
+  /* 表格区域自适应剩余空间 */
+  .quick-search-calendar-container .rdp-table {
+    flex: 1 !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  /* 表头固定高度 */
+  .quick-search-calendar-container .rdp-head {
+    flex-shrink: 0;
+  }
+  
+  .quick-search-calendar-container .rdp-head_row {
+    height: 32px !important;
+  }
+  
+  /* 表体自适应高度 */
+  .quick-search-calendar-container .rdp-tbody {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  /* 每行平均分配高度 */
+  .quick-search-calendar-container .rdp-row {
+    flex: 1 !important;
+    min-height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  
+  /* 确保每个日期单元格有合适的高度，但不强制覆盖选中样式 */
+  .quick-search-calendar-container .rdp-day {
+    min-height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* 确保日期范围选择样式正常工作 */
+  .quick-search-calendar-container .rdp-day_range_start {
+    border-radius: 6px 0 0 6px !important;
+  }
+  
+  .quick-search-calendar-container .rdp-day_range_end {
+    border-radius: 0 6px 6px 0 !important;
+  }
+  
+  .quick-search-calendar-container .rdp-day_range_middle {
+    border-radius: 0 !important;
+  }
+  
+  /* 响应式调整 - 在小屏幕上显示单月 */
+  @media (max-width: 640px) {
+    .quick-search-calendar-container {
+      min-height: 280px;
+      max-height: 280px;
+    }
+    
+    .quick-search-calendar-container .rdp-months {
+      flex-direction: column;
+    }
+    
+    .quick-search-calendar-container .rdp-month:nth-child(2) {
+      display: none; /* 在小屏幕上隐藏第二个月 */
+    }
+  }
+`;
+
 // 定义卡片属性类型
 type InfoCardProps = {
   titleKey: string; // 翻译键
@@ -163,6 +290,8 @@ const QuickSearch = () => {
       transition={{ delay: 1.4, duration: 0.8 }}
       className="bg-black/20 backdrop-blur-md border border-white/20 rounded-lg p-3 md:p-6 w-full max-w-4xl mx-auto"
     >
+      <style dangerouslySetInnerHTML={{ __html: quickSearchCalendarStyles }} />
+
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-4">
         {/* 日期选择 */}
         <div className="md:col-span-2">
@@ -207,48 +336,58 @@ const QuickSearch = () => {
 
                 {/* 日历 */}
                 <div className="p-3">
-                  <Calendar
-                    mode="range"
-                    selected={{
-                      from: tempCheckIn,
-                      to: tempCheckOut,
-                    }}
-                    onSelect={(range) => {
-                      if (range?.from) setTempCheckIn(range.from);
-                      if (range?.to) setTempCheckOut(range.to);
-                    }}
-                    disabled={(date) => date < today}
-                    locale={dateLocale}
-                    numberOfMonths={2}
-                    className="rounded-md border-0"
-                    classNames={{
-                      months:
-                        "flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0",
-                      month: "space-y-4",
-                      caption: "flex justify-center pt-1 relative items-center",
-                      caption_label: "text-sm font-medium",
-                      nav: "space-x-1 flex items-center",
-                      nav_button:
-                        "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-                      nav_button_previous: "absolute left-1",
-                      nav_button_next: "absolute right-1",
-                      table: "w-full border-collapse space-y-1",
-                      head_row: "flex",
-                      head_cell:
-                        "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
-                      row: "flex w-full mt-2",
-                      cell: "text-center text-sm p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-                      day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
-                      day_selected:
-                        "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-                      day_today: "bg-accent text-accent-foreground",
-                      day_outside: "text-muted-foreground opacity-50",
-                      day_disabled: "text-muted-foreground opacity-50",
-                      day_range_middle:
-                        "aria-selected:bg-accent aria-selected:text-accent-foreground",
-                      day_hidden: "invisible",
-                    }}
-                  />
+                  {/* 固定高度的日历容器 */}
+                  <div className="quick-search-calendar-container">
+                    <Calendar
+                      mode="range"
+                      selected={{
+                        from: tempCheckIn,
+                        to: tempCheckOut,
+                      }}
+                      onSelect={(range) => {
+                        if (range?.from) setTempCheckIn(range.from);
+                        if (range?.to) setTempCheckOut(range.to);
+                      }}
+                      disabled={(date) => date < today}
+                      locale={dateLocale}
+                      numberOfMonths={2} // 保持双月显示
+                      fixedWeeks={true} // 固定显示6周
+                      showOutsideDays={true} // 显示其他月份的日期以填充空白
+                      className="rounded-md border-0"
+                      classNames={{
+                        months:
+                          "flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0",
+                        month: "space-y-4",
+                        caption:
+                          "flex justify-center pt-1 relative items-center",
+                        caption_label: "text-sm font-medium",
+                        nav: "space-x-1 flex items-center",
+                        nav_button:
+                          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+                        nav_button_previous: "absolute left-1",
+                        nav_button_next: "absolute right-1",
+                        table: "w-full border-collapse space-y-1",
+                        head_row: "flex",
+                        head_cell:
+                          "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
+                        row: "flex w-full mt-2",
+                        cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                        day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
+                        day_selected:
+                          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                        day_today: "bg-accent text-accent-foreground",
+                        day_outside: "text-muted-foreground opacity-30",
+                        day_disabled: "text-muted-foreground opacity-50",
+                        day_range_start:
+                          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground rounded-l-md rounded-r-none shadow-md",
+                        day_range_end:
+                          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground rounded-r-md rounded-l-none shadow-md",
+                        day_range_middle:
+                          "bg-primary/15 text-primary hover:bg-primary/25 rounded-none",
+                        day_hidden: "invisible",
+                      }}
+                    />
+                  </div>
 
                   {/* 当前选择预览 */}
                   {tempCheckIn && tempCheckOut && (
@@ -550,7 +689,7 @@ export function ZenHero() {
             transition={{ delay: 1.2, duration: 1, ease: "easeOut" }}
             className="w-px bg-white/70 mb-8 overflow-hidden"
           />
-          
+
           {/* 文字内容 - 移动端也使用竖排，但居中显示 */}
           <div
             className="writing-vertical text-white space-y-8 text-center md:text-right"

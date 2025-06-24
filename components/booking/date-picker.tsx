@@ -19,6 +19,103 @@ import {
   type SupportedLocale,
 } from "@/lib/utils/date";
 
+// 内联样式定义，确保日历固定高度
+const calendarStyles = `
+  .calendar-container {
+    min-height: 280px; /* 固定最小高度 */
+    max-height: 280px; /* 固定最大高度 */
+    overflow: hidden; /* 防止内容溢出 */
+    position: relative;
+  }
+  
+  /* 日历主体布局 */
+  .calendar-container .rdp {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .calendar-container .rdp-months {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .calendar-container .rdp-month {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* 标题区域固定高度 */
+  .calendar-container .rdp-caption {
+    height: 40px !important;
+    min-height: 40px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+  
+  /* 导航按钮定位 */
+  .calendar-container [class*="nav_button"] {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 10;
+  }
+  
+  .calendar-container [class*="nav_button_previous"] {
+    left: 4px !important;
+  }
+  
+  .calendar-container [class*="nav_button_next"] {
+    right: 4px !important;
+  }
+  
+  /* 表格区域自适应剩余空间 */
+  .calendar-container .rdp-table {
+    flex: 1 !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  /* 表头固定高度 */
+  .calendar-container .rdp-head {
+    flex-shrink: 0;
+  }
+  
+  .calendar-container .rdp-head_row {
+    height: 32px !important;
+  }
+  
+  /* 表体自适应高度 */
+  .calendar-container .rdp-tbody {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  /* 每行平均分配高度 */
+  .calendar-container .rdp-row {
+    flex: 1 !important;
+    min-height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  
+  /* 确保每个日期单元格有合适的高度 */
+  .calendar-container [class*="day"] {
+    height: 32px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+`;
+
 interface DatePickerProps {
   checkInDate: Date | undefined;
   checkOutDate: Date | undefined;
@@ -144,6 +241,9 @@ export function DatePicker({
 
   return (
     <div className="w-full">
+      {/* 添加内联样式 */}
+      <style dangerouslySetInnerHTML={{ __html: calendarStyles }} />
+
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -256,111 +356,125 @@ export function DatePicker({
                       <p className="text-xs font-medium text-gray-700 mb-2">
                         {t("booking.selectCheckIn")}
                       </p>
-                      <Calendar
-                        mode="range"
-                        selected={{
-                          from: tempCheckIn,
-                          to: tempCheckOut,
-                        }}
-                        onSelect={(range) => {
-                          if (range?.from) {
-                            handleCheckInSelect(range.from);
-                          }
-                        }}
-                        disabled={(date) => date < today}
-                        locale={dateLocale}
-                        className="rounded-md border-0 w-full"
-                        classNames={{
-                          months: "flex flex-col space-y-4 w-full",
-                          month: "space-y-4 w-full",
-                          caption:
-                            "flex justify-center pt-1 relative items-center w-full",
-                          caption_label: "text-sm font-medium",
-                          nav: "space-x-1 flex items-center",
-                          nav_button:
-                            "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-                          nav_button_previous: "absolute left-1",
-                          nav_button_next: "absolute right-1",
-                          table: "w-full border-collapse",
-                          head_row: "flex w-full",
-                          head_cell:
-                            "text-muted-foreground rounded-md flex-1 font-normal text-[0.8rem] text-center",
-                          row: "flex w-full mt-1",
-                          cell: "flex-1 text-center text-sm p-0 relative focus-within:relative focus-within:z-20",
-                          day: "h-8 w-full p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md transition-colors",
-                          day_selected:
-                            "bg-primary text-white hover:bg-primary/90 rounded-md",
-                          day_today: "bg-primary/10 text-primary font-semibold",
-                          day_outside: "text-muted-foreground opacity-50",
-                          day_disabled: "text-muted-foreground opacity-50",
-                          day_range_start:
-                            "bg-primary text-white hover:bg-primary/90 rounded-l-md rounded-r-none shadow-md",
-                          day_range_end:
-                            "bg-primary text-white hover:bg-primary/90 rounded-r-md rounded-l-none shadow-md",
-                          day_range_middle:
-                            "bg-primary/15 text-primary hover:bg-primary/25 rounded-none border-y border-primary/10",
-                          day_hidden: "invisible",
-                        }}
-                      />
+                      {/* 固定高度的日历容器 */}
+                      <div className="calendar-container">
+                        <Calendar
+                          mode="range"
+                          numberOfMonths={1}
+                          selected={{
+                            from: tempCheckIn,
+                            to: tempCheckOut,
+                          }}
+                          onSelect={(range) => {
+                            if (range?.from) {
+                              handleCheckInSelect(range.from);
+                            }
+                          }}
+                          disabled={(date) => date < today}
+                          locale={dateLocale}
+                          fixedWeeks={true} // 固定显示6周
+                          showOutsideDays={true} // 显示其他月份的日期以填充空白
+                          className="rounded-md border-0 w-full"
+                          classNames={{
+                            months: "flex flex-col space-y-4 w-full",
+                            month: "space-y-4 w-full",
+                            caption:
+                              "flex justify-center pt-1 relative items-center w-full", // 移除固定高度，让CSS控制
+                            caption_label: "text-sm font-medium",
+                            nav: "space-x-1 flex items-center",
+                            nav_button:
+                              "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100", // 恢复原始样式
+                            nav_button_previous: "absolute left-1",
+                            nav_button_next: "absolute right-1",
+                            table: "w-full border-collapse", // 移除固定高度，让CSS控制
+                            head_row: "flex w-full",
+                            head_cell:
+                              "text-muted-foreground rounded-md flex-1 font-normal text-[0.8rem] text-center", // 移除固定高度
+                            row: "flex w-full", // 移除固定高度和margin，让CSS控制
+                            cell: "flex-1 text-center text-sm p-0 relative focus-within:relative focus-within:z-20",
+                            day: "h-8 w-full p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md transition-colors",
+                            day_selected:
+                              "bg-primary text-white hover:bg-primary/90 rounded-md",
+                            day_today:
+                              "bg-primary/10 text-primary font-semibold",
+                            day_outside: "text-muted-foreground opacity-30", // 降低其他月份日期的透明度
+                            day_disabled: "text-muted-foreground opacity-50",
+                            day_range_start:
+                              "bg-primary text-white hover:bg-primary/90 rounded-l-md rounded-r-none shadow-md",
+                            day_range_end:
+                              "bg-primary text-white hover:bg-primary/90 rounded-r-md rounded-l-none shadow-md",
+                            day_range_middle:
+                              "bg-primary/15 text-primary hover:bg-primary/25 rounded-none border-y border-primary/10",
+                            day_hidden: "invisible",
+                          }}
+                        />
+                      </div>
                     </div>
                   ) : (
                     <div>
                       <p className="text-xs font-medium text-gray-700 mb-2">
                         {t("booking.selectCheckOut")}
                       </p>
-                      <Calendar
-                        mode="range"
-                        selected={{
-                          from: tempCheckIn,
-                          to: tempCheckOut,
-                        }}
-                        onSelect={(range) => {
-                          if (range?.to && tempCheckIn) {
-                            handleCheckOutSelect(range.to);
-                          } else if (range?.from && !tempCheckIn) {
-                            handleCheckInSelect(range.from);
-                          }
-                        }}
-                        disabled={(date) => {
-                          if (date < today) return true;
-                          if (tempCheckIn && date <= tempCheckIn) return true;
-                          return false;
-                        }}
-                        defaultMonth={tempCheckIn}
-                        locale={dateLocale}
-                        className="rounded-md border-0 w-full"
-                        classNames={{
-                          months: "flex flex-col space-y-4 w-full",
-                          month: "space-y-4 w-full",
-                          caption:
-                            "flex justify-center pt-1 relative items-center w-full",
-                          caption_label: "text-sm font-medium",
-                          nav: "space-x-1 flex items-center",
-                          nav_button:
-                            "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-                          nav_button_previous: "absolute left-1",
-                          nav_button_next: "absolute right-1",
-                          table: "w-full border-collapse",
-                          head_row: "flex w-full",
-                          head_cell:
-                            "text-muted-foreground rounded-md flex-1 font-normal text-[0.8rem] text-center",
-                          row: "flex w-full mt-1",
-                          cell: "flex-1 text-center text-sm p-0 relative focus-within:relative focus-within:z-20",
-                          day: "h-8 w-full p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md transition-colors",
-                          day_selected:
-                            "bg-primary text-white hover:bg-primary/90 rounded-md",
-                          day_today: "bg-primary/10 text-primary font-semibold",
-                          day_outside: "text-muted-foreground opacity-50",
-                          day_disabled: "text-muted-foreground opacity-50",
-                          day_range_start:
-                            "bg-primary text-white hover:bg-primary/90 rounded-l-md rounded-r-none shadow-md",
-                          day_range_end:
-                            "bg-primary text-white hover:bg-primary/90 rounded-r-md rounded-l-none shadow-md",
-                          day_range_middle:
-                            "bg-primary/15 text-primary hover:bg-primary/25 rounded-none border-y border-primary/10",
-                          day_hidden: "invisible",
-                        }}
-                      />
+                      {/* 固定高度的日历容器 */}
+                      <div className="calendar-container">
+                        <Calendar
+                          mode="range"
+                          numberOfMonths={1}
+                          selected={{
+                            from: tempCheckIn,
+                            to: tempCheckOut,
+                          }}
+                          onSelect={(range) => {
+                            if (range?.to && tempCheckIn) {
+                              handleCheckOutSelect(range.to);
+                            } else if (range?.from && !tempCheckIn) {
+                              handleCheckInSelect(range.from);
+                            }
+                          }}
+                          disabled={(date) => {
+                            if (date < today) return true;
+                            if (tempCheckIn && date <= tempCheckIn) return true;
+                            return false;
+                          }}
+                          defaultMonth={tempCheckIn}
+                          locale={dateLocale}
+                          fixedWeeks={true} // 固定显示6周
+                          showOutsideDays={true} // 显示其他月份的日期以填充空白
+                          className="rounded-md border-0 w-full"
+                          classNames={{
+                            months: "flex flex-col space-y-4 w-full",
+                            month: "space-y-4 w-full",
+                            caption:
+                              "flex justify-center pt-1 relative items-center w-full", // 移除固定高度，让CSS控制
+                            caption_label: "text-sm font-medium",
+                            nav: "space-x-1 flex items-center",
+                            nav_button:
+                              "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100", // 恢复原始样式
+                            nav_button_previous: "absolute left-1",
+                            nav_button_next: "absolute right-1",
+                            table: "w-full border-collapse", // 移除固定高度，让CSS控制
+                            head_row: "flex w-full",
+                            head_cell:
+                              "text-muted-foreground rounded-md flex-1 font-normal text-[0.8rem] text-center", // 移除固定高度
+                            row: "flex w-full", // 移除固定高度和margin，让CSS控制
+                            cell: "flex-1 text-center text-sm p-0 relative focus-within:relative focus-within:z-20",
+                            day: "h-8 w-full p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md transition-colors",
+                            day_selected:
+                              "bg-primary text-white hover:bg-primary/90 rounded-md",
+                            day_today:
+                              "bg-primary/10 text-primary font-semibold",
+                            day_outside: "text-muted-foreground opacity-30", // 降低其他月份日期的透明度
+                            day_disabled: "text-muted-foreground opacity-50",
+                            day_range_start:
+                              "bg-primary text-white hover:bg-primary/90 rounded-l-md rounded-r-none shadow-md",
+                            day_range_end:
+                              "bg-primary text-white hover:bg-primary/90 rounded-r-md rounded-l-none shadow-md",
+                            day_range_middle:
+                              "bg-primary/15 text-primary hover:bg-primary/25 rounded-none border-y border-primary/10",
+                            day_hidden: "invisible",
+                          }}
+                        />
+                      </div>
                     </div>
                   )}
                 </motion.div>

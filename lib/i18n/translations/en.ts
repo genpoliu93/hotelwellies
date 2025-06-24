@@ -116,6 +116,22 @@ export const en = {
     deluxeDesc: "Spacious and comfortable premium suite",
     family: "Family Room",
     familyDesc: "Spacious room suitable for family stays",
+    // New room type translations
+    deluxeRoom: "Deluxe Double Room",
+    deluxeRoomDescription:
+      "Spacious and elegant deluxe room with modern amenities, providing the ultimate comfort for your stay.",
+    familyRoom: "Family Room",
+    familyRoomDescription:
+      "Specially designed spacious room for families, warm and comfortable for the whole family to enjoy.",
+    standardTwin: "Standard Twin Room",
+    standardTwinDescription:
+      "Comfortable room with twin beds, perfect for friends or business travelers.",
+    mountainDouble: "Mountain View Standard Double Room",
+    mountainDoubleDescription:
+      "Double room with beautiful mountain views, allowing you to relax in Karuizawa's natural beauty.",
+    mountainTwin: "Mountain View Standard Twin Room",
+    mountainTwinDescription:
+      "Twin room with charming mountain views, creating unforgettable moments in a peaceful natural setting.",
     amenities: "Amenities",
     popular: "Popular",
     perNight: "/ night",

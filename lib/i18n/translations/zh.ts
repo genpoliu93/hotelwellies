@@ -104,6 +104,22 @@ export const zh = {
     deluxeDesc: "宽敞舒适的高级套房",
     family: "家庭房",
     familyDesc: "适合家庭入住的宽敞房间",
+    // 新的房型翻译
+    deluxeRoom: "豪华双人间",
+    deluxeRoomDescription:
+      "宽敞优雅的豪华客房，配备现代化设施，为您提供极致舒适的住宿体验。",
+    familyRoom: "家庭间",
+    familyRoomDescription:
+      "专为家庭设计的宽敞客房，温馨舒适，让全家人享受美好的住宿时光。",
+    standardTwin: "标准双床间",
+    standardTwinDescription:
+      "配备两张单人床的舒适客房，适合朋友或商务旅客入住。",
+    mountainDouble: "山景标准双人间",
+    mountainDoubleDescription:
+      "拥有美丽山景的双人客房，让您在轻井泽的自然美景中放松身心。",
+    mountainTwin: "山景标准双床间",
+    mountainTwinDescription:
+      "享有迷人山景的双床客房，在宁静的自然环境中度过难忘时光。",
     amenities: "设施",
     popular: "热门",
     perNight: "/ 晚",

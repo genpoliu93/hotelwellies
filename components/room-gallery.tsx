@@ -21,49 +21,103 @@ import { Badge } from "@/components/ui/badge";
 // 房间数据配置
 const roomData = {
   deluxe: {
-    nameKey: "rooms.room1Name",
-    descriptionKey: "rooms.room1Description",
+    nameKey: "rooms.deluxeRoom",
+    descriptionKey: "rooms.deluxeRoomDescription",
     japaneseLabel: "デラックス　ダブルルーム",
+    gradientFrom: "from-purple-500/80",
+    gradientTo: "to-pink-600/80",
+    iconBg: "bg-purple-500/20",
+    icon: <Bed className="h-6 w-6 text-white" />,
+    images: [
+      "/images/room/豪华双人间 deluxe room/698005445.jpg",
+      "/images/room/豪华双人间 deluxe room/698005446.jpg",
+      "/images/room/豪华双人间 deluxe room/698005447.jpg",
+      "/images/room/豪华双人间 deluxe room/698005448.jpg",
+      "/images/room/豪华双人间 deluxe room/698005449.jpg",
+      "/images/room/豪华双人间 deluxe room/698005450.jpg",
+      "/images/room/豪华双人间 deluxe room/698005451.jpg",
+      "/images/room/豪华双人间 deluxe room/698005452.jpg",
+      "/images/room/豪华双人间 deluxe room/698005453.jpg",
+      "/images/room/豪华双人间 deluxe room/698005494.jpg",
+    ],
+  },
+  family: {
+    nameKey: "rooms.familyRoom",
+    descriptionKey: "rooms.familyRoomDescription",
+    japaneseLabel: "ファミリールーム",
+    gradientFrom: "from-green-500/80",
+    gradientTo: "to-emerald-600/80",
+    iconBg: "bg-green-500/20",
+    icon: <Users className="h-6 w-6 text-white" />,
+    images: [
+      "/images/room/家庭间 family room/227463919.jpg",
+      "/images/room/家庭间 family room/227529317.jpg",
+      "/images/room/家庭间 family room/696369374.jpg",
+      "/images/room/家庭间 family room/696379363.jpg",
+      "/images/room/家庭间 family room/696379467.jpg",
+      "/images/room/家庭间 family room/696379480.jpg",
+    ],
+  },
+  standardTwin: {
+    nameKey: "rooms.standardTwin",
+    descriptionKey: "rooms.standardTwinDescription",
+    japaneseLabel: "スタンダードツインルーム",
     gradientFrom: "from-blue-500/80",
-    gradientTo: "to-indigo-600/80",
+    gradientTo: "to-cyan-600/80",
     iconBg: "bg-blue-500/20",
     icon: <Bed className="h-6 w-6 text-white" />,
-    images: Array.from({ length: 10 }, (_, i) => {
-      const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-      return `/images/rooms/deluxe/DSCF${numbers[i]}.jpg`;
-    }),
+    images: [
+      "/images/room/标准双床间 standard twin/696481372.jpg",
+      "/images/room/标准双床间 standard twin/696481625.jpg",
+      "/images/room/标准双床间 standard twin/696502147.jpg",
+      "/images/room/标准双床间 standard twin/696502274.jpg",
+      "/images/room/标准双床间 standard twin/696502654.jpg",
+      "/images/room/标准双床间 standard twin/696502902.jpg",
+      "/images/room/标准双床间 standard twin/696515704.jpg",
+      "/images/room/标准双床间 standard twin/696516294.jpg",
+      "/images/room/标准双床间 standard twin/698007219.jpg",
+      "/images/room/标准双床间 standard twin/698007221.jpg",
+      "/images/room/标准双床间 standard twin/698007223.jpg",
+      "/images/room/标准双床间 standard twin/698007224.jpg",
+    ],
   },
-  double: {
-    nameKey: "rooms.room2Name",
-    descriptionKey: "rooms.room2Description",
-    japaneseLabel: "スタンダードダブルルーム",
-    gradientFrom: "from-emerald-500/80",
-    gradientTo: "to-green-600/80",
-    iconBg: "bg-emerald-500/20",
-    icon: <Users className="h-6 w-6 text-white" />,
-    images: Array.from({ length: 12 }, (_, i) => {
-      const numbers = [
-        4600, 4603, 4605, 4606, 4611, 4613, 4619, 4621, 4622, 4626, 4627, 4629,
-      ];
-      return `/images/rooms/double/DSCF${numbers[i]}.jpg`;
-    }),
-  },
-  threebed: {
-    nameKey: "rooms.room3Name",
-    descriptionKey: "rooms.room3Description",
-    japaneseLabel: "ファミリールーム",
+  mountainDouble: {
+    nameKey: "rooms.mountainDouble",
+    descriptionKey: "rooms.mountainDoubleDescription",
+    japaneseLabel: "山景スタンダードダブルルーム",
     gradientFrom: "from-amber-500/80",
     gradientTo: "to-orange-600/80",
     iconBg: "bg-amber-500/20",
     icon: <Coffee className="h-6 w-6 text-white" />,
-    images: Array.from({ length: 27 }, (_, i) => {
-      const numbers = [
-        4759, 4766, 4769, 4770, 4773, 4776, 4778, 4779, 4781, 4782, 4783, 4784,
-        4786, 4787, 4788, 4791, 4793, 4799, 4800, 4806, 4808, 4811, 4817, 4818,
-        4819, 4838, 4840,
-      ];
-      return `/images/rooms/threebed/DSCF${numbers[i]}.jpg`;
-    }),
+    images: [
+      "/images/room/山景标准双人间standard double room with mountain/227464393.jpg",
+      "/images/room/山景标准双人间standard double room with mountain/696481372.jpg",
+      "/images/room/山景标准双人间standard double room with mountain/696481625.jpg",
+      "/images/room/山景标准双人间standard double room with mountain/696499779.jpg",
+      "/images/room/山景标准双人间standard double room with mountain/696501268.jpg",
+      "/images/room/山景标准双人间standard double room with mountain/696501894.jpg",
+    ],
+  },
+  mountainTwin: {
+    nameKey: "rooms.mountainTwin",
+    descriptionKey: "rooms.mountainTwinDescription",
+    japaneseLabel: "山景スタンダードツインルーム",
+    gradientFrom: "from-teal-500/80",
+    gradientTo: "to-slate-600/80",
+    iconBg: "bg-teal-500/20",
+    icon: <Eye className="h-6 w-6 text-white" />,
+    images: [
+      "/images/room/山景标准双床间 standard twin room with mountain/227529317.jpg",
+      "/images/room/山景标准双床间 standard twin room with mountain/227529321.jpg",
+      "/images/room/山景标准双床间 standard twin room with mountain/696369256.jpg",
+      "/images/room/山景标准双床间 standard twin room with mountain/696369374.jpg",
+      "/images/room/山景标准双床间 standard twin room with mountain/696370198.jpg",
+      "/images/room/山景标准双床间 standard twin room with mountain/696373842.jpg",
+      "/images/room/山景标准双床间 standard twin room with mountain/696373913.jpg",
+      "/images/room/山景标准双床间 standard twin room with mountain/696373960.jpg",
+      "/images/room/山景标准双床间 standard twin room with mountain/696374246.jpg",
+      "/images/room/山景标准双床间 standard twin room with mountain/696374391.jpg",
+    ],
   },
 };
 

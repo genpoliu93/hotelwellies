@@ -109,6 +109,22 @@ export const ja = {
     deluxeDesc: "広々として快適なプレミアムスイート",
     family: "ファミリールーム",
     familyDesc: "ファミリーステイに適した広々とした部屋",
+    // 新しい客室タイプの翻訳
+    deluxeRoom: "デラックス　ダブルルーム",
+    deluxeRoomDescription:
+      "モダンな設備を備えた広々として優雅なデラックスルーム。最高の快適さをご提供いたします。",
+    familyRoom: "ファミリールーム",
+    familyRoomDescription:
+      "ファミリー向けに特別に設計された広々としたお部屋。温かく快適で、ご家族皆様でお楽しみいただけます。",
+    standardTwin: "スタンダードツインルーム",
+    standardTwinDescription:
+      "ツインベッドを備えた快適なお部屋。ご友人やビジネスのお客様に最適です。",
+    mountainDouble: "山景スタンダードダブルルーム",
+    mountainDoubleDescription:
+      "美しい山景色をお楽しみいただけるダブルルーム。軽井沢の自然美の中でおくつろぎください。",
+    mountainTwin: "山景スタンダードツインルーム",
+    mountainTwinDescription:
+      "魅力的な山景色をご覧いただけるツインルーム。静かな自然環境で忘れられないひとときをお過ごしください。",
     amenities: "アメニティ",
     popular: "人気",
     perNight: "/ 一泊",
