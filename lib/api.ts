@@ -143,7 +143,7 @@ export async function fetchAvailableRooms(
 
   // 发送请求
   const result = await fetchApi<RoomQueryResult>(
-    `/api/room_occupancy/available-rooms?${queryParams.toString()}`
+    `/api/room_occupancy/temairazu-available-rooms?${queryParams.toString()}`
   );
 
   return result;
