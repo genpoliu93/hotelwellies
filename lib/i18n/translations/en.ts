@@ -82,7 +82,7 @@ export const en = {
     },
     bicycle: {
       title: "Bicycle Rental",
-      desc: "Bicycles and electric bicycles are available for rent. Please reserve in advance. Electric bicycle: 1,500 yen per day, 750 yen for half a day. Bicycle: 1,000 yen per day, 500 yen for half a day.",
+      desc: "Bicycles and electric bicycles are available for rent. Please reserve in advance. Electric bicycle: 2,000 yen per day, 1,500 yen for half a day. Bicycle: 1,000 yen per day, 500 yen for half a day.",
     },
     ...zenTextKeysEN.features,
     flexibleDining: "Flexible dining options",
