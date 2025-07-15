@@ -209,6 +209,14 @@ export const ja = {
       byWalkTitle: "徒歩でお越しの方",
       byWalkDesc: "中軽井沢駅北口より徒歩7分。北口のご利用が便利です。",
     },
+    mapDialog: {
+      title: "地図ナビゲーション",
+      message: "地図アプリを開いてナビゲーションを開始しますか？",
+      openMap: "地図を開く",
+      cancel: "キャンセル",
+      dontAskAgain: "いいえ、このセッション中は確認しない",
+      dontAskAgainHint: "（ページを更新すると再度確認されます）",
+    },
   },
   footer: {
     description: "快適な宿泊体験を提供し、あなたの旅行をより楽しくします。",

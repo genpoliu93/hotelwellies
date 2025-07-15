@@ -201,6 +201,14 @@ export const zh = {
       byWalkTitle: "步行",
       byWalkDesc: "从中轻井泽站北出口步行7分钟。使用北出口比较方便。",
     },
+    mapDialog: {
+      title: "打开地图导航",
+      message: "是否要打开地图应用进行导航？",
+      openMap: "打开地图",
+      cancel: "取消",
+      dontAskAgain: "不用，本次会话不再询问",
+      dontAskAgainHint: "（刷新页面后会重新询问）",
+    },
   },
   footer: {
     description: "提供舒适的住宿体验，让您的旅行更加愉快。",

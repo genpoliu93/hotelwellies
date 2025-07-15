@@ -218,6 +218,14 @@ export const en = {
       byWalkDesc:
         "7 minutes walk from Naka-Karuizawa Station North Exit. Using the North Exit is convenient.",
     },
+    mapDialog: {
+      title: "Open Map Navigation",
+      message: "Would you like to open the map application for navigation?",
+      openMap: "Open Map",
+      cancel: "Cancel",
+      dontAskAgain: "No, don't ask in this session",
+      dontAskAgainHint: "(Will ask again after page refresh)",
+    },
   },
   footer: {
     description:
