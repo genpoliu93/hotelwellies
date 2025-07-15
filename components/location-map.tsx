@@ -67,41 +67,81 @@ async function getWalkingRoute(
   endLat: number,
   endLng: number
 ): Promise<number[][]> {
-  try {
-    // 使用OSRM公共API获取步行路径
-    const response = await fetch(
-      `https://router.project-osrm.org/route/v1/foot/${startLng},${startLat};${endLng},${endLat}?overview=full&geometries=geojson`
-    );
+  // 定义多个OSRM服务器作为备用
+  const osrmServers = [
+    "https://router.project-osrm.org/route/v1/foot",
+    "https://routing.openstreetmap.de/routed-foot/route/v1/foot",
+  ];
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch route");
+  let lastError: Error | null = null;
+
+  // 尝试每个服务器
+  for (const serverUrl of osrmServers) {
+    try {
+      console.log(`Trying OSRM server: ${serverUrl}`);
+
+      // 创建一个带超时的请求
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5秒超时
+
+      try {
+        const response = await fetch(
+          `${serverUrl}/${startLng},${startLat};${endLng},${endLat}?overview=full&geometries=geojson`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+            },
+            signal: controller.signal,
+          }
+        );
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        if (data.routes && data.routes.length > 0 && data.routes[0].geometry) {
+          // 获取路径的几何坐标
+          const coordinates = data.routes[0].geometry.coordinates;
+          if (coordinates && coordinates.length > 0) {
+            console.log(`Successfully got route from ${serverUrl}`);
+            // 转换为 [lat, lng] 格式
+            return coordinates.map((coord: number[]) => [coord[1], coord[0]]);
+          }
+        }
+
+        throw new Error("No valid routes found in response");
+      } catch (fetchError) {
+        clearTimeout(timeoutId);
+        throw fetchError;
+      }
+    } catch (error) {
+      console.warn(`Failed to get route from ${serverUrl}:`, error);
+      lastError = error instanceof Error ? error : new Error(String(error));
+      // 继续尝试下一个服务器
+      continue;
     }
-
-    const data = await response.json();
-
-    if (data.routes && data.routes.length > 0) {
-      // 获取路径的几何坐标
-      const coordinates = data.routes[0].geometry.coordinates;
-      // 转换为 [lat, lng] 格式
-      return coordinates.map((coord: number[]) => [coord[1], coord[0]]);
-    }
-
-    throw new Error("No routes found");
-  } catch (error) {
-    console.error("Error fetching walking route:", error);
-    // 如果API失败，返回备用的手动路径
-    return [
-      [STATION_LAT, STATION_LNG], // 起点：中轻井泽站
-      [36.348245, 138.592583], // 出站后沿车站前道路
-      [36.34858, 138.59352], // 左转进入主要道路
-      [36.3492, 138.5951], // 沿主要道路北行
-      [36.3498, 138.5968], // 继续北行
-      [36.3501, 138.5975], // 右转进入酒店所在街道
-      [36.3502, 138.5981], // 沿酒店街道前行
-      [36.3503, 138.5988], // 接近酒店
-      [HOTEL_LAT, HOTEL_LNG], // 终点：酒店
-    ];
   }
+
+  console.warn("All OSRM servers failed, using fallback manual route");
+  console.error("Last error:", lastError);
+
+  // 如果所有API都失败，返回备用的手动路径（更精确的路径）
+  return [
+    [STATION_LAT, STATION_LNG], // 起点：中轻井泽站
+    [36.348245, 138.592583], // 出站后沿车站前道路
+    [36.34858, 138.59352], // 左转进入主要道路
+    [36.3492, 138.5951], // 沿主要道路北行
+    [36.3498, 138.5968], // 继续北行
+    [36.3501, 138.5975], // 右转进入酒店所在街道
+    [36.3502, 138.5981], // 沿酒店街道前行
+    [36.3503, 138.5988], // 接近酒店
+    [HOTEL_LAT, HOTEL_LNG], // 终点：酒店
+  ];
 }
 
 export function LocationMap() {
