@@ -103,6 +103,9 @@ export const en = {
     specialSurpriseTitle: "We also provide special day surprises!",
     specialSurpriseDescription:
       "We help create memorable moments for birthdays, anniversaries, graduations, and other special occasions. Cake, sparkling wine, and bouquet set (with message): ¥6,000 (*Reservation required 3 days in advance)",
+    bicycleTitle: "Bicycle Rental",
+    bicycleDescription:
+      "Explore Karuizawa's beautiful nature at your own pace. We offer both standard and electric bicycles for rent. Please make reservations in advance.\n• Electric bicycle: ¥2,000 per day, ¥1,500 for half a day\n• Standard bicycle: ¥1,000 per day, ¥500 for half a day",
   },
   rooms: {
     title: "Featured Rooms",
@@ -200,6 +203,20 @@ export const en = {
       stoneChurch: "Stone Church (Uchimura Kanzo Memorial)",
       saisonMuseum: "Sezon Museum of Modern Art",
       kumobaPool: "Kumoba Pond",
+    },
+    access: {
+      title: "Transportation Access",
+      byCarTitle: "By Car",
+      byCarDesc:
+        "Free parking is available. Please use Google Maps for directions.",
+      byTrainTitle: "By Train",
+      byTrainDesc:
+        "If you notify us of your arrival time by 17:00, we provide free shuttle service to Karuizawa Station North Exit.",
+      byTrainNote:
+        "※During summer and Golden Week periods, due to expected road congestion, shuttle service will be to Naka-Karuizawa Station South Exit.",
+      byWalkTitle: "On Foot",
+      byWalkDesc:
+        "7 minutes walk from Naka-Karuizawa Station North Exit. Using the North Exit is convenient.",
     },
   },
   footer: {

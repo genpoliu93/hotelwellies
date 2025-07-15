@@ -91,6 +91,9 @@ export const zh = {
     specialSurpriseTitle: "我们也承接特别日子的惊喜服务！",
     specialSurpriseDescription:
       "我们帮助您为生日、纪念日、毕业等重要日子进行特别安排。蛋糕·起泡酒·花束套装（含留言）：6,000日元（※需提前3天预订）",
+    bicycleTitle: "自行车租赁",
+    bicycleDescription:
+      "以自己的节奏探索轻井泽的自然美景。我们提供标准自行车和电动自行车租赁服务。请提前预订。\n• 电动自行车：全天2,000日元，半天1,500日元\n• 标准自行车：全天1,000日元，半天500日元",
   },
   rooms: {
     almostSoldOut: "几乎售罄",
@@ -185,6 +188,18 @@ export const zh = {
       stoneChurch: "石之教堂（内村鉴三纪念堂）",
       saisonMuseum: "塞松现代美术馆",
       kumobaPool: "云场池",
+    },
+    access: {
+      title: "交通方式",
+      byCarTitle: "自驾车",
+      byCarDesc: "提供免费停车场。请使用谷歌地图导航前往。",
+      byTrainTitle: "电车",
+      byTrainDesc:
+        "如果您在17:00前通知我们到达时间，我们将提供到轻井泽站北出口的免费接送服务。",
+      byTrainNote:
+        "※夏季和黄金周期间，由于预计道路拥堵，接送服务将改为中轻井泽站南出口。",
+      byWalkTitle: "步行",
+      byWalkDesc: "从中轻井泽站北出口步行7分钟。使用北出口比较方便。",
     },
   },
   footer: {

@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/lib/i18n/context";
 import { motion } from "framer-motion";
-import { Coffee, Utensils, Gift } from "lucide-react";
+import { Coffee, Utensils, Gift, Bike } from "lucide-react";
 import Image from "next/image";
 
 export function ZenFeatures() {
@@ -39,6 +39,16 @@ export function ZenFeatures() {
       gradientFrom: "from-rose-500/80",
       gradientTo: "to-pink-600/80",
       iconBg: "bg-rose-500/20",
+    },
+    {
+      icon: <Bike className="h-10 w-10 text-white" />,
+      title: t("services.bicycleTitle"),
+      description: t("services.bicycleDescription"),
+      japaneseSymbol: "輪",
+      backgroundImage: "/images/walking-paths.webp",
+      gradientFrom: "from-blue-500/80",
+      gradientTo: "to-indigo-600/80",
+      iconBg: "bg-blue-500/20",
     },
   ];
 
@@ -83,7 +93,7 @@ export function ZenFeatures() {
         </div>
 
         {/* 服务项目 - 完整展示设计 */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={index}

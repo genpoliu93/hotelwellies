@@ -3,7 +3,16 @@
 import { useLanguage } from "@/lib/i18n/context";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { MapPin, Phone, Mail, Clock, Navigation } from "lucide-react";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  Navigation,
+  Car,
+  Train,
+  MapPinIcon,
+} from "lucide-react";
 import { LocationMap } from "@/components/location-map";
 
 export function ZenContact() {
@@ -241,17 +250,69 @@ export function ZenContact() {
           >
             <div className="mb-8">
               <h3 className="text-2xl font-light text-stone-800 mb-2">
-                アクセス
+                {t("contact.access.title")}
               </h3>
               <div className="h-px w-12 bg-stone-300"></div>
             </div>
 
-            <div className="flex-1 relative bg-stone-50 rounded-md overflow-hidden">
+            {/* 交通信息 */}
+            <div className="space-y-4 mb-6">
+              {/* 自驾车 */}
+              <div className="flex gap-3 items-start p-3 bg-stone-50 rounded-md">
+                <div className="p-2 bg-white rounded-md shadow-sm">
+                  <Car className="h-4 w-4 text-stone-700" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-stone-800 font-medium text-sm mb-1">
+                    {t("contact.access.byCarTitle")}
+                  </h4>
+                  <p className="text-stone-600 text-xs font-light leading-relaxed">
+                    {t("contact.access.byCarDesc")}
+                  </p>
+                </div>
+              </div>
+
+              {/* 电车 */}
+              <div className="flex gap-3 items-start p-3 bg-stone-50 rounded-md">
+                <div className="p-2 bg-white rounded-md shadow-sm">
+                  <Train className="h-4 w-4 text-stone-700" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-stone-800 font-medium text-sm mb-1">
+                    {t("contact.access.byTrainTitle")}
+                  </h4>
+                  <p className="text-stone-600 text-xs font-light leading-relaxed mb-1">
+                    {t("contact.access.byTrainDesc")}
+                  </p>
+                  <p className="text-stone-500 text-xs font-light italic">
+                    {t("contact.access.byTrainNote")}
+                  </p>
+                </div>
+              </div>
+
+              {/* 步行 */}
+              <div className="flex gap-3 items-start p-3 bg-stone-50 rounded-md">
+                <div className="p-2 bg-white rounded-md shadow-sm">
+                  <MapPinIcon className="h-4 w-4 text-stone-700" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-stone-800 font-medium text-sm mb-1">
+                    {t("contact.access.byWalkTitle")}
+                  </h4>
+                  <p className="text-stone-600 text-xs font-light leading-relaxed">
+                    {t("contact.access.byWalkDesc")}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* 地图 */}
+            <div className="flex-1 relative bg-stone-50 rounded-md overflow-hidden min-h-[200px]">
               <LocationMap />
             </div>
 
             {/* 地图说明 */}
-            <div className="pt-6 mt-auto">
+            <div className="pt-4 mt-auto">
               <div className="text-center">
                 <p className="text-xs text-stone-500 mb-2">
                   {t("gallery.locationInfo")}

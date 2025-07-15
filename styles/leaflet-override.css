@@ -19,3 +19,52 @@
 .leaflet-container * {
   z-index: inherit !important;
 }
+
+/* 自定义tooltip样式 */
+.custom-tooltip {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  color: #374151 !important;
+  backdrop-filter: blur(4px) !important;
+  max-width: 200px !important;
+  text-align: center !important;
+}
+
+.custom-tooltip::before {
+  border-top-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.hotel-tooltip {
+  border-left: 3px solid #dc2626 !important;
+}
+
+.station-tooltip {
+  border-left: 3px solid #2563eb !important;
+}
+
+/* 自定义图标样式 */
+.custom-hotel-icon,
+.custom-station-icon {
+  background: none !important;
+  border: none !important;
+}
+
+/* 距离标记样式优化 */
+.custom-div-icon {
+  background: none !important;
+  border: none !important;
+}
+
+.custom-div-icon div {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif !important;
+  letter-spacing: 0.5px !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}

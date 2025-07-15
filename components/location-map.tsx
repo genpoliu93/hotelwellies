@@ -4,10 +4,11 @@ import { useEffect, useRef } from "react";
 import { useLanguage } from "@/lib/i18n/context";
 import { Z_INDEX } from "@/lib/z-index";
 
-// 更新HOTEL_LAT和HOTEL_LNG变量以匹配实际位置
-// 这些坐标是轻井沢的大致位置，您可能需要根据实际地址进行调整
+// 酒店和车站的坐标
 const HOTEL_LAT = 36.3485;
 const HOTEL_LNG = 138.6312;
+const STATION_LAT = 36.3476;
+const STATION_LNG = 138.6298;
 
 export function LocationMap() {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -46,9 +47,13 @@ export function LocationMap() {
 
         // 初始化地图
         if (mapRef.current && !mapRef.current.hasChildNodes()) {
+          // 计算中心点（两个位置的中点）
+          const centerLat = (HOTEL_LAT + STATION_LAT) / 2;
+          const centerLng = (HOTEL_LNG + STATION_LNG) / 2;
+
           const map = leaflet
             .map(mapRef.current)
-            .setView([HOTEL_LAT, HOTEL_LNG], 15);
+            .setView([centerLat, centerLng], 17);
 
           // 确保地图容器的z-index不会超出我们的控制
           if (mapRef.current) {
@@ -62,23 +67,78 @@ export function LocationMap() {
             })
             .addTo(map);
 
-          // 添加标记
-          const icon = leaflet.icon({
-            iconUrl:
-              "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowUrl:
-              "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-            shadowSize: [41, 41],
+          // 创建酒店标记图标（红色）
+          const hotelIcon = (leaflet as any).divIcon({
+            html: '<div style="background: #dc2626; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;"><div style="color: white; font-size: 12px; font-weight: bold;">🏨</div></div>',
+            iconSize: [24, 24],
+            iconAnchor: [12, 12],
+            className: "custom-hotel-icon",
           });
 
+          // 创建车站标记图标（蓝色）
+          const stationIcon = (leaflet as any).divIcon({
+            html: '<div style="background: #2563eb; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;"><div style="color: white; font-size: 12px; font-weight: bold;">🚂</div></div>',
+            iconSize: [24, 24],
+            iconAnchor: [12, 12],
+            className: "custom-station-icon",
+          });
+
+          // 酒店地址信息
+          const hotelAddress = "Hotel Wellies";
+          const stationAddress = "中軽井沢駅";
+
+          // 添加酒店标记
           leaflet
-            .marker([HOTEL_LAT, HOTEL_LNG], { icon })
+            .marker([HOTEL_LAT, HOTEL_LNG], { icon: hotelIcon })
             .addTo(map)
-            .bindPopup("Hotel Wellies")
-            .openPopup();
+            .bindTooltip(hotelAddress, {
+              permanent: true,
+              direction: "top",
+              offset: [0, -15],
+              className: "custom-tooltip hotel-tooltip",
+            });
+
+          // 添加车站标记
+          leaflet
+            .marker([STATION_LAT, STATION_LNG], { icon: stationIcon })
+            .addTo(map)
+            .bindTooltip(stationAddress, {
+              permanent: true,
+              direction: "top",
+              offset: [0, -15],
+              className: "custom-tooltip station-tooltip",
+            });
+
+          // 添加从车站到酒店的路径线
+          const pathLine = (leaflet as any)
+            .polyline(
+              [
+                [STATION_LAT, STATION_LNG],
+                [HOTEL_LAT, HOTEL_LNG],
+              ],
+              {
+                color: "#3b82f6",
+                weight: 3,
+                opacity: 0.8,
+                dashArray: "10, 10",
+              }
+            )
+            .addTo(map);
+
+          // 添加步行距离文本
+          const midLat = (HOTEL_LAT + STATION_LAT) / 2;
+          const midLng = (HOTEL_LNG + STATION_LNG) / 2;
+
+          leaflet
+            .marker([midLat, midLng], {
+              icon: (leaflet as any).divIcon({
+                html: '<div style="background: rgba(59, 130, 246, 0.9); color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; white-space: nowrap;">徒歩7分 / 7 min walk</div>',
+                iconSize: [80, 20],
+                iconAnchor: [40, 10],
+                className: "custom-div-icon",
+              }),
+            })
+            .addTo(map);
 
           // 标记地图已初始化
           (mapRef.current as any).mapInitialized = true;

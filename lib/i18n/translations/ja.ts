@@ -95,6 +95,9 @@ export const ja = {
     specialSurpriseTitle: "特別な日のサプライズも承ります！",
     specialSurpriseDescription:
       "お誕生日・記念日・卒業など、大切な日の演出もお手伝いします。ケーキ・スパークリングワイン・花束のセット（メッセージ付き）：6,000円（※3日前までに要予約）",
+    bicycleTitle: "貸自転車",
+    bicycleDescription:
+      "軽井沢の美しい自然をマイペースで探索できます。標準自転車と電動自転車をご用意しております。事前にご予約ください。\n• 電動自転車：1日2,000円、半日1,500円\n• 標準自転車：1日1,000円、半日500円",
   },
   rooms: {
     almostSoldOut: "ほとんど売り切れ",
@@ -192,6 +195,19 @@ export const ja = {
       stoneChurch: "石の教会（内村鑑三記念堂）",
       saisonMuseum: "セゾン現代美術館",
       kumobaPool: "雲場池",
+    },
+    access: {
+      title: "交通アクセス",
+      byCarTitle: "お車でお越しの方",
+      byCarDesc:
+        "無料駐車場を完備しております。Googleマップをご利用のうえお越しください。",
+      byTrainTitle: "電車でお越しの方",
+      byTrainDesc:
+        "17:00までに到着予定時間をお知らせしていただければ、軽井沢駅北口まで無料送迎を行っております。",
+      byTrainNote:
+        "※夏季・ゴールデンウィーク期間は道路の混雑が予想されるため、中軽井沢駅南口への送迎となります。",
+      byWalkTitle: "徒歩でお越しの方",
+      byWalkDesc: "中軽井沢駅北口より徒歩7分。北口のご利用が便利です。",
     },
   },
   footer: {
