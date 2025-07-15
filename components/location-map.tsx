@@ -7,10 +7,14 @@ import { Z_INDEX } from "@/lib/z-index";
 // 酒店和车站的准确坐标
 // 酒店地址：長野県北佐久郡軽井沢町長倉2350-160
 // 中轻井泽站：〒389-0111 Nagano, Kitasaku District, Karuizawa, Nagakura
-const HOTEL_LAT = 36.35035050662762;
-const HOTEL_LNG = 138.59839943694024;
+const HOTEL_LAT = 36.350164242959764;
+const HOTEL_LNG = 138.59845617665812;
 const STATION_LAT = 36.34787075863807;
 const STATION_LNG = 138.59258273313165;
+
+// 酒店和车站的完整地址
+const HOTEL_ADDRESS = "〒389-0111長野県北佐久郡軽井沢町長倉2350-160";
+const STATION_ADDRESS = "中軽井沢駅";
 
 // 检测设备类型
 function isMobileDevice(): boolean {
@@ -26,17 +30,16 @@ function isIOS(): boolean {
 
 // 打开系统级导航
 function openSystemNavigation(
-  destinationLat: number,
-  destinationLng: number,
+  destinationAddress: string,
   destinationName: string = "Hotel Wellies"
 ): void {
-  const destination = `${destinationLat},${destinationLng}`;
+  const encodedAddress = encodeURIComponent(destinationAddress);
 
   if (isMobileDevice()) {
     if (isIOS()) {
       // iOS设备：优先使用Apple Maps
-      const appleMapsUrl = `maps://maps.google.com/maps?daddr=${destination}&directionsmode=walking`;
-      const fallbackUrl = `https://maps.apple.com/?daddr=${destination}&dirflg=w`;
+      const appleMapsUrl = `maps://maps.google.com/maps?daddr=${encodedAddress}&directionsmode=walking`;
+      const fallbackUrl = `https://maps.apple.com/?daddr=${encodedAddress}&dirflg=w`;
 
       // 尝试打开Apple Maps，如果失败则使用网页版
       window.location.href = appleMapsUrl;
@@ -47,12 +50,12 @@ function openSystemNavigation(
       }, 1000);
     } else {
       // Android设备：使用Google Maps
-      const googleMapsUrl = `https://maps.google.com/maps?daddr=${destination}&dirflg=w`;
+      const googleMapsUrl = `https://maps.google.com/maps?daddr=${encodedAddress}&dirflg=w`;
       window.open(googleMapsUrl, "_blank");
     }
   } else {
     // 桌面设备：使用Google Maps网页版
-    const googleMapsUrl = `https://maps.google.com/maps?daddr=${destination}&dirflg=w`;
+    const googleMapsUrl = `https://maps.google.com/maps?daddr=${encodedAddress}&dirflg=w`;
     window.open(googleMapsUrl, "_blank");
   }
 }
@@ -146,11 +149,13 @@ export function LocationMap() {
   // 处理弹窗确认
   const handleMapDialogConfirm = () => {
     if (pendingNavigation) {
-      openSystemNavigation(
-        pendingNavigation.lat,
-        pendingNavigation.lng,
-        pendingNavigation.name
-      );
+      // 根据名称选择对应的地址
+      const address =
+        pendingNavigation.name === "Hotel Wellies"
+          ? HOTEL_ADDRESS
+          : STATION_ADDRESS;
+
+      openSystemNavigation(address, pendingNavigation.name);
     }
     setShowMapDialog(false);
     setPendingNavigation(null);
@@ -303,28 +308,14 @@ export function LocationMap() {
           });
 
           stationMarker.on("click", () => {
-            handleNavigationRequest(STATION_LAT, STATION_LNG, "中轻井泽站");
+            // 直接打开导航，不显示确认弹窗
+            openSystemNavigation(STATION_ADDRESS, "中轻井泽站");
           });
 
           // 添加地图点击事件处理程序
           map.on("click", (e: any) => {
-            const lat = e.latlng.lat;
-            const lng = e.latlng.lng;
-
-            // 计算点击位置与酒店和车站的距离
-            const distanceToHotel = Math.sqrt(
-              Math.pow(lat - HOTEL_LAT, 2) + Math.pow(lng - HOTEL_LNG, 2)
-            );
-            const distanceToStation = Math.sqrt(
-              Math.pow(lat - STATION_LAT, 2) + Math.pow(lng - STATION_LNG, 2)
-            );
-
-            // 如果点击位置更接近酒店，则导航到酒店；否则导航到车站
-            if (distanceToHotel < distanceToStation) {
-              handleNavigationRequest(HOTEL_LAT, HOTEL_LNG, "Hotel Wellies");
-            } else {
-              handleNavigationRequest(STATION_LAT, STATION_LNG, "中轻井泽站");
-            }
+            // 无论点击地图任何地方，都导航到酒店地址
+            handleNavigationRequest(HOTEL_LAT, HOTEL_LNG, "Hotel Wellies");
           });
 
           // 获取并添加真实的步行路径
