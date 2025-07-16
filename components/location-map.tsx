@@ -231,11 +231,95 @@ export function LocationMap() {
         linkEl.crossOrigin = "";
         document.head.appendChild(linkEl);
 
-        // 添加我们的覆盖样式
-        const overrideLinkEl = document.createElement("link");
-        overrideLinkEl.rel = "stylesheet";
-        overrideLinkEl.href = "/styles/leaflet-override.css";
-        document.head.appendChild(overrideLinkEl);
+        // 添加内联样式，避免外部文件引用问题
+        const styleEl = document.createElement("style");
+        styleEl.textContent = `
+          /* Leaflet地图z-index覆盖 */
+          .leaflet-container {
+            z-index: 10 !important;
+          }
+
+          .leaflet-control-container {
+            z-index: 11 !important;
+          }
+
+          .leaflet-popup-pane {
+            z-index: 12 !important;
+          }
+
+          .leaflet-tooltip-pane {
+            z-index: 13 !important;
+          }
+
+          /* 确保地图相关元素不会超过我们定义的层级 */
+          .leaflet-container * {
+            z-index: inherit !important;
+          }
+
+          /* 自定义tooltip样式 */
+          .custom-tooltip {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 1px solid #e5e7eb !important;
+            border-radius: 6px !important;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1),
+              0 1px 2px -1px rgba(0, 0, 0, 0.06) !important;
+            padding: 4px 8px !important;
+            font-size: 11px !important;
+            font-weight: 500 !important;
+            line-height: 1.3 !important;
+            color: #374151 !important;
+            backdrop-filter: blur(4px) !important;
+            max-width: 120px !important;
+            text-align: center !important;
+            white-space: nowrap !important;
+          }
+
+          .custom-tooltip::before {
+            border-top-color: rgba(255, 255, 255, 0.95) !important;
+          }
+
+          .hotel-tooltip {
+            border-left: 3px solid #dc2626 !important;
+          }
+
+          .station-tooltip {
+            border-left: 3px solid #2563eb !important;
+          }
+
+          /* 自定义标记样式 */
+          .custom-marker {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+          }
+
+          .custom-marker:hover {
+            transform: scale(1.1);
+          }
+
+          .hotel-marker {
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+          }
+
+          .station-marker {
+            background: rgba(37, 99, 235, 0.9);
+            color: white;
+          }
+
+          .custom-div-icon {
+            background: transparent !important;
+            border: none !important;
+          }
+        `;
+        document.head.appendChild(styleEl);
 
         // 等待CSS加载
         await new Promise((resolve) => setTimeout(resolve, 100));

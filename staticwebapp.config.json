@@ -36,7 +36,7 @@
     }
   },
   "globalHeaders": {
-    "content-security-policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://*.tile.openstreetmap.org https://web.squarecdn.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://web.squarecdn.com; connect-src 'self' https://api.fuyosankyo.jp https://connect.squareup.com https://pci-connect.squareup.com; img-src 'self' data: https: https://*.tile.openstreetmap.org https://unpkg.com; frame-src https://js.squareup.com https://web.squarecdn.com;"
+    "content-security-policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://*.tile.openstreetmap.org https://web.squarecdn.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://web.squarecdn.com; connect-src 'self' https://api.fuyosankyo.jp https://connect.squareup.com https://pci-connect.squareup.com https://router.project-osrm.org https://routing.openstreetmap.de https://server.arcgisonline.com; img-src 'self' data: https: https://*.tile.openstreetmap.org https://unpkg.com https://server.arcgisonline.com; frame-src https://js.squareup.com https://web.squarecdn.com;"
   },
   "mimeTypes": {
     ".json": "text/json"
