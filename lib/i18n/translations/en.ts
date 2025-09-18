@@ -584,6 +584,18 @@ export const en = {
         "If you have any feedback or suggestions regarding our initiatives, please do not hesitate to speak to our staff. We sincerely appreciate your understanding and cooperation.",
     },
   },
+  maintenance: {
+    title: "Service Temporarily Unavailable",
+    subtitle: "We apologize for the inconvenience",
+    message:
+      "Our booking system is currently under maintenance to provide you with better service. Please try again later or contact us directly.",
+    contactInfo: "For immediate assistance, please contact us:",
+    phone: "Phone: +81-267-46-1670",
+    email: "Email: info@hotelwellies.jp",
+    backToHome: "Back to Home",
+    expectedResolution: "Expected to be resolved soon",
+    thankYou: "Thank you for your understanding",
+  },
   countries: {
     jp: "Japan",
     cn: "China",

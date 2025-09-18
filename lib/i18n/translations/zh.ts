@@ -547,6 +547,18 @@ export const zh = {
         "如果您对我们的举措有任何反馈或建议，请随时与我们的员工联系。我们衷心感谢您的理解和配合。",
     },
   },
+  maintenance: {
+    title: "服务暂时不可用",
+    subtitle: "给您带来不便，我们深表歉意",
+    message:
+      "我们的预订系统正在进行维护，以便为您提供更好的服务。请稍后重试或直接联系我们。",
+    contactInfo: "如需立即帮助，请联系我们：",
+    phone: "电话：+81-267-46-1670",
+    email: "邮箱：info@hotelwellies.jp",
+    backToHome: "返回首页",
+    expectedResolution: "预计很快恢复",
+    thankYou: "感谢您的理解",
+  },
   countries: {
     jp: "日本",
     cn: "中国",
