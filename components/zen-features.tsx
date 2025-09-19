@@ -4,16 +4,23 @@ import { useLanguage } from "@/lib/i18n/context";
 import { motion } from "framer-motion";
 import { Coffee, Utensils, Gift, Bike } from "lucide-react";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export function ZenFeatures() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  // 酒店服务项目数据
+  // 酒店服务项目数据 - 三语标签
   const features = [
     {
       icon: <Coffee className="h-10 w-10 text-white" />,
       title: t("services.welcomeTeaTitle"),
       description: t("services.welcomeTeaDescription"),
+      labels: {
+        zh: "欢迎茶",
+        en: "Welcome Tea",
+        ja: "ウェルカムティー"
+      },
       japaneseSymbol: "茶",
       backgroundImage: "/images/food/welcometea.jpg",
       gradientFrom: "from-amber-500/80",
@@ -24,6 +31,11 @@ export function ZenFeatures() {
       icon: <Utensils className="h-10 w-10 text-white" />,
       title: t("services.diningTitle"),
       description: t("services.diningDescription"),
+      labels: {
+        zh: "餐饮服务",
+        en: "Dining Service",
+        ja: "お食事"
+      },
       japaneseSymbol: "食",
       backgroundImage: "/images/food/227477231.jpg",
       gradientFrom: "from-emerald-500/80",
@@ -34,6 +46,11 @@ export function ZenFeatures() {
       icon: <Gift className="h-10 w-10 text-white" />,
       title: t("services.specialSurpriseTitle"),
       description: t("services.specialSurpriseDescription"),
+      labels: {
+        zh: "特别惊喜",
+        en: "Special Surprise",
+        ja: "サプライズ"
+      },
       japaneseSymbol: "祝",
       backgroundImage: "/images/food/celebrity.jpg",
       gradientFrom: "from-rose-500/80",
@@ -44,6 +61,11 @@ export function ZenFeatures() {
       icon: <Bike className="h-10 w-10 text-white" />,
       title: t("services.bicycleTitle"),
       description: t("services.bicycleDescription"),
+      labels: {
+        zh: "自行车租赁",
+        en: "Bicycle Rental",
+        ja: "貸自転車"
+      },
       japaneseSymbol: "輪",
       backgroundImage: "/images/walking-paths.webp",
       gradientFrom: "from-blue-500/80",
@@ -52,141 +74,230 @@ export function ZenFeatures() {
     },
   ];
 
+  // 自动轮播功能 - 匹配nasu-yobou.jp的4秒间隔
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % features.length);
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, [features.length]);
+
+  // 手动切换到指定slide
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
   return (
     <section
       id="features"
-      className="py-24 bg-gradient-to-br from-stone-50 via-stone-100 to-stone-200 relative overflow-hidden"
+      className="bg-white relative overflow-hidden"
+      style={{
+        backgroundImage: "url('/images/service-bg.png')",
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: '511px',
+        backgroundPosition: 'left center'
+      }}
     >
-      {/* 背景装饰元素 */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="zen-bg-decoration absolute top-20 left-10 w-32 h-32 rounded-full bg-stone-400"></div>
-        <div className="zen-bg-decoration absolute bottom-20 right-10 w-24 h-24 rounded-full bg-stone-500"></div>
-        <div className="zen-bg-decoration absolute top-1/2 left-1/3 w-16 h-16 rounded-full bg-stone-300"></div>
-      </div>
-
       <div className="container relative lg:ml-80">
-        {/* 标题区域 */}
-        <div className="text-center mb-16 max-w-3xl mx-auto">
+        {/* 标题区域 - 匹配nasu-yobou.jp样式 */}
+        <div className="text-center mb-16 lg:mb-0 lg:text-left max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="space-y-6"
+            className="space-y-6 py-24"
           >
-            <div className="flex justify-center items-center gap-4">
-              <div className="h-px w-8 bg-gradient-to-r from-transparent to-stone-400"></div>
-              <h3 className="text-sm uppercase tracking-[0.25em] text-stone-600 font-light">
-                {t("services.subtitle")}
-              </h3>
-              <div className="h-px w-8 bg-gradient-to-l from-transparent to-stone-400"></div>
+            {/* 主标题 */}
+            <div className="space-y-2">
+              <h2 className="text-4xl lg:text-5xl font-light text-stone-800 tracking-wide">
+                {t("services.title")}
+                <span className="block text-lg text-stone-600 font-light mt-2 tracking-[0.2em]">
+                  {t("services.subtitle")}
+                </span>
+              </h2>
             </div>
 
-            <h2 className="text-4xl font-light text-stone-800 tracking-wide">
-              {t("services.title")}
-            </h2>
+            {/* 副标题 */}
+            <div className="max-w-md lg:max-w-none">
+              <p className="text-stone-600 font-light leading-relaxed text-base">
+                お客様の滞在をより思い出深く<br className="hidden lg:block" />
+                快適にするために、<br className="hidden lg:block" />
+                － 丁寧に企画されたサービス －
+              </p>
+            </div>
 
-            <p className="text-stone-600 font-light max-w-2xl mx-auto">
-              {t("services.description")}
-            </p>
+            {/* 描述内容 */}
+            <div className="w-fit ml-auto">
+              <p className="text-stone-700 font-light leading-relaxed text-sm max-w-lg">
+                {t("services.description")}
+              </p>
+            </div>
           </motion.div>
         </div>
 
-        {/* 服务项目 - 完整展示设计 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: index * 0.2 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="zen-feature-card group relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500"
-            >
-              {/* 背景图片 */}
-              <div className="absolute inset-0">
-                <Image
-                  src={feature.backgroundImage}
-                  alt={feature.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              </div>
+        {/* 主要内容区域 - 匹配nasu-yobou.jp的flex布局 */}
+        <div className="lg:flex lg:flex-row-reverse lg:items-start lg:pb-24">
 
-              {/* 暗色覆盖层 */}
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-500"></div>
+          {/* 轮播图片区域 - 70%宽度 */}
+          <div className="lg:w-[70%] mb-12 lg:mb-0">
+            <div className="relative w-full max-w-[716px] mx-auto lg:mx-0">
+              {/* Swiper容器 - 精确匹配尺寸 */}
+              <div className="relative overflow-hidden w-full" style={{ height: '571px' }}>
+                {/* 图片slides */}
+                <div className="relative w-full" style={{ height: '537px' }}>
+                  {features.map((feature, index) => {
+                    const isActive = index === currentSlide;
+                    const translateX = isActive ? 0 : index > currentSlide ? 100 : -100;
 
-              {/* 微妙的纹理覆盖层 */}
-              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
+                    return (
+                      <motion.div
+                        key={index}
+                        className="absolute inset-0 overflow-hidden"
+                        initial={false}
+                        animate={{
+                          x: `${translateX}%`,
+                          opacity: isActive ? 1 : 0,
+                        }}
+                        transition={{
+                          duration: 2.0, // 匹配nasu-yobou.jp的2秒切换
+                          ease: [0.25, 0.46, 0.45, 0.94],
+                        }}
+                      >
+                        {/* 视差效果层 - 模拟data-swiper-parallax-x="90%" */}
+                        <motion.div
+                          className="w-full h-full"
+                          animate={{
+                            x: isActive ? 0 : `${90 * (translateX > 0 ? 1 : -1)}%`,
+                          }}
+                          transition={{
+                            duration: 2.0,
+                            ease: [0.25, 0.46, 0.45, 0.94],
+                          }}
+                        >
+                          <Image
+                            src={feature.backgroundImage}
+                            alt={feature.title}
+                            fill
+                            className="object-cover"
+                          />
+                        </motion.div>
 
-              {/* 内容区域 - 自适应高度 */}
-              <div className="relative p-6 md:p-8 text-center text-white min-h-[500px] flex flex-col">
-                {/* 顶部图标区域 */}
-                <div className="flex flex-col items-center mb-6">
-                  <div
-                    className={`${feature.iconBg} backdrop-blur-sm p-4 rounded-full mb-4 border border-white/20 transition-transform duration-300 group-hover:scale-110`}
-                  >
-                    {feature.icon}
-                  </div>
+                        {/* 内容浮动层 - 只在当前活跃slide显示 */}
+                        {isActive && (
+                          <motion.div
+                            className="absolute bottom-0 right-0 left-0 z-20"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 20 }}
+                            transition={{ duration: 0.8, delay: 0.5 }}
+                          >
+                            <div className="bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6 lg:p-8">
+                              <div className="max-w-2xl ml-auto">
+                                <div className="text-white space-y-4">
+                                  {/* 服务标题 */}
+                                  <h3 className="text-xl font-light mb-3">
+                                    {feature.title}
+                                  </h3>
 
-                  {/* 日语符号 */}
-                  <div className="absolute top-4 right-4 text-4xl text-white/20 font-light transition-all duration-500 group-hover:text-white/30">
-                    {feature.japaneseSymbol}
-                  </div>
-
-                  {/* 标题 */}
-                  <h3 className="text-lg font-light mb-4 leading-tight">
-                    {feature.title}
-                  </h3>
+                                  {/* 详细描述 */}
+                                  <div className="font-light text-sm leading-relaxed whitespace-pre-line">
+                                    {feature.description}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </motion.div>
+                    );
+                  })}
                 </div>
 
-                {/* 描述内容 - 完整显示 */}
-                <div className="flex-1 flex items-start">
-                  <div className="text-white/95 font-light leading-relaxed text-sm whitespace-pre-line">
-                    {feature.description}
+
+                {/* 分页器 - 匹配nasu-yobou.jp样式 */}
+                <div className="relative h-[34px] flex justify-center items-center">
+                  <div className="flex gap-3">
+                    {features.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => goToSlide(index)}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                          index === currentSlide
+                            ? 'bg-stone-800 scale-125'
+                            : 'bg-stone-400 hover:bg-stone-600'
+                        }`}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
                   </div>
                 </div>
-
-                {/* 底部装饰线 */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-12 h-px bg-white/30 transition-all duration-500 group-hover:w-20 group-hover:bg-white/50"></div>
               </div>
-
-              {/* 悬浮时的边框光效 */}
-              <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-lg transition-all duration-500"></div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* 装饰线条和墨迹元素 */}
-        <div className="mt-16 flex justify-center items-center space-x-8">
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-stone-400 to-transparent"></div>
-
-          {/* 使用SVG墨迹装饰 */}
-          <div className="relative flex items-center space-x-4">
-            <Image
-              src="/images/ink-branch.svg"
-              alt="Ink branch decoration"
-              width={30}
-              height={30}
-              className="opacity-30 transform rotate-12"
-            />
-            <Image
-              src="/images/ink-splash.svg"
-              alt="Ink splash decoration"
-              width={40}
-              height={40}
-              className="opacity-20"
-            />
-            <Image
-              src="/images/ink-branch.svg"
-              alt="Ink branch decoration"
-              width={30}
-              height={30}
-              className="opacity-30 transform -rotate-12 scale-x-[-1]"
-            />
+            </div>
           </div>
 
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-stone-400 to-transparent"></div>
+          {/* 左侧标签区域 - 30%宽度 */}
+          <div className="lg:w-[30%] lg:pr-12">
+            <div className="space-y-6">
+              {/* Swiper-style导航列表 - 正确实现垂直滑块效果 */}
+              <div className="thumb-swiper relative">
+                <div className="swiper-wrapper">
+                  {features.map((feature, index) => {
+                    const isActive = index === currentSlide;
+
+                    // 根据当前语言显示对应标签
+                    const getDisplayLabel = () => {
+                      switch (locale) {
+                        case 'zh':
+                          return feature.labels.zh;
+                        case 'en':
+                          return feature.labels.en;
+                        case 'ja':
+                          return feature.labels.ja;
+                        default:
+                          return feature.labels.en;
+                      }
+                    };
+
+                    const slideClasses = `
+                      swiper-slide swiper-slide-visible swiper-slide-fully-visible
+                      ${isActive ? 'swiper-slide-active' : ''}
+                    `.trim();
+
+                    return (
+                      <motion.div
+                        key={index}
+                        className={`${slideClasses}`}
+                        onClick={() => goToSlide(index)}
+                        role="group"
+                        aria-label={`${index + 1} / ${features.length}`}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <p
+                          style={{
+                            fontFamily: '"Shippori Mincho", serif',
+                            fontSize: '13px',
+                            lineHeight: '24.31px',
+                            letterSpacing: '1.3px',
+                            textAlign: 'start'
+                          }}
+                        >
+                          {getDisplayLabel()}
+                        </p>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* 底部描述 */}
+              <p className="text-stone-700 text-sm">
+                滞在中いつでもお楽しみいただけます。
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

@@ -422,3 +422,51 @@ input[type="checkbox"]:focus {
 .zoom-out:hover img {
   transform: scale(1.035);
 }
+
+/* Swiper-style navigation styles - 简洁版本 */
+.thumb-swiper {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+.swiper-wrapper {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+
+.swiper-slide {
+  position: relative;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.swiper-slide:last-child {
+  border-bottom: none;
+}
+
+.swiper-slide p {
+  margin: 0;
+  padding: 4px 0;
+  transition: all 0.2s ease;
+}
+
+.swiper-slide-active p {
+  opacity: 1;
+  font-weight: 500;
+  color: rgb(53, 53, 53);
+}
+
+.swiper-slide:not(.swiper-slide-active) p {
+  opacity: 0.6;
+  font-weight: 400;
+  color: rgb(53, 53, 53);
+}
+
+.swiper-slide:hover p {
+  opacity: 1;
+}
