@@ -18,16 +18,19 @@ export function generateStaticParams() {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-stone-50 pt-24 text-stone-800 lg:pt-0 lg:pl-72">
+    <>
       <SideMenu />
       <ZenHero />
-      <ZenAbout />
-      <ZenFeatures />
-      <ZenRooms />
-      <ZenTestimonials />
-      <ZenGallery />
-      <ZenContact />
-      <Footer />
-    </main>
+      {/* 滚动内容区域 - 会遮盖固定的 banner */}
+      <main className="relative z-20 bg-stone-50 pt-24 text-stone-800 lg:pt-0">
+        <ZenAbout />
+        <ZenFeatures />
+        <ZenRooms />
+        <ZenTestimonials />
+        <ZenGallery />
+        <ZenContact />
+        <Footer />
+      </main>
+    </>
   );
 }

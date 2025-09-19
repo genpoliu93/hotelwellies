@@ -113,9 +113,14 @@ export function SideMenu() {
 
   return (
     <>
+
+      {/* 完全透明的导航菜单 - 类似 nasu-yobou */}
       <aside
-        className="fixed inset-y-0 left-0 hidden w-72 flex-col justify-between border-r border-stone-200 bg-stone-50/90 px-8 py-12 text-stone-800 backdrop-blur-lg lg:flex"
-        style={{ zIndex: Z_INDEX.NAVIGATION }}
+        className="fixed inset-y-0 left-0 w-80 flex-col justify-between px-10 py-16 text-white transition-all duration-500 hidden lg:flex"
+        style={{
+          zIndex: Z_INDEX.NAVIGATION,
+          background: "rgba(0, 0, 0, 0)"
+        }}
       >
         <div className="space-y-12">
           <Link href={`/${locale}`} className="group flex flex-col gap-6">
@@ -125,18 +130,18 @@ export function SideMenu() {
                 alt="Hotel Wellies Logo"
                 width={64}
                 height={64}
-                className="h-16 w-16 rounded-full bg-white object-contain p-1 shadow-sm transition-transform duration-300 group-hover:scale-105"
+                className="h-16 w-16 rounded-full bg-white/90 object-contain p-1 shadow-lg transition-transform duration-300 group-hover:scale-105"
               />
               <div className="space-y-1">
-                <p className="text-xs uppercase tracking-[0.45em] text-stone-500">
+                <p className="text-xs uppercase tracking-[0.45em] text-white/60">
                   Karuizawa
                 </p>
-                <p className="text-2xl font-light tracking-[0.25em] text-stone-800">
+                <p className="text-2xl font-light tracking-[0.25em] text-white">
                   Hotel Wellies
                 </p>
               </div>
             </div>
-            <p className="text-sm leading-relaxed text-stone-600">
+            <p className="text-sm leading-relaxed text-white/80">
               {subHeadline}
             </p>
           </Link>
@@ -149,9 +154,9 @@ export function SideMenu() {
                     key={item.id}
                     type="button"
                     onClick={() => navigateToSection(item.id)}
-                    className="group flex w-full items-center gap-3 text-left text-xs uppercase tracking-[0.5em] text-stone-500 transition hover:text-stone-900"
+                    className="group flex w-full items-center gap-3 text-left text-xs uppercase tracking-[0.5em] text-white/70 transition hover:text-white"
                   >
-                    <span className="h-px w-10 bg-stone-300 transition-all group-hover:w-16 group-hover:bg-stone-800" />
+                    <span className="h-px w-10 bg-white/30 transition-all group-hover:w-16 group-hover:bg-white" />
                     <span className="flex-1">{item.label}</span>
                   </button>
                 );
@@ -162,9 +167,9 @@ export function SideMenu() {
                   key={item.id}
                   type="button"
                   onClick={() => navigateToRoute(item.href)}
-                  className="group flex w-full items-center gap-3 text-left text-xs uppercase tracking-[0.5em] text-stone-500 transition hover:text-stone-900"
+                  className="group flex w-full items-center gap-3 text-left text-xs uppercase tracking-[0.5em] text-white/70 transition hover:text-white"
                 >
-                  <span className="h-px w-10 bg-stone-300 transition-all group-hover:w-16 group-hover:bg-stone-800" />
+                  <span className="h-px w-10 bg-white/30 transition-all group-hover:w-16 group-hover:bg-white" />
                   <span className="flex-1">{item.label}</span>
                 </button>
               );
@@ -173,25 +178,25 @@ export function SideMenu() {
         </div>
 
         <div className="space-y-6">
-          <div className="space-y-3 text-xs uppercase tracking-[0.4em] text-stone-500">
+          <div className="space-y-3 text-xs uppercase tracking-[0.4em] text-white/60">
             <span className="block">{sinceText}</span>
-            <span className="block font-medium text-stone-800">{headline}</span>
+            <span className="block font-medium text-white">{headline}</span>
           </div>
-          <div className="space-y-3 text-sm text-stone-600">
-            <p className="flex items-center gap-3 text-stone-700">
+          <div className="space-y-3 text-sm text-white/80">
+            <p className="flex items-center gap-3 text-white">
               <Phone className="h-4 w-4" />
               <span>{phone}</span>
             </p>
             <div className="flex items-center gap-3">
               <LanguageSwitcher />
-              <span className="text-xs uppercase tracking-[0.4em] text-stone-500">
+              <span className="text-xs uppercase tracking-[0.4em] text-white/60">
                 {languageLabel}
               </span>
             </div>
           </div>
           <Button
             size="lg"
-            className="w-full rounded-none bg-stone-900 py-3 text-xs uppercase tracking-[0.5em] text-white transition hover:bg-stone-700"
+            className="w-full rounded-lg border border-white/20 bg-white/10 py-3 text-xs uppercase tracking-[0.5em] text-white transition hover:bg-white/20 backdrop-blur-sm"
             onClick={() => navigateToSection("contact")}
           >
             {t("common.bookNow")}

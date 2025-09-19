@@ -9,28 +9,12 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import {
-  CalendarIcon,
   ChevronLeft,
   ChevronRight,
-  Users,
-  Search,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import {
-  formatDateDisplay,
-  getDateFnsLocale,
-  type SupportedLocale,
-} from "@/lib/utils/date";
+import { useState, useEffect, useRef } from "react";
 
 // 轮播图片配置
 const carouselImages = [
@@ -60,481 +44,10 @@ const carouselImages = [
   },
 ];
 
-// 内联样式定义，确保日历固定高度（针对双月历优化）
-const quickSearchCalendarStyles = `
-  .quick-search-calendar-container {
-    min-height: 320px; /* 固定最小高度，双月历需要更高 */
-    max-height: 320px; /* 固定最大高度 */
-    overflow: hidden; /* 防止内容溢出 */
-    position: relative;
-  }
-  
-  /* 日历主体布局 */
-  .quick-search-calendar-container .rdp {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .quick-search-calendar-container .rdp-months {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-  }
-  
-  .quick-search-calendar-container .rdp-month {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-  
-  /* 标题区域固定高度 */
-  .quick-search-calendar-container .rdp-caption {
-    height: 40px !important;
-    min-height: 40px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    flex-shrink: 0;
-  }
-  
-  /* 导航按钮定位 */
-  .quick-search-calendar-container [class*="nav_button"] {
-    position: absolute !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    z-index: 10;
-  }
-  
-  .quick-search-calendar-container [class*="nav_button_previous"] {
-    left: 4px !important;
-  }
-  
-  .quick-search-calendar-container [class*="nav_button_next"] {
-    right: 4px !important;
-  }
-  
-  /* 表格区域自适应剩余空间 */
-  .quick-search-calendar-container .rdp-table {
-    flex: 1 !important;
-    height: auto !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-  
-  /* 表头固定高度 */
-  .quick-search-calendar-container .rdp-head {
-    flex-shrink: 0;
-  }
-  
-  .quick-search-calendar-container .rdp-head_row {
-    height: 32px !important;
-  }
-  
-  /* 表体自适应高度 */
-  .quick-search-calendar-container .rdp-tbody {
-    flex: 1 !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-  
-  /* 每行平均分配高度 */
-  .quick-search-calendar-container .rdp-row {
-    flex: 1 !important;
-    min-height: 32px !important;
-    display: flex !important;
-    align-items: center !important;
-  }
-  
-  /* 确保每个日期单元格有合适的高度，但不强制覆盖选中样式 */
-  .quick-search-calendar-container .rdp-day {
-    min-height: 32px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-  
-  /* 确保日期范围选择样式正常工作 */
-  .quick-search-calendar-container .rdp-day_range_start {
-    border-radius: 6px 0 0 6px !important;
-  }
-  
-  .quick-search-calendar-container .rdp-day_range_end {
-    border-radius: 0 6px 6px 0 !important;
-  }
-  
-  .quick-search-calendar-container .rdp-day_range_middle {
-    border-radius: 0 !important;
-  }
-  
-  /* 响应式调整 - 在小屏幕上显示单月 */
-  @media (max-width: 640px) {
-    .quick-search-calendar-container {
-      min-height: 280px;
-      max-height: 280px;
-    }
-    
-    .quick-search-calendar-container .rdp-months {
-      flex-direction: column;
-    }
-    
-    .quick-search-calendar-container .rdp-month:nth-child(2) {
-      display: none; /* 在小屏幕上隐藏第二个月 */
-    }
-  }
-`;
-
 // 定义卡片属性类型
 type InfoCardProps = {
   titleKey: string; // 翻译键
   descKey: string; // 翻译键
-  // Removed initialDelay as animation is now parent-controlled for scroll effect
-};
-
-// 快速搜索组件
-const QuickSearch = () => {
-  const { t, locale } = useLanguage();
-  const router = useRouter();
-  const [checkInDate, setCheckInDate] = useState<Date | undefined>(undefined);
-  const [checkOutDate, setCheckOutDate] = useState<Date | undefined>(undefined);
-  const [tempCheckIn, setTempCheckIn] = useState<Date | undefined>(undefined);
-  const [tempCheckOut, setTempCheckOut] = useState<Date | undefined>(undefined);
-  const [adults, setAdults] = useState(2);
-  const [children, setChildren] = useState(0);
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const [isGuestPickerOpen, setIsGuestPickerOpen] = useState(false);
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const dateLocale = getDateFnsLocale(locale as SupportedLocale);
-
-  // 计算住宿天数
-  const calculateNights = (
-    checkIn: Date | undefined,
-    checkOut: Date | undefined
-  ) => {
-    if (!checkIn || !checkOut) return 0;
-    const diffTime = checkOut.getTime() - checkIn.getTime();
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  };
-
-  const nights = calculateNights(checkInDate, checkOutDate);
-  const tempNights = calculateNights(tempCheckIn, tempCheckOut);
-
-  // 处理搜索
-  const handleSearch = () => {
-    if (!checkInDate || !checkOutDate) {
-      return;
-    }
-
-    const searchParams = new URLSearchParams({
-      checkIn: checkInDate.toISOString().split("T")[0],
-      checkOut: checkOutDate.toISOString().split("T")[0],
-      adults: adults.toString(),
-      children: children.toString(),
-    });
-
-    router.push(`/${locale}/booking?${searchParams.toString()}`);
-  };
-
-  // 格式化日期显示
-  const formatDate = (date: Date | undefined) => {
-    if (!date) return "";
-    return formatDateDisplay(date, locale as SupportedLocale, {
-      useShortFormat: true,
-    });
-  };
-
-  // 处理日期选择器打开
-  const handleDatePickerOpen = (open: boolean) => {
-    if (open) {
-      setTempCheckIn(checkInDate);
-      setTempCheckOut(checkOutDate);
-    }
-    setIsDatePickerOpen(open);
-  };
-
-  // 重置临时日期
-  const handleDateReset = () => {
-    setTempCheckIn(undefined);
-    setTempCheckOut(undefined);
-  };
-
-  // 确认日期选择
-  const handleDateConfirm = () => {
-    setCheckInDate(tempCheckIn);
-    setCheckOutDate(tempCheckOut);
-    setIsDatePickerOpen(false);
-  };
-
-  // 获取主按钮显示文本
-  const getDateButtonText = () => {
-    if (checkInDate && checkOutDate) {
-      return `${formatDate(checkInDate)} - ${formatDate(
-        checkOutDate
-      )} (${nights} ${
-        nights === 1 ? t("booking.night") : t("booking.nights")
-      })`;
-    }
-    return t("booking.selectDates");
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.4, duration: 0.8 }}
-      className="bg-black/20 backdrop-blur-md border border-white/20 rounded-lg p-3 md:p-6 w-full max-w-4xl mx-auto"
-    >
-      <style dangerouslySetInnerHTML={{ __html: quickSearchCalendarStyles }} />
-
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-4">
-        {/* 日期选择 */}
-        <div className="md:col-span-2">
-          <Popover open={isDatePickerOpen} onOpenChange={handleDatePickerOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className={cn(
-                  "w-full justify-start text-left font-normal bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm",
-                  !checkInDate && "text-white/70"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4 flex-shrink-0" />
-                <div className="flex flex-col min-w-0">
-                  <span className="text-xs text-white/70 mb-0.5">
-                    {t("booking.stayDates")}
-                  </span>
-                  <span className="text-xs md:text-sm font-medium truncate">
-                    {getDateButtonText()}
-                  </span>
-                </div>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <div className="bg-white rounded-lg overflow-hidden">
-                {/* 头部 */}
-                <div className="p-3 border-b border-gray-100 bg-gray-50">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium text-gray-800 text-sm">
-                      {t("booking.selectDates")}
-                    </h3>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={handleDateReset}
-                      className="text-gray-500 hover:text-gray-700 h-6 px-2 text-xs"
-                    >
-                      {t("booking.reset")}
-                    </Button>
-                  </div>
-                </div>
-
-                {/* 日历 */}
-                <div className="p-3">
-                  {/* 固定高度的日历容器 */}
-                  <div className="quick-search-calendar-container">
-                    <Calendar
-                      mode="range"
-                      selected={{
-                        from: tempCheckIn,
-                        to: tempCheckOut,
-                      }}
-                      onSelect={(range) => {
-                        if (range?.from) setTempCheckIn(range.from);
-                        if (range?.to) setTempCheckOut(range.to);
-                      }}
-                      disabled={(date) => date < today}
-                      locale={dateLocale}
-                      numberOfMonths={2} // 保持双月显示
-                      fixedWeeks={true} // 固定显示6周
-                      showOutsideDays={true} // 显示其他月份的日期以填充空白
-                      className="rounded-md border-0"
-                      classNames={{
-                        months:
-                          "flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0",
-                        month: "space-y-4",
-                        caption:
-                          "flex justify-center pt-1 relative items-center",
-                        caption_label: "text-sm font-medium",
-                        nav: "space-x-1 flex items-center",
-                        nav_button:
-                          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
-                        nav_button_previous: "absolute left-1",
-                        nav_button_next: "absolute right-1",
-                        table: "w-full border-collapse space-y-1",
-                        head_row: "flex",
-                        head_cell:
-                          "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
-                        row: "flex w-full mt-2",
-                        cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-                        day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
-                        day_selected:
-                          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-                        day_today: "bg-accent text-accent-foreground",
-                        day_outside: "text-muted-foreground opacity-30",
-                        day_disabled: "text-muted-foreground opacity-50",
-                        day_range_start:
-                          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground rounded-l-md rounded-r-none shadow-md",
-                        day_range_end:
-                          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground rounded-r-md rounded-l-none shadow-md",
-                        day_range_middle:
-                          "bg-primary/15 text-primary hover:bg-primary/25 rounded-none",
-                        day_hidden: "invisible",
-                      }}
-                    />
-                  </div>
-
-                  {/* 当前选择预览 */}
-                  {tempCheckIn && tempCheckOut && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-3 p-3 bg-primary/5 border border-primary/20 rounded-md"
-                    >
-                      <div className="text-center">
-                        <p className="text-sm text-primary font-medium">
-                          {formatDate(tempCheckIn)} → {formatDate(tempCheckOut)}
-                        </p>
-                        <p className="text-xs text-primary/70 mt-1">
-                          {tempNights}{" "}
-                          {tempNights === 1
-                            ? t("booking.night")
-                            : t("booking.nights")}{" "}
-                          • {tempNights + 1} {t("booking.days")}
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </div>
-
-                {/* 底部操作 */}
-                <div className="p-3 border-t border-gray-100 bg-gray-50">
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      onClick={() => setIsDatePickerOpen(false)}
-                      className="flex-1 h-8 text-xs"
-                    >
-                      {t("booking.back")}
-                    </Button>
-                    <Button
-                      onClick={handleDateConfirm}
-                      disabled={!tempCheckIn || !tempCheckOut}
-                      className="flex-1 h-8 text-xs bg-primary hover:bg-primary/90"
-                    >
-                      {t("booking.confirm")}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
-        </div>
-
-        {/* 人数选择 */}
-        <div>
-          <Popover open={isGuestPickerOpen} onOpenChange={setIsGuestPickerOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-full justify-start text-left font-normal bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm"
-              >
-                <Users className="mr-2 h-4 w-4 flex-shrink-0" />
-                <span className="text-xs md:text-sm font-medium truncate">
-                  {adults + children > 0
-                    ? `${adults + children} ${t("booking.guests")}`
-                    : t("booking.guests")}
-                </span>
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-80" align="start">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">{t("booking.adults")}</p>
-                    <p className="text-sm text-gray-500">
-                      {t("booking.age13Plus")}
-                    </p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setAdults(Math.max(1, adults - 1))}
-                      disabled={adults <= 1}
-                    >
-                      -
-                    </Button>
-                    <span className="w-8 text-center">{adults}</span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setAdults(Math.min(6, adults + 1))}
-                      disabled={adults >= 6}
-                    >
-                      +
-                    </Button>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">{t("booking.children")}</p>
-                    <p className="text-sm text-gray-500">
-                      {t("booking.age0To12")}
-                    </p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setChildren(Math.max(0, children - 1))}
-                      disabled={children <= 0}
-                    >
-                      -
-                    </Button>
-                    <span className="w-8 text-center">{children}</span>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setChildren(Math.min(4, children + 1))}
-                      disabled={children >= 4}
-                    >
-                      +
-                    </Button>
-                  </div>
-                </div>
-                <Button
-                  onClick={() => setIsGuestPickerOpen(false)}
-                  className="w-full"
-                >
-                  {t("booking.apply")}
-                </Button>
-              </div>
-            </PopoverContent>
-          </Popover>
-        </div>
-
-        {/* 搜索按钮 */}
-        <div>
-          <Button
-            onClick={handleSearch}
-            disabled={!checkInDate || !checkOutDate}
-            className="w-full bg-primary hover:bg-primary/90 text-white"
-          >
-            <Search className="mr-2 h-4 w-4" />
-            <span className="text-xs md:text-sm font-medium">
-              {t("booking.searchRooms")}
-            </span>
-          </Button>
-        </div>
-      </div>
-    </motion.div>
-  );
 };
 
 // 卡片子组件 (修改为竖向文字布局)
@@ -542,13 +55,13 @@ const InfoCard = ({ titleKey, descKey }: InfoCardProps) => {
   const { t } = useLanguage();
 
   return (
-    <div // This div is what gets animated by the parent motion.div
+    <div
       className="bg-black/50 backdrop-blur-md rounded-lg p-2 md:p-4 border border-white/20 shadow-lg w-20 h-48 md:w-32 md:h-72 flex flex-col items-center justify-center"
     >
-      <motion.div // Inner content fade-in
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.7, delay: 0.2 }} // Quick fade for content after card appears
+        transition={{ duration: 0.7, delay: 0.2 }}
         className="h-full flex flex-col justify-around items-center text-center"
       >
         <h3 className="text-white text-sm md:text-xl font-light writing-vertical">
@@ -568,25 +81,31 @@ const InfoCard = ({ titleKey, descKey }: InfoCardProps) => {
 
 export function ZenHero() {
   const { t, locale } = useLanguage();
-  const { scrollY } = useScroll();
+  const heroRef = useRef<HTMLElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const backgroundScale = useTransform(scrollY, [0, 800], [1, 1.15]);
-  const backgroundBrightness = useTransform(scrollY, [0, 400], [0.85, 0.7]);
+  // 获取滚动进度用于"由近到远"效果
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+    layoutEffect: false
+  });
 
-  // 自动轮播
+  // 长焦镜头"由近到远"效果组合 - 优化范围，更柔和
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.04, 0.96]); // 减小缩放范围
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.8, 1], [1, 0.96, 0.8]); // 减小透明度变化
+  const imageBlur = useTransform(scrollYProgress, [0, 0.6, 1], [0, 0.3, 2]); // 减小模糊变化
+  const imageBrightness = useTransform(scrollYProgress, [0, 1], [1.02, 0.85]); // 减小亮度变化
+  const imageSaturation = useTransform(scrollYProgress, [0, 1], [1.05, 0.9]); // 减小饱和度变化
+
+  // 自动轮播 - 匹配 nasu-yobou.jp 的 7 秒间隔
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % carouselImages.length);
-    }, 5000); // 每5秒切换一次
+    }, 7000);
 
     return () => clearInterval(interval);
   }, []);
-
-  // 手动切换到指定图片
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
-  };
 
   // 上一张/下一张
   const goToPrevious = () => {
@@ -599,37 +118,61 @@ export function ZenHero() {
     setCurrentIndex((prev) => (prev + 1) % carouselImages.length);
   };
 
-  // Helper for card animation properties
-  const cardAnimationProps = (delay: number) => ({
-    initial: { opacity: 0, x: 60 }, // Start off-screen to the right and transparent
-    whileInView: { opacity: 1, x: 0 }, // Animate to fully visible and original position
-    viewport: { once: true, amount: 0.4 }, // Trigger animation when 40% of the card is visible
-    transition: { duration: 0.9, delay },
-  });
-
   return (
     <section
-      className="relative h-screen overflow-hidden flex flex-col"
+      ref={heroRef}
+      className="relative h-screen"
       id="hero"
     >
-      {/* 轮播背景图片 */}
+      {/* 固定背景图片 - 长焦镜头由近到远效果 */}
       <motion.div
-        className="absolute inset-0 z-0"
+        className="fixed inset-0 z-0"
         style={{
-          scale: backgroundScale,
+          height: '100vh',
+          width: '100vw',
+          scale: imageScale,
+          opacity: imageOpacity,
           filter: useTransform(
-            backgroundBrightness,
-            (v) => `brightness(${v}) saturate(0.9)`
+            [imageBlur, imageBrightness, imageSaturation],
+            ([blur, brightness, saturation]) =>
+              `blur(${blur}px) brightness(${brightness}) saturate(${saturation})`
           ),
         }}
       >
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="sync">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
+            initial={{
+              opacity: 0,
+              scale: 1.06, // 减小初始缩放
+              filter: "blur(1px) contrast(0.95)"
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1.02, // 减小最大缩放
+              filter: "blur(0px) contrast(1.03)"
+            }}
+            exit={{
+              opacity: 0,
+              scale: 0.96, // 减小退场缩放幅度
+              filter: "blur(2px) contrast(0.85)"
+            }}
+            transition={{
+              duration: 3.0, // 延长切换时间，让效果更柔和
+              ease: [0.25, 0.46, 0.45, 0.94],
+              opacity: {
+                duration: 2.0, // 延长透明度变化
+                ease: "easeInOut"
+              },
+              scale: {
+                duration: 3.5, // 延长缩放时间，更缓慢
+                ease: [0.4, 0.0, 0.2, 1]
+              },
+              filter: {
+                duration: 2.5, // 延长模糊效果
+                ease: "easeOut"
+              }
+            }}
             className="absolute inset-0"
           >
             <Image
@@ -641,135 +184,54 @@ export function ZenHero() {
             />
           </motion.div>
         </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/25 to-transparent" />
       </motion.div>
 
-      {/* 轮播控制按钮 */}
-      <div className="absolute top-1/2 left-4 z-30 transform -translate-y-1/2">
-        <button
-          onClick={goToPrevious}
-          className="p-2 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm border border-white/20 text-white transition-all duration-200"
+      {/* 前景元素层 - 固定在banner上 */}
+      <div className="fixed inset-0 z-10 pointer-events-none">
+        {/* 右上角预约按钮 - 仿 nasu-yobou */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
+          className="absolute top-6 right-6 pointer-events-auto"
         >
-          <ChevronLeft className="h-6 w-6" />
-        </button>
-      </div>
-
-      <div className="absolute top-1/2 right-4 z-30 transform -translate-y-1/2">
-        <button
-          onClick={goToNext}
-          className="p-2 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-sm border border-white/20 text-white transition-all duration-200"
-        >
-          <ChevronRight className="h-6 w-6" />
-        </button>
-      </div>
-
-      {/* 轮播指示器 - 移动端隐藏 */}
-      <div className="hidden md:flex absolute bottom-40 left-1/2 transform -translate-x-1/2 z-30 space-x-2">
-        {carouselImages.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentIndex
-                ? "bg-white"
-                : "bg-white/40 hover:bg-white/60"
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* 主要内容容器 - 占据剩余空间，并让内容垂直居中, 分为左右两栏 */}
-      <div className="relative z-10 flex-grow flex items-stretch justify-between container px-6 md:px-10 py-10 md:py-16 pb-32 md:pb-40">
-        {/* 文案区域 - 移动端竖排居中，PC端竖排靠左 */}
-        <motion.div className="flex flex-col items-center md:items-start justify-center w-full md:max-w-[50vw]">
-          {/* 装饰线 - 始终保持竖直 */}
-          <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: "6rem" }}
-            transition={{ delay: 1.2, duration: 1, ease: "easeOut" }}
-            className="w-px bg-white/70 mb-8 overflow-hidden"
-          />
-
-          {/* 文字内容 - 移动端也使用竖排，但居中显示 */}
-          <div
-            className="writing-vertical text-white space-y-8 text-center md:text-right"
-            style={{ textOrientation: "mixed", whiteSpace: "normal" }}
+          <Button
+            variant="outline"
+            className="bg-white/90 hover:bg-white text-stone-700 border-0 rounded-full px-4 py-2 text-sm font-medium tracking-wide shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-md"
+            asChild
           >
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.6,
-                duration: 1.2,
-              }}
-              className="text-3xl md:text-4xl lg:text-5xl font-extralight tracking-wide md:tracking-widest leading-tight"
-              style={{ maxHeight: "60vh" }}
-            >
-              {t("hero.title")}
-            </motion.h1>
+            <Link href={`/${locale}/booking`}>
+              <div className="flex flex-col items-center text-center">
+                <span className="text-xs">{t("common.bookNow")}</span>
+                <span className="text-xs opacity-60">Reserve</span>
+              </div>
+            </Link>
+          </Button>
+        </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.8,
-                duration: 1.2,
-              }}
-              className="text-sm md:text-base lg:text-lg text-white/80 font-light max-w-[45ch]"
-              style={{ maxHeight: "40vh" }}
-            >
-              {t("hero.subtitle")}
-            </motion.p>
+        {/* 左上角标题 - 仿 nasu-yobou 极小字体 */}
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+          className="absolute top-4 left-4 text-white text-xs font-medium tracking-wider leading-tight"
+          style={{
+            fontSize: '10px',
+            letterSpacing: '1.3px',
+            fontFamily: '"Shippori Mincho", serif',
+            lineHeight: '16px'
+          }}
+        >
+          <div className="space-y-1">
+            <div>{t("hero.title").split(' ')[0]}</div>
+            <div>{t("hero.title").split(' ').slice(1).join(' ')}</div>
+            <div className="text-white/80 mt-2">Hotel Wellies【公式】</div>
           </div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 1 }}
-            className="mt-10 hidden md:block"
-          >
-            <Button
-              variant="outline"
-              size="lg"
-              className="gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-light rounded-full px-6"
-              asChild
-            >
-              <Link href={`/${locale}/booking`}>
-                <CalendarIcon className="h-4 w-4" />
-                {t("common.bookNow")}
-              </Link>
-            </Button>
-          </motion.div>
-        </motion.div>
-
-        {/* 右侧区域: 竖排信息卡片 - 移动端隐藏 */}
-        <motion.div className="hidden md:flex flex-row space-x-5 items-end justify-center relative z-20">
-          <motion.div {...cardAnimationProps(0.7)}>
-            <InfoCard
-              titleKey="hero.cardTitle1"
-              descKey="hero.convenientLocationDesc"
-            />
-          </motion.div>
-          <motion.div {...cardAnimationProps(0.85)} className="mb-8">
-            <InfoCard
-              titleKey="hero.cardTitle2"
-              descKey="hero.comfortableRoomsDesc"
-            />
-          </motion.div>
-          <motion.div {...cardAnimationProps(1.0)}>
-            <InfoCard
-              titleKey="hero.cardTitle3"
-              descKey="hero.attentiveServiceDesc"
-            />
-          </motion.div>
-        </motion.div>
+        </motion.h1>
       </div>
 
-      {/* 快速搜索栏 - 底部固定，移动端缩小间距 */}
-      <div className="absolute bottom-4 md:bottom-6 left-0 right-0 z-20 px-4 md:px-10">
-        <QuickSearch />
-      </div>
-
-      {/* 底部水平信息卡片 - 此区域已移除并整合到右侧 */}
+      {/* 占位空间 - 确保页面有滚动高度 */}
+      <div className="h-screen"></div>
     </section>
   );
 }

@@ -146,6 +146,7 @@ async function getWalkingRoute(
 
 export function LocationMap() {
   const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<any>(null);
   const { t } = useLanguage();
   const [showMapDialog, setShowMapDialog] = useState(false);
   const [pendingNavigation, setPendingNavigation] = useState<{
@@ -217,7 +218,7 @@ export function LocationMap() {
 
   useEffect(() => {
     // 确保只在客户端执行，并且只执行一次
-    if (!mapRef.current || (mapRef.current as any).mapInitialized) return;
+    if (!mapRef.current || mapInstanceRef.current) return;
 
     // 动态加载Leaflet库
     const loadLeaflet = async () => {
@@ -331,7 +332,7 @@ export function LocationMap() {
         const leaflet = L.default || L;
 
         // 初始化地图
-        if (mapRef.current) {
+        if (mapRef.current && !mapInstanceRef.current) {
           // 计算两个地点的中心点
           const centerLat = (HOTEL_LAT + STATION_LAT) / 2;
           const centerLng = (HOTEL_LNG + STATION_LNG) / 2;
@@ -345,6 +346,9 @@ export function LocationMap() {
             attributionControl: false,
             layers: [],
           });
+
+          // 保存地图实例引用
+          mapInstanceRef.current = map;
 
           // 定义多个地图图层
           const standardLayer = (leaflet as any).tileLayer(
@@ -482,9 +486,6 @@ export function LocationMap() {
 
           // 添加路径
           addWalkingPath();
-
-          // 标记地图已初始化
-          (mapRef.current as any).mapInitialized = true;
         }
       } catch (error) {
         console.error("Failed to load Leaflet:", error);
@@ -495,8 +496,13 @@ export function LocationMap() {
 
     // 清理函数
     return () => {
-      if (mapRef.current && (mapRef.current as any).mapInitialized) {
-        // 如果需要清理地图实例
+      if (mapInstanceRef.current) {
+        try {
+          mapInstanceRef.current.remove();
+          mapInstanceRef.current = null;
+        } catch (error) {
+          console.warn("Error cleaning up map:", error);
+        }
       }
     };
   }, []);
