@@ -1,4 +1,3 @@
-import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,6 +6,7 @@ import { translations } from "@/lib/i18n/translations";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle, Phone, Mail, Home } from "lucide-react";
+import { SideMenu } from "@/components/side-menu";
 
 // 为静态导出生成所有支持的语言页面
 export function generateStaticParams() {
@@ -23,8 +23,8 @@ export default async function BookingPage({
   const maintenance = t.maintenance as any;
 
   return (
-    <main className="min-h-screen bg-[#f8f9fa]">
-      <Header />
+    <main className="min-h-screen bg-[#f8f9fa] pt-24 text-stone-800 lg:pt-0 lg:pl-72">
+      <SideMenu />
       <div className="relative">
         <div className="h-[300px] relative w-full overflow-hidden">
           <Image

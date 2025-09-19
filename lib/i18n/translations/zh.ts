@@ -15,6 +15,8 @@ export const zh = {
     sendMessage: "发送消息",
     subscribe: "订阅",
     selectRoom: "选择此房间",
+    languages: "语言",
+    since: "始于 2013 年",
   },
   hero: {
     title: "清新舒适的度假体验",

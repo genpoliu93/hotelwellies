@@ -4,8 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
-import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { SideMenu } from "@/components/side-menu";
 
 export default function NewsPage() {
   const { t, locale } = useLanguage();
@@ -15,8 +15,8 @@ export default function NewsPage() {
   };
 
   return (
-    <main className="min-h-screen bg-background">
-      <Header />
+    <main className="min-h-screen bg-background pt-24 text-stone-800 lg:pt-0 lg:pl-72">
+      <SideMenu />
 
       <div className="flex-1">
         {/* 页面标题 */}

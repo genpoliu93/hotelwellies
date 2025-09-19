@@ -4,12 +4,12 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/context";
-import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { PaymentSummary } from "@/components/payment/payment-summary";
 import { CustomerInfo } from "@/components/payment/customer-info";
 import { PaymentForm } from "@/components/payment/payment-form";
 import { TermsConditions } from "@/components/payment/terms-conditions";
+import { SideMenu } from "@/components/side-menu";
 
 // 创建一个客户端组件来处理URL参数
 function PaymentContent() {
@@ -134,8 +134,8 @@ export default function PaymentPage() {
   const { t } = useLanguage();
 
   return (
-    <main className="min-h-screen bg-[#f8f9fa]">
-      <Header />
+    <main className="min-h-screen bg-[#f8f9fa] pt-24 text-stone-800 lg:pt-0 lg:pl-72">
+      <SideMenu />
 
       <div className="py-16">
         <div className="container">

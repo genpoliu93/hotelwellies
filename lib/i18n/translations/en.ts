@@ -16,6 +16,8 @@ export const en = {
     sendMessage: "Send Message",
     subscribe: "Subscribe",
     selectRoom: "Select Room",
+    languages: "Languages",
+    since: "Since 2013",
   },
   hero: {
     title: "Comfortable and Relaxing Stay",

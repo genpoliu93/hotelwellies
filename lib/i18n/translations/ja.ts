@@ -15,6 +15,8 @@ export const ja = {
     sendMessage: "メッセージを送信",
     subscribe: "登録",
     selectRoom: "この部屋を選択",
+    languages: "言語",
+    since: "創業 2013年",
   },
   hero: {
     title: "心地よい滞在体験",
