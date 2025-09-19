@@ -145,74 +145,68 @@ export function ZenFeatures() {
             <div className="relative w-full max-w-[716px] mx-auto lg:mx-0">
               {/* Swiper容器 - 精确匹配尺寸 */}
               <div className="relative overflow-hidden w-full" style={{ height: '571px' }}>
-                {/* 图片slides */}
-                <div className="relative w-full" style={{ height: '537px' }}>
-                  {features.map((feature, index) => {
-                    const isActive = index === currentSlide;
-                    const translateX = isActive ? 0 : index > currentSlide ? 100 : -100;
+                {/* 图片slides - 从左到右擦除切换动画 */}
+                <div
+                  className="relative w-full"
+                  style={{ height: '537px' }}
+                >
+                  {/* 基础背景图片 - 当前图片 */}
+                  <div className="absolute inset-0">
+                    <Image
+                      src={features[currentSlide].backgroundImage}
+                      alt={features[currentSlide].title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
 
-                    return (
-                      <motion.div
-                        key={index}
-                        className="absolute inset-0 overflow-hidden"
-                        initial={false}
-                        animate={{
-                          x: `${translateX}%`,
-                          opacity: isActive ? 1 : 0,
-                        }}
-                        transition={{
-                          duration: 2.0, // 匹配nasu-yobou.jp的2秒切换
-                          ease: [0.25, 0.46, 0.45, 0.94],
-                        }}
-                      >
-                        {/* 视差效果层 - 模拟data-swiper-parallax-x="90%" */}
-                        <motion.div
-                          className="w-full h-full"
-                          animate={{
-                            x: isActive ? 0 : `${90 * (translateX > 0 ? 1 : -1)}%`,
-                          }}
-                          transition={{
-                            duration: 2.0,
-                            ease: [0.25, 0.46, 0.45, 0.94],
-                          }}
-                        >
-                          <Image
-                            src={feature.backgroundImage}
-                            alt={feature.title}
-                            fill
-                            className="object-cover"
-                          />
-                        </motion.div>
+                  {/* 覆盖图片 - 下一张图片，从左到右擦除显示 */}
+                  <motion.div
+                    key={`slide-${currentSlide}`}
+                    className="absolute inset-0 z-10"
+                    initial={{
+                      clipPath: 'inset(0 100% 0 0)' // 初始状态：从右边完全隐藏
+                    }}
+                    animate={{
+                      clipPath: 'inset(0 0 0 0)' // 动画到：完全显示
+                    }}
+                    transition={{
+                      duration: 2.0,
+                      ease: [0.25, 0.46, 0.45, 0.94],
+                    }}
+                  >
+                    <Image
+                      src={features[(currentSlide + 1) % features.length].backgroundImage}
+                      alt={features[(currentSlide + 1) % features.length].title}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
 
-                        {/* 内容浮动层 - 只在当前活跃slide显示 */}
-                        {isActive && (
-                          <motion.div
-                            className="absolute bottom-0 right-0 left-0 z-20"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 20 }}
-                            transition={{ duration: 0.8, delay: 0.5 }}
-                          >
-                            <div className="bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6 lg:p-8">
-                              <div className="max-w-2xl ml-auto">
-                                <div className="text-white space-y-4">
-                                  {/* 服务标题 */}
-                                  <h3 className="text-xl font-light mb-3">
-                                    {feature.title}
-                                  </h3>
+                  {/* 内容浮动层 - 当前活跃slide显示 */}
+                  <motion.div
+                    className="absolute bottom-0 right-0 left-0 z-20"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                  >
+                    <div className="bg-gradient-to-t from-black/80 via-black/50 to-transparent p-6 lg:p-8">
+                      <div className="max-w-2xl ml-auto">
+                        <div className="text-white space-y-4">
+                          {/* 服务标题 */}
+                          <h3 className="text-xl font-light mb-3">
+                            {features[currentSlide].title}
+                          </h3>
 
-                                  {/* 详细描述 */}
-                                  <div className="font-light text-sm leading-relaxed whitespace-pre-line">
-                                    {feature.description}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </motion.div>
-                        )}
-                      </motion.div>
-                    );
-                  })}
+                          {/* 详细描述 */}
+                          <div className="font-light text-sm leading-relaxed whitespace-pre-line">
+                            {features[currentSlide].description}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
                 </div>
 
 
