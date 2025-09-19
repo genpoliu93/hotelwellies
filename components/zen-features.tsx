@@ -239,12 +239,21 @@ export function ZenFeatures() {
 
           {/* 左侧标签区域 - 30%宽度 */}
           <div className="lg:w-[30%] lg:pr-12">
-            <div className="space-y-6">
-              {/* Swiper-style导航列表 - 正确实现垂直滑块效果 */}
-              <div className="thumb-swiper relative">
-                <div className="swiper-wrapper">
+            <div className="room-slider__thumb">
+              {/* Thumb Swiper - 完全复制nasu-yobou.jp */}
+              <div className="swiper thumb-swiper swiper-initialized swiper-vertical swiper-free-mode swiper-watch-progress swiper-backface-hidden swiper-thumbs">
+                <div
+                  className="swiper-wrapper"
+                  style={{
+                    transform: 'translate3d(0px, 0px, 0px)',
+                    transitionDuration: '0ms',
+                    transitionDelay: '0ms'
+                  }}
+                  aria-live="polite"
+                >
                   {features.map((feature, index) => {
                     const isActive = index === currentSlide;
+                    const isNext = index === (currentSlide + 1) % features.length;
 
                     // 根据当前语言显示对应标签
                     const getDisplayLabel = () => {
@@ -262,37 +271,63 @@ export function ZenFeatures() {
 
                     const slideClasses = `
                       swiper-slide swiper-slide-visible swiper-slide-fully-visible
-                      ${isActive ? 'swiper-slide-active' : ''}
+                      ${isActive ? 'swiper-slide-active swiper-slide-thumb-active' : ''}
+                      ${isNext ? 'swiper-slide-next' : ''}
                     `.trim();
 
                     return (
                       <motion.div
                         key={index}
-                        className={`${slideClasses}`}
+                        className={slideClasses}
                         onClick={() => goToSlide(index)}
+                        style={{
+                          height: '58.4286px',
+                          marginBottom: '20px'
+                        }}
                         role="group"
                         aria-label={`${index + 1} / ${features.length}`}
                         transition={{ duration: 0.3 }}
                       >
-                        <p
-                          style={{
-                            fontFamily: '"Shippori Mincho", serif',
-                            fontSize: '13px',
-                            lineHeight: '24.31px',
-                            letterSpacing: '1.3px',
-                            textAlign: 'start'
-                          }}
-                        >
+                        <p>
                           {getDisplayLabel()}
                         </p>
                       </motion.div>
                     );
                   })}
                 </div>
+                <span className="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+              </div>
+
+              {/* 导航按钮 - 仅PC显示 */}
+              <div className="ta_pcview hidden lg:block">
+                <div className="swiper-nav flex gap-2 mt-4">
+                  <button
+                    className="swiper-button-prev over-prev"
+                    onClick={() => goToSlide((currentSlide - 1 + features.length) % features.length)}
+                    tabIndex={0}
+                    role="button"
+                    aria-label="Previous slide"
+                  >
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                      <path d="M25 30L15 20L25 10" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                  <button
+                    className="swiper-button-next over-next"
+                    onClick={() => goToSlide((currentSlide + 1) % features.length)}
+                    tabIndex={0}
+                    role="button"
+                    aria-label="Next slide"
+                  >
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                      <path d="M15 10L25 20L15 30" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
 
               {/* 底部描述 */}
-              <p className="text-stone-700 text-sm">
+              <p className="text-stone-700 text-sm mt-6">
                 滞在中いつでもお楽しみいただけます。
               </p>
             </div>

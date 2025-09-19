@@ -423,50 +423,186 @@ input[type="checkbox"]:focus {
   transform: scale(1.035);
 }
 
-/* Swiper-style navigation styles - 简洁版本 */
+/* Room Slider Thumb - 完全复制nasu-yobou.jp */
+.room-slider__thumb {
+  position: relative;
+}
+
 .thumb-swiper {
   position: relative;
-  width: 100%;
-  max-width: 300px;
+  width: 128px;
+  height: 469px;
+  overflow: visible;
+  z-index: 1;
+}
+
+/* 分段式连接线 - 第一段：第1个到第2个slide之间 */
+.thumb-swiper::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 58.4286px; /* 第一个slide底部 */
+  height: 20px; /* 新的margin-bottom距离 */
+  width: 1px;
+  background-color: #e0e0e0;
+  z-index: -1;
+}
+
+/* 分段式连接线 - 第二段：第2个到第3个slide之间 */
+.thumb-swiper::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(58.4286px + 20px + 58.4286px); /* 第二个slide底部 */
+  height: 20px; /* 新的margin-bottom距离 */
+  width: 1px;
+  background-color: #e0e0e0;
+  z-index: -1;
+}
+
+/* 桌面端垂直布局 */
+.swiper-vertical > .swiper-wrapper {
+  flex-direction: column;
+}
+
+.swiper-vertical {
+  touch-action: pan-x;
 }
 
 .swiper-wrapper {
   position: relative;
   width: 100%;
-  display: block;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  transition-property: transform;
+  transition-timing-function: var(--swiper-wrapper-transition-timing-function, initial);
+  box-sizing: content-box;
 }
 
 .swiper-slide {
+  flex-shrink: 0;
+  width: 128px;
+  height: 58.4286px;
   position: relative;
+  transition-property: transform;
   display: block;
-  width: 100%;
   cursor: pointer;
-  padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 20px; /* 增加垂直间距 */
 }
 
 .swiper-slide:last-child {
-  border-bottom: none;
+  margin-bottom: 0;
 }
+
+/* 第三段连接线：第3个到第4个slide之间 */
+.swiper-slide:nth-child(3)::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 58.4286px; /* slide底部 */
+  height: 20px; /* margin-bottom距离 */
+  width: 1px;
+  background-color: #e0e0e0;
+  z-index: -1;
+}
+
 
 .swiper-slide p {
   margin: 0;
-  padding: 4px 0;
-  transition: all 0.2s ease;
-}
-
-.swiper-slide-active p {
-  opacity: 1;
-  font-weight: 500;
-  color: rgb(53, 53, 53);
-}
-
-.swiper-slide:not(.swiper-slide-active) p {
-  opacity: 0.6;
+  padding: 8px 12px;
+  font-family: "Shippori Mincho", serif;
+  font-size: 13px;
   font-weight: 400;
+  line-height: 24.31px;
+  letter-spacing: 1.3px;
   color: rgb(53, 53, 53);
+  text-align: center;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.swiper-slide:hover p {
+/* 关键样式：thumb-active状态 */
+.swiper-slide-thumb-active p {
+  background-color: rgb(38, 69, 61) !important;
+  color: rgb(255, 255, 255) !important;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+.swiper-slide:not(.swiper-slide-thumb-active) p {
+  background-color: transparent;
+  color: rgb(53, 53, 53);
+  opacity: 0.7;
+}
+
+.swiper-slide:hover:not(.swiper-slide-thumb-active) p {
   opacity: 1;
+  background-color: rgba(53, 53, 53, 0.05);
+}
+
+/* 导航按钮样式 */
+.swiper-nav {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  opacity: 0.7;
+}
+
+.swiper-button-prev svg path,
+.swiper-button-next svg path {
+  transition: stroke 0.3s ease;
+}
+
+.swiper-button-prev:hover svg path,
+.swiper-button-next:hover svg path {
+  stroke: #333;
+}
+
+/* 响应式设计 */
+@media (max-width: 767px) {
+  .thumb-swiper {
+    width: 325px;
+    height: 93.8125px;
+  }
+
+  .swiper-vertical > .swiper-wrapper {
+    flex-direction: row;
+  }
+
+  .swiper-slide {
+    width: 37.8571px;
+    height: auto;
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+
+  .swiper-slide:last-child {
+    margin-right: 0;
+  }
 }
