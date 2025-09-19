@@ -450,7 +450,7 @@ export function ZenGallery() {
         <div className="zen-bg-decoration absolute top-1/3 left-1/2 w-20 h-20 rounded-full bg-gray-400"></div>
       </div>
 
-      <div className="container relative">
+      <div className="container relative lg:ml-80">
         {/* 标题区域 */}
         <div className="text-center mb-12">
           <motion.div

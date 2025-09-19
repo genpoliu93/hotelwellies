@@ -23,6 +23,7 @@ export function SideMenu() {
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [isDarkText, setIsDarkText] = useState(false);
 
   const navItems: NavItem[] = useMemo(
     () => [
@@ -101,6 +102,20 @@ export function SideMenu() {
     setIsNavigating(false);
   }, [pathname, isNavigating]);
 
+  // 监听滚动，切换到第二个section时文字变黑色
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const viewportHeight = window.innerHeight;
+
+      // 当滚动超过视窗高度的60%时，文字变为黑色
+      setIsDarkText(scrollPosition > viewportHeight * 0.6);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const headline = t("hero.title");
   const subHeadline = t("hero.subtitle");
   const phone = t("contact.phone");
@@ -114,12 +129,14 @@ export function SideMenu() {
   return (
     <>
 
-      {/* 完全透明的导航菜单 - 类似 nasu-yobou */}
+      {/* 智能文字颜色切换的导航菜单 */}
       <aside
-        className="fixed inset-y-0 left-0 w-80 flex-col justify-between px-10 py-16 text-white transition-all duration-500 hidden lg:flex"
+        className={`fixed inset-y-0 left-0 w-80 flex-col justify-between px-10 py-16 transition-all duration-500 hidden lg:flex ${
+          isDarkText ? 'text-stone-800' : 'text-white'
+        }`}
         style={{
           zIndex: Z_INDEX.NAVIGATION,
-          background: "rgba(0, 0, 0, 0)"
+          background: "transparent"
         }}
       >
         <div className="space-y-12">
@@ -133,15 +150,19 @@ export function SideMenu() {
                 className="h-16 w-16 rounded-full bg-white/90 object-contain p-1 shadow-lg transition-transform duration-300 group-hover:scale-105"
               />
               <div className="space-y-1">
-                <p className="text-xs uppercase tracking-[0.45em] text-white/60">
+                <p className={`text-xs uppercase tracking-[0.45em] ${
+                  isDarkText ? 'text-stone-600' : 'text-white/60'
+                }`}>
                   Karuizawa
                 </p>
-                <p className="text-2xl font-light tracking-[0.25em] text-white">
+                <p className="text-2xl font-light tracking-[0.25em]">
                   Hotel Wellies
                 </p>
               </div>
             </div>
-            <p className="text-sm leading-relaxed text-white/80">
+            <p className={`text-sm leading-relaxed ${
+              isDarkText ? 'text-stone-700' : 'text-white/80'
+            }`}>
               {subHeadline}
             </p>
           </Link>
@@ -154,9 +175,17 @@ export function SideMenu() {
                     key={item.id}
                     type="button"
                     onClick={() => navigateToSection(item.id)}
-                    className="group flex w-full items-center gap-3 text-left text-xs uppercase tracking-[0.5em] text-white/70 transition hover:text-white"
+                    className={`group flex w-full items-center gap-3 text-left text-xs uppercase tracking-[0.5em] transition ${
+                      isDarkText
+                        ? 'text-stone-600 hover:text-stone-800'
+                        : 'text-white/70 hover:text-white'
+                    }`}
                   >
-                    <span className="h-px w-10 bg-white/30 transition-all group-hover:w-16 group-hover:bg-white" />
+                    <span className={`h-px w-10 transition-all group-hover:w-16 ${
+                      isDarkText
+                        ? 'bg-stone-400 group-hover:bg-stone-800'
+                        : 'bg-white/30 group-hover:bg-white'
+                    }`} />
                     <span className="flex-1">{item.label}</span>
                   </button>
                 );
@@ -167,9 +196,17 @@ export function SideMenu() {
                   key={item.id}
                   type="button"
                   onClick={() => navigateToRoute(item.href)}
-                  className="group flex w-full items-center gap-3 text-left text-xs uppercase tracking-[0.5em] text-white/70 transition hover:text-white"
+                  className={`group flex w-full items-center gap-3 text-left text-xs uppercase tracking-[0.5em] transition ${
+                    isDarkText
+                      ? 'text-stone-600 hover:text-stone-800'
+                      : 'text-white/70 hover:text-white'
+                  }`}
                 >
-                  <span className="h-px w-10 bg-white/30 transition-all group-hover:w-16 group-hover:bg-white" />
+                  <span className={`h-px w-10 transition-all group-hover:w-16 ${
+                    isDarkText
+                      ? 'bg-stone-400 group-hover:bg-stone-800'
+                      : 'bg-white/30 group-hover:bg-white'
+                  }`} />
                   <span className="flex-1">{item.label}</span>
                 </button>
               );
@@ -178,25 +215,39 @@ export function SideMenu() {
         </div>
 
         <div className="space-y-6">
-          <div className="space-y-3 text-xs uppercase tracking-[0.4em] text-white/60">
+          <div className={`space-y-3 text-xs uppercase tracking-[0.4em] ${
+            isDarkText ? 'text-stone-600' : 'text-white/60'
+          }`}>
             <span className="block">{sinceText}</span>
-            <span className="block font-medium text-white">{headline}</span>
+            <span className={`block font-medium ${
+              isDarkText ? 'text-stone-800' : 'text-white'
+            }`}>{headline}</span>
           </div>
-          <div className="space-y-3 text-sm text-white/80">
-            <p className="flex items-center gap-3 text-white">
+          <div className={`space-y-3 text-sm ${
+            isDarkText ? 'text-stone-700' : 'text-white/80'
+          }`}>
+            <p className={`flex items-center gap-3 ${
+              isDarkText ? 'text-stone-800' : 'text-white'
+            }`}>
               <Phone className="h-4 w-4" />
               <span>{phone}</span>
             </p>
             <div className="flex items-center gap-3">
               <LanguageSwitcher />
-              <span className="text-xs uppercase tracking-[0.4em] text-white/60">
+              <span className={`text-xs uppercase tracking-[0.4em] ${
+                isDarkText ? 'text-stone-600' : 'text-white/60'
+              }`}>
                 {languageLabel}
               </span>
             </div>
           </div>
           <Button
             size="lg"
-            className="w-full rounded-lg border border-white/20 bg-white/10 py-3 text-xs uppercase tracking-[0.5em] text-white transition hover:bg-white/20 backdrop-blur-sm"
+            className={`w-full rounded-lg py-3 text-xs uppercase tracking-[0.5em] transition ${
+              isDarkText
+                ? 'border border-stone-300 bg-stone-100 text-stone-800 hover:bg-stone-200'
+                : 'border border-white/20 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm'
+            }`}
             onClick={() => navigateToSection("contact")}
           >
             {t("common.bookNow")}

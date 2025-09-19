@@ -67,7 +67,7 @@ export function ZenRooms() {
         <div className="zen-bg-decoration absolute top-2/3 left-1/3 w-20 h-20 rounded-full bg-stone-300"></div>
       </div>
 
-      <div className="container relative">
+      <div className="container relative lg:ml-80">
         {/* 标题区域 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end mb-16">
           <motion.div

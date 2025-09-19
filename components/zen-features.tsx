@@ -64,7 +64,7 @@ export function ZenFeatures() {
         <div className="zen-bg-decoration absolute top-1/2 left-1/3 w-16 h-16 rounded-full bg-stone-300"></div>
       </div>
 
-      <div className="container relative">
+      <div className="container relative lg:ml-80">
         {/* 标题区域 */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <motion.div

@@ -187,3 +187,238 @@ input[type="checkbox"]:focus {
   outline: 2px solid hsl(var(--primary));
   outline-offset: 2px;
 }
+
+/* 响应式侧边栏布局 - 最佳实践 */
+@media (max-width: 1023px) {
+  /* 移动端时移除侧边栏影响，确保内容全宽显示 */
+  .container.lg\\:ml-80 {
+    margin-left: 0 !important;
+  }
+}
+
+/* nasu-yobou 完全精确复制的样式系统 */
+.concept-section {
+  position: relative;
+  background-color: #fff;
+  padding: 100px 0 75px;
+  color: rgb(53, 53, 53);
+  font-size: 13px;
+  line-height: 1.87;
+}
+
+.concept-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 标题区域 */
+.concept-header {
+  margin-bottom: 50px;
+  text-align: left;
+}
+
+.concept-label,
+.concept-subtitle {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 24.31px;
+  color: rgb(53, 53, 53);
+  margin: 0 0 10px 0;
+  text-align: left;
+}
+
+/* 主内容区域 - 图片 + 大标题 */
+.concept-main-content {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+}
+
+.concept-image-1 {
+  width: 100%;
+  flex: 0 0 100%;
+}
+
+.concept-title {
+  width: 100%;
+  flex: 0 0 100%;
+  margin-top: 30px;
+}
+
+@media (min-width: 768px) {
+  .concept-image-1 {
+    width: 358px;
+    flex: 0 0 358px;
+  }
+
+  .concept-title {
+    width: 358px;
+    flex: 0 0 358px;
+    margin-top: 0;
+  }
+}
+
+.concept-image-1 .zoom-out__inner {
+  width: 100%;
+  height: 269px;
+}
+
+.concept-title h2 {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: rgb(53, 53, 53);
+  text-align: left;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .concept-title h2 {
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1320px) {
+  .concept-title h2 {
+    font-size: 2.5vw;
+  }
+}
+
+@media (min-width: 1321px) {
+  .concept-title h2 {
+    font-size: 32px;
+  }
+}
+
+/* 文本内容区域 - 文字 + 竖向图片 */
+.concept-text-content {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.concept-text {
+  width: 100%;
+  flex: 0 0 100%;
+  order: 2;
+}
+
+.concept-image-2 {
+  width: 100%;
+  flex: 0 0 100%;
+  order: 1;
+  margin-bottom: 30px;
+}
+
+@media (min-width: 768px) {
+  .concept-text {
+    width: 60%;
+    flex: 0 0 60%;
+    order: 1;
+  }
+
+  .concept-image-2 {
+    width: 35%;
+    flex: 0 0 35%;
+    order: 2;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .concept-text {
+    width: 716px;
+    flex: 0 0 716px;
+  }
+
+  .concept-image-2 {
+    width: 272px;
+    flex: 0 0 272px;
+  }
+}
+
+.concept-text p {
+  font-size: 13px;
+  line-height: 32.5px;
+  color: rgb(53, 53, 53);
+  text-align: left;
+  margin: 0 0 1.5em 0;
+}
+
+.concept-text p:last-of-type {
+  margin-bottom: 2em;
+}
+
+.concept-image-2 .zoom-out__inner {
+  width: 100%;
+  height: 300px;
+}
+
+@media (min-width: 768px) {
+  .concept-image-2 .zoom-out__inner {
+    height: 355px;
+  }
+}
+
+/* 签名区域 */
+.concept-signature {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 2rem;
+}
+
+.signature-name {
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: rgb(53, 53, 53);
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.signature-location {
+  font-size: 0.875rem;
+  color: #6b7280;
+  letter-spacing: 0.05em;
+}
+
+/* Zoom-out 动画效果 - 精确复制 */
+.zoom-out {
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 1000ms;
+  border-radius: 0;
+}
+
+.zoom-out.effect.is-fade {
+  opacity: 1;
+}
+
+.zoom-out__inner {
+  transform: scale(1.085) translate3d(0, 0, 0);
+  transition: transform 1100ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.zoom-out.effect.is-fade .zoom-out__inner {
+  transform: scale(1) translate3d(0, 0, 0);
+}
+
+.zoom-out img {
+  transition: transform 1300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.zoom-out:hover img {
+  transform: scale(1.035);
+}

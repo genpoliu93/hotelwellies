@@ -3,107 +3,124 @@
 import { useLanguage } from "@/lib/i18n/context";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 export function ZenAbout() {
   const { t } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // 实现精确的zoom-out淡入效果
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+
+      const zoomElements = sectionRef.current.querySelectorAll('.zoom-out');
+      zoomElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+
+        if (isVisible && !el.classList.contains('is-fade')) {
+          setTimeout(() => {
+            el.classList.add('is-fade');
+          }, 300);
+        }
+      });
+    };
+
+    // 初始检查
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <section id="about" className="py-24 overflow-hidden bg-stone-50">
-      <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* 文字内容区域 */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="space-y-6"
-          >
-            {/* 装饰性水平线和标题 */}
-            <div className="flex items-center gap-4">
-              <div className="h-px w-12 bg-stone-400"></div>
-              <h2 className="text-sm uppercase tracking-[0.25em] text-stone-500 font-light">
-                {t("about.subtitle")}
-              </h2>
-            </div>
+    <section
+      id="about"
+      className="concept-section"
+      ref={sectionRef}
+    >
+      <div className="concept-container lg:ml-80">
+        {/* 标题区域 - 完全按照nasu-yobou的样式 */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="concept-header"
+        >
+          <p className="concept-label">
+            {t("about.subtitle")}
+          </p>
+          <p className="concept-subtitle">
+            {t("about.title")}
+          </p>
+        </motion.div>
 
-            {/* 主标题 */}
-            <h2 className="text-4xl font-light text-stone-800 tracking-wide">
-              {t("about.title")}
-            </h2>
-
-            {/* 内容分段 */}
-            <p className="text-stone-600 font-light leading-relaxed">
-              {t("about.paragraph1")}
-            </p>
-            <p className="text-stone-600 font-light leading-relaxed">
-              {t("about.paragraph2")}
-            </p>
-
-            {/* 签名式样式 */}
-            <div className="pt-6">
-              <div className="text-xl font-light text-stone-700 italic">
-                Hotel Wellies
-              </div>
-              <div className="text-sm text-stone-500">Karuizawa, Japan</div>
-            </div>
-          </motion.div>
-
-          {/* 图片区域 - 使用网格形式的两张图片 */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="relative"
-          >
-            <div className="grid grid-cols-12 gap-6">
-              {/* 主图片 */}
-              <div className="col-span-8 relative h-[500px]">
+        {/* 主内容区域 - 图片 + 大标题 (横向排列) */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="concept-main-content"
+        >
+          <div className="concept-image-1">
+            <div className="zoom-out effect">
+              <div className="zoom-out__inner">
                 <Image
                   src="/images/hotel-terrace.webp"
                   alt="Hotel Wellies terrace"
-                  className="object-cover rounded-sm"
-                  fill
+                  width={358}
+                  height={269}
+                  className="object-cover w-full h-full"
                 />
-                {/* 图片装饰边框 */}
-                <div className="absolute -inset-1 border border-stone-200 rounded-sm z-[-1]"></div>
               </div>
+            </div>
+          </div>
+          <div className="concept-title">
+            <h2 dangerouslySetInnerHTML={{
+              __html: t("about.title").replace(/\s+/g, '<br>')
+            }} />
+          </div>
+        </motion.div>
 
-              {/* 次要图片 */}
-              <div className="col-span-4 relative self-end h-[300px]">
+        {/* 文本内容区域 - 文字 + 竖向图片 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="concept-text-content"
+        >
+          <div className="concept-text">
+            <p className="mb-6">{t("about.paragraph1")}</p>
+            <p className="mb-8">{t("about.paragraph2")}</p>
+
+            {/* 签名区域 */}
+            <div className="concept-signature">
+              <div className="signature-name">
+                Hotel Wellies
+              </div>
+              <div className="signature-location">
+                Karuizawa, Japan
+              </div>
+            </div>
+          </div>
+          <div className="concept-image-2">
+            <div className="zoom-out effect">
+              <div className="zoom-out__inner">
                 <Image
                   src="/images/garden-detail.jpg"
                   alt="Hotel Wellies garden detail"
-                  className="object-cover rounded-sm"
-                  fill
+                  width={272}
+                  height={355}
+                  className="object-cover w-full h-full"
                 />
-                {/* 图片装饰边框 */}
-                <div className="absolute -inset-1 border border-stone-200 rounded-sm z-[-1]"></div>
               </div>
-
-              {/* 装饰线条 */}
-              <div className="col-span-12 mt-4 h-px w-full bg-stone-300/50"></div>
             </div>
-
-            {/* 日式装饰元素 */}
-            <div className="absolute -top-8 -right-8 w-20 h-20 rotate-12 opacity-10 z-10">
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                <path
-                  d="M50,0 a50,50 0 1,0 0,100 a50,50 0 1,0 0,-100"
-                  fill="none"
-                  stroke="#000"
-                  strokeWidth="1"
-                />
-                <path
-                  d="M30,30 L70,70 M30,70 L70,30"
-                  stroke="#000"
-                  strokeWidth="1"
-                />
-              </svg>
-            </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
