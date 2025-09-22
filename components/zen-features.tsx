@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 export function ZenFeatures() {
   const { t, locale } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [animationDirection, setAnimationDirection] = useState<'forward' | 'backward'>('forward');
+  const [isPaused, setIsPaused] = useState(false);
 
   // 酒店服务项目数据 - 三语标签
   const features = [
@@ -74,17 +76,29 @@ export function ZenFeatures() {
     },
   ];
 
-  // 自动轮播功能 - 匹配nasu-yobou.jp的4秒间隔
+  // 自动轮播功能 - 支持hover暂停
   useEffect(() => {
+    if (isPaused) return; // 如果暂停，不启动定时器
+
     const timer = setInterval(() => {
+      setAnimationDirection('forward');
       setCurrentSlide((prev) => (prev + 1) % features.length);
     }, 4000);
 
     return () => clearInterval(timer);
-  }, [features.length]);
+  }, [features.length, isPaused]);
 
-  // 手动切换到指定slide
+  // 手动切换到指定slide - 带方向检测
   const goToSlide = (index: number) => {
+    const currentIndex = currentSlide;
+
+    // 判断动画方向
+    if (index > currentIndex || (currentIndex === features.length - 1 && index === 0)) {
+      setAnimationDirection('forward');
+    } else {
+      setAnimationDirection('backward');
+    }
+
     setCurrentSlide(index);
   };
 
@@ -145,30 +159,38 @@ export function ZenFeatures() {
             <div className="relative w-full max-w-[716px] mx-auto lg:mx-0">
               {/* Swiper容器 - 精确匹配尺寸 */}
               <div className="relative overflow-hidden w-full" style={{ height: '571px' }}>
-                {/* 图片slides - 从左到右擦除切换动画 */}
+                {/* 图片slides - 从左到右擦除切换动画，支持hover暂停 */}
                 <div
                   className="relative w-full"
                   style={{ height: '537px' }}
+                  onMouseEnter={() => setIsPaused(true)}
+                  onMouseLeave={() => setIsPaused(false)}
                 >
-                  {/* 基础背景图片 - 当前图片 */}
+                  {/* 基础背景图片 - 根据动画方向显示前一张或后一张 */}
                   <div className="absolute inset-0">
                     <Image
-                      src={features[currentSlide].backgroundImage}
-                      alt={features[currentSlide].title}
+                      src={animationDirection === 'forward'
+                        ? features[(currentSlide - 1 + features.length) % features.length].backgroundImage
+                        : features[(currentSlide + 1) % features.length].backgroundImage}
+                      alt={animationDirection === 'forward'
+                        ? features[(currentSlide - 1 + features.length) % features.length].title
+                        : features[(currentSlide + 1) % features.length].title}
                       fill
                       className="object-cover"
                     />
                   </div>
 
-                  {/* 覆盖图片 - 下一张图片，从左到右擦除显示 */}
+                  {/* 覆盖图片 - 支持双向擦除动画 */}
                   <motion.div
-                    key={`slide-${currentSlide}`}
+                    key={`slide-${currentSlide}-${animationDirection}`}
                     className="absolute inset-0 z-10"
                     initial={{
-                      clipPath: 'inset(0 100% 0 0)' // 初始状态：从右边完全隐藏
+                      clipPath: animationDirection === 'forward'
+                        ? 'inset(0 100% 0 0)' // 前进：从右边隐藏
+                        : 'inset(0 0 0 100%)' // 后退：从左边隐藏
                     }}
                     animate={{
-                      clipPath: 'inset(0 0 0 0)' // 动画到：完全显示
+                      clipPath: 'inset(0 0 0 0)' // 都是完全显示
                     }}
                     transition={{
                       duration: 2.0,
@@ -176,8 +198,8 @@ export function ZenFeatures() {
                     }}
                   >
                     <Image
-                      src={features[(currentSlide + 1) % features.length].backgroundImage}
-                      alt={features[(currentSlide + 1) % features.length].title}
+                      src={features[currentSlide].backgroundImage}
+                      alt={features[currentSlide].title}
                       fill
                       className="object-cover"
                     />
@@ -231,99 +253,101 @@ export function ZenFeatures() {
             </div>
           </div>
 
-          {/* 左侧标签区域 - 30%宽度 */}
+          {/* 左侧标签区域 - 30%宽度，使用Grid Template Areas */}
           <div className="lg:w-[30%] lg:pr-12">
-            <div className="room-slider__thumb">
-              {/* Thumb Swiper - 完全复制nasu-yobou.jp */}
-              <div className="swiper thumb-swiper swiper-initialized swiper-vertical swiper-free-mode swiper-watch-progress swiper-backface-hidden swiper-thumbs">
-                <div
-                  className="swiper-wrapper"
-                  style={{
-                    transform: 'translate3d(0px, 0px, 0px)',
-                    transitionDuration: '0ms',
-                    transitionDelay: '0ms'
-                  }}
-                  aria-live="polite"
-                >
-                  {features.map((feature, index) => {
-                    const isActive = index === currentSlide;
-                    const isNext = index === (currentSlide + 1) % features.length;
-
-                    // 根据当前语言显示对应标签
-                    const getDisplayLabel = () => {
-                      switch (locale) {
-                        case 'zh':
-                          return feature.labels.zh;
-                        case 'en':
-                          return feature.labels.en;
-                        case 'ja':
-                          return feature.labels.ja;
-                        default:
-                          return feature.labels.en;
-                      }
-                    };
-
-                    const slideClasses = `
-                      swiper-slide swiper-slide-visible swiper-slide-fully-visible
-                      ${isActive ? 'swiper-slide-active swiper-slide-thumb-active' : ''}
-                      ${isNext ? 'swiper-slide-next' : ''}
-                    `.trim();
-
-                    return (
-                      <motion.div
-                        key={index}
-                        className={slideClasses}
-                        onClick={() => goToSlide(index)}
-                        style={{
-                          height: '58.4286px',
-                          marginBottom: '20px'
-                        }}
-                        role="group"
-                        aria-label={`${index + 1} / ${features.length}`}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <p>
-                          {getDisplayLabel()}
-                        </p>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-                <span className="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
-              </div>
-
-              {/* 导航按钮 - 仅PC显示 */}
-              <div className="ta_pcview hidden lg:block">
-                <div className="swiper-nav flex gap-2 mt-4">
-                  <button
-                    className="swiper-button-prev over-prev"
-                    onClick={() => goToSlide((currentSlide - 1 + features.length) % features.length)}
-                    tabIndex={0}
-                    role="button"
-                    aria-label="Previous slide"
+            <div className="sidebar-grid-container">
+              {/* 导航区域 */}
+              <div className="sidebar-nav-area">
+                <div className="vertical-nav-container">
+                  <div
+                    className="vertical-nav-grid"
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => setIsPaused(false)}
                   >
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                      <path d="M25 30L15 20L25 10" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </button>
-                  <button
-                    className="swiper-button-next over-next"
-                    onClick={() => goToSlide((currentSlide + 1) % features.length)}
-                    tabIndex={0}
-                    role="button"
-                    aria-label="Next slide"
-                  >
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                      <path d="M15 10L25 20L15 30" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </button>
+                    {features.map((feature, index) => {
+                      const isActive = index === currentSlide;
+                      const isNext = index === (currentSlide + 1) % features.length;
+
+                      // 根据当前语言显示对应标签
+                      const getDisplayLabel = () => {
+                        switch (locale) {
+                          case 'zh':
+                            return feature.labels.zh;
+                          case 'en':
+                            return feature.labels.en;
+                          case 'ja':
+                            return feature.labels.ja;
+                          default:
+                            return feature.labels.en;
+                        }
+                      };
+
+                      const slideClasses = `
+                        nav-item
+                        ${isActive ? 'nav-item-active' : ''}
+                        ${isNext ? 'nav-item-next' : ''}
+                      `.trim();
+
+                      return (
+                        <motion.button
+                          key={index}
+                          className={slideClasses}
+                          onClick={() => goToSlide(index)}
+                          role="tab"
+                          aria-selected={isActive}
+                          aria-label={`${getDisplayLabel()} - ${index + 1} of ${features.length}`}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <span className="nav-item-text">
+                            {getDisplayLabel()}
+                          </span>
+                        </motion.button>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
 
-              {/* 底部描述 */}
-              <p className="text-stone-700 text-sm mt-6">
-                滞在中いつでもお楽しみいただけます。
-              </p>
+              {/* 控制按钮区域 */}
+              <div className="sidebar-controls-area">
+                <div className="ta_pcview hidden lg:block">
+                  <div
+                    className="swiper-nav flex gap-2 justify-center"
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => setIsPaused(false)}
+                  >
+                    <button
+                      className="swiper-button-prev over-prev"
+                      onClick={() => goToSlide((currentSlide - 1 + features.length) % features.length)}
+                      tabIndex={0}
+                      role="button"
+                      aria-label="Previous slide"
+                    >
+                      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M25 30L15 20L25 10" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    <button
+                      className="swiper-button-next over-next"
+                      onClick={() => goToSlide((currentSlide + 1) % features.length)}
+                      tabIndex={0}
+                      role="button"
+                      aria-label="Next slide"
+                    >
+                      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M15 10L25 20L15 30" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* 描述文字区域 */}
+              <div className="sidebar-description-area">
+                <p className="text-stone-700 text-sm text-center">
+                  滞在中いつでもお楽しみいただけます。
+                </p>
+              </div>
             </div>
           </div>
 

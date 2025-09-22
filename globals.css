@@ -438,12 +438,144 @@ input[type="checkbox"]:focus {
   position: relative;
 }
 
-.thumb-swiper {
+/* 侧边栏Grid容器 - 使用Template Areas最佳实践 */
+.sidebar-grid-container {
+  display: grid;
+  grid-template-areas:
+    "navigation"
+    "controls"
+    "description";
+  grid-template-rows: 2fr 1fr 1fr; /* 导航区域占2/4，控制和描述各占1/4 */
+  gap: 20px;
+  height: 537px; /* 匹配右侧图片高度 */
+  align-content: stretch; /* 确保等高分布 */
+}
+
+.sidebar-nav-area {
+  grid-area: navigation;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-controls-area {
+  grid-area: controls;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-description-area {
+  grid-area: description;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 调整导航容器适应新布局 */
+.vertical-nav-container {
   position: relative;
   width: 128px;
-  height: 469px;
-  overflow: visible;
+  height: 100%; /* 占满父容器 */
+}
+
+.vertical-nav-grid {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr); /* 4个等高项目 */
+  gap: 16px; /* 增加间距适应更大的容器 */
+  height: 100%;
+  position: relative;
+  max-height: 320px; /* 限制最大高度 */
+}
+
+/* 导航项目基础样式 */
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  width: 100%;
+  min-height: 48px; /* 符合无障碍点击区域标准 */
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Grid自动创建等高效果 */
+}
+
+.nav-item-text {
+  font-family: "Shippori Mincho", serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 1.3px;
+  color: rgb(53, 53, 53);
+  text-align: center;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+/* 激活状态 */
+.nav-item-active .nav-item-text {
+  background-color: rgb(38, 69, 61) !important;
+  color: rgb(255, 255, 255) !important;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 2px;
+}
+
+/* 非激活状态样式 */
+.nav-item:not(.nav-item-active) .nav-item-text {
+  background-color: transparent;
+  opacity: 0.7;
+}
+
+/* 悬停效果 */
+.nav-item:not(.nav-item-active):hover .nav-item-text {
+  opacity: 1;
+  background-color: rgba(53, 53, 53, 0.05);
+}
+
+/* 连接线 - 准确定位在gap区域中心 */
+.vertical-nav-grid::before {
+  content: '';
+  position: absolute;
+  left: 64px; /* 128px的一半 = 64px 居中 */
+  width: 1px;
+  background-color: #e0e0e0;
   z-index: 1;
+  pointer-events: none;
+  /* 第1段：第1个项目底部 + gap一半 */
+  top: calc(25% - 8px); /* 第1个项目结束位置 + gap的一半(16px/2) */
+  height: 16px;
+}
+
+.vertical-nav-grid::after {
+  content: '';
+  position: absolute;
+  left: 64px; /* 128px的一半 = 64px 居中 */
+  width: 1px;
+  background-color: #e0e0e0;
+  z-index: 1;
+  pointer-events: none;
+  /* 第2段：第2个项目底部 + gap一半 */
+  top: calc(50% - 8px); /* 第2个项目结束位置 + gap的一半 */
+  height: 16px;
+}
+
+/* 第3段连接线：第3个项目底部 + gap一半 */
+.vertical-nav-container::before {
+  content: '';
+  position: absolute;
+  left: 64px;
+  width: 1px;
+  background-color: #e0e0e0;
+  z-index: 1;
+  pointer-events: none;
+  top: calc(75% - 8px); /* 第3个项目结束位置 + gap的一半 */
+  height: 16px;
 }
 
 /* 分段式连接线 - 第一段：第1个到第2个slide之间 */
