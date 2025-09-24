@@ -58,51 +58,43 @@ export function ZenRooms() {
   return (
     <section
       id="rooms"
-      className="py-4 bg-gradient-to-br from-stone-50 via-slate-50 to-stone-100 relative overflow-hidden"
+      className="rooms-section-modern"
     >
-      {/* 背景装饰元素 */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="zen-bg-decoration absolute top-20 left-16 w-36 h-36 rounded-full bg-stone-400"></div>
-        <div className="zen-bg-decoration absolute bottom-20 right-16 w-28 h-28 rounded-full bg-slate-500"></div>
-        <div className="zen-bg-decoration absolute top-2/3 left-1/3 w-20 h-20 rounded-full bg-stone-300"></div>
-      </div>
-
-      <div className="container relative lg:ml-80">
-        {/* 标题区域 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end mb-16">
+      <div className="rooms-container">
+        {/* 使用CSS Grid创建现代布局 */}
+        <div className="rooms-grid">
+          {/* 标题区域 */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="space-y-6"
+            className="rooms-header"
           >
-            <div className="flex items-center gap-4">
-              <div className="h-px w-12 bg-gradient-to-r from-transparent to-stone-400"></div>
-              <h3 className="text-sm uppercase tracking-[0.25em] text-stone-600 font-light flex items-center gap-2">
+            <div className="rooms-header-content">
+              <span className="rooms-label">
                 <Bed className="h-4 w-4" />
                 {t("rooms.subtitle")}
-              </h3>
+              </span>
+              <h2 className="rooms-title">
+                {t("rooms.title")}
+              </h2>
+              <p className="rooms-description">
+                {t("rooms.description")}
+              </p>
             </div>
-
-            <h2 className="text-4xl font-light text-stone-800 tracking-wide">
-              {t("rooms.title")}
-            </h2>
-
-            <p className="text-stone-600 font-light max-w-xl">
-              {t("rooms.description")}
-            </p>
           </motion.div>
 
+          {/* CTA按钮区域 */}
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="flex justify-start md:justify-end"
+            className="rooms-cta"
           >
             <Button
-              className="bg-gradient-to-r from-stone-700 to-stone-800 hover:from-stone-800 hover:to-stone-900 text-white font-light shadow-lg hover:shadow-xl transition-all duration-300"
+              className="rooms-cta-button"
               size="lg"
               asChild
             >
@@ -112,92 +104,85 @@ export function ZenRooms() {
               </Link>
             </Button>
           </motion.div>
-        </div>
 
-        {/* 房间展示 */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {rooms.map((room, index) => (
-            <motion.div
-              key={room.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="zen-feature-card group relative rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
-              onMouseEnter={() => setHoveredRoom(room.id)}
-              onMouseLeave={() => setHoveredRoom(null)}
-            >
-              {/* 房间图片 */}
-              <div className="relative h-[350px] overflow-hidden">
-                <Image
-                  src={room.image}
-                  alt={room.name}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+          {/* 房间卡片区域 */}
+          <div className="rooms-cards-container">
+            {rooms.map((room, index) => (
+              <motion.div
+                key={room.id}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.1,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="room-card"
+                onMouseEnter={() => setHoveredRoom(room.id)}
+                onMouseLeave={() => setHoveredRoom(null)}
+              >
+                <div className="room-card-image">
+                  <Image
+                    src={room.image}
+                    alt={room.name}
+                    fill
+                    className="object-cover"
+                  />
 
-                {/* 简洁的暗色覆盖层 */}
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-all duration-500"></div>
+                  {/* 简化的覆盖层 */}
+                  <div className="room-card-overlay"></div>
 
-                {/* 微妙的纹理覆盖层 */}
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]"></div>
+                  {/* 房间图标 */}
+                  <div className={`room-card-icon ${room.iconBg}`}>
+                    {room.icon}
+                  </div>
 
-                {/* 房间图标 */}
-                <div
-                  className={`absolute top-6 left-6 ${room.iconBg} backdrop-blur-sm p-3 rounded-full border border-white/20 transition-all duration-300 group-hover:scale-110 opacity-0 group-hover:opacity-100`}
-                >
-                  {room.icon}
-                </div>
-
-                {/* 日语标签 */}
-                <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-sm transition-all duration-300 group-hover:bg-white/95 group-hover:scale-105">
-                  <div className="text-lg font-light text-stone-800">
-                    {room.japaneseLabel}
+                  {/* 房间标签 */}
+                  <div className="room-card-label">
+                    <span className="room-card-name">
+                      {room.japaneseLabel}
+                    </span>
                   </div>
                 </div>
-
-                {/* 价格标签 */}
-                {/*    <div className="absolute top-6 right-6 bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-sm text-sm font-light opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100">
-                  {room.price}
-                </div>
- */}
-                {/* 边框光效 */}
-                <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-lg transition-all duration-500"></div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* 装饰线条和墨迹元素 */}
-        <div className="mt-16 flex justify-center items-center space-x-8">
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-stone-400 to-transparent"></div>
-
-          {/* 使用SVG墨迹装饰 */}
-          <div className="relative flex items-center space-x-4">
-            <Image
-              src="/images/ink-branch.svg"
-              alt="Ink branch decoration"
-              width={30}
-              height={30}
-              className="opacity-30 transform rotate-12"
-            />
-            <Image
-              src="/images/ink-splash.svg"
-              alt="Ink splash decoration"
-              width={40}
-              height={40}
-              className="opacity-20"
-            />
-            <Image
-              src="/images/ink-branch.svg"
-              alt="Ink branch decoration"
-              width={30}
-              height={30}
-              className="opacity-30 transform -rotate-12 scale-x-[-1]"
-            />
+              </motion.div>
+            ))}
           </div>
 
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-stone-400 to-transparent"></div>
+          {/* 装饰元素 */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 1.0, delay: 0.8 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="rooms-decoration"
+          >
+            <div className="decoration-line decoration-line-left"></div>
+            <div className="decoration-elements">
+              <Image
+                src="/images/ink-branch.svg"
+                alt="Decoration"
+                width={24}
+                height={24}
+                className="decoration-element decoration-branch-left"
+              />
+              <Image
+                src="/images/ink-splash.svg"
+                alt="Decoration"
+                width={32}
+                height={32}
+                className="decoration-element decoration-splash"
+              />
+              <Image
+                src="/images/ink-branch.svg"
+                alt="Decoration"
+                width={24}
+                height={24}
+                className="decoration-element decoration-branch-right"
+              />
+            </div>
+            <div className="decoration-line decoration-line-right"></div>
+          </motion.div>
         </div>
       </div>
     </section>

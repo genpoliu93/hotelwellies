@@ -29,6 +29,533 @@ body::-webkit-scrollbar {
   clip-path: inset(0 0 0 0);
 }
 
+/* 现代化About Section布局 - 2024最佳实践 */
+.about-section-modern {
+  position: relative;
+  background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+  padding: 120px 0;
+  color: rgb(53, 53, 53);
+  overflow: hidden;
+}
+
+.about-section-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f0f0f0' fill-opacity='0.3'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.about-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 1024px) {
+  .about-container {
+    margin-left: 320px; /* 为SideMenu留出空间 */
+    margin-right: auto;
+    max-width: calc(100vw - 320px - 48px); /* 总宽度减去侧边栏和内边距 */
+  }
+}
+
+/* CSS Grid布局 - 现代响应式设计 */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "hero"
+    "content"
+    "accent";
+  gap: 60px;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "header header"
+      "hero content"
+      "accent accent";
+    gap: 80px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .about-grid {
+    grid-template-columns: 2fr 3fr 2fr;
+    grid-template-areas:
+      "header header ."
+      "hero content accent";
+    gap: 100px;
+  }
+}
+
+/* 标题区域 */
+.about-header {
+  grid-area: header;
+  text-align: center;
+}
+
+.about-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #8b7355;
+  background: linear-gradient(90deg, #8b7355, #a68b5b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+}
+
+.about-title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.2;
+  color: rgb(53, 53, 53);
+  margin: 0;
+  font-family: "Shippori Mincho", serif;
+}
+
+/* 主图片区域 */
+.about-hero-image {
+  grid-area: hero;
+  position: relative;
+}
+
+.about-hero-image .zoom-out__inner {
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+  .about-hero-image .zoom-out__inner {
+    height: 400px;
+  }
+}
+
+/* 内容区域 */
+.about-content {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+}
+
+.about-text {
+  space-y: 24px;
+}
+
+.about-paragraph {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgb(53, 53, 53);
+  margin: 0 0 24px 0;
+  font-weight: 400;
+}
+
+.about-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* 签名区域 */
+.about-signature {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-top: 32px;
+}
+
+.signature-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+}
+
+.signature-text {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.signature-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(53, 53, 53);
+  margin-bottom: 4px;
+  font-family: "Shippori Mincho", serif;
+}
+
+.signature-location {
+  font-size: 12px;
+  color: #8b7355;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+/* 装饰图片区域 */
+.about-accent-image {
+  grid-area: accent;
+  position: relative;
+  align-self: end;
+}
+
+.about-accent-image .zoom-out__inner {
+  height: 320px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease;
+}
+
+.about-accent-image:hover .zoom-out__inner {
+  transform: rotate(0deg);
+}
+
+@media (min-width: 1200px) {
+  .about-accent-image .zoom-out__inner {
+    height: 400px;
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 767px) {
+  .about-section-modern {
+    padding: 80px 0;
+  }
+
+  .about-grid {
+    gap: 40px;
+  }
+
+  .about-container {
+    padding: 0 16px;
+  }
+}
+
+/* 现代化Rooms Section布局 - 2024最佳实践 */
+.rooms-section-modern {
+  position: relative;
+  background: linear-gradient(to bottom, #ffffff 0%, #fafafa 50%, #f5f5f5 100%);
+  padding: 120px 0;
+  overflow: hidden;
+}
+
+.rooms-section-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(139, 115, 85, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(139, 115, 85, 0.03) 0%, transparent 50%);
+  z-index: 0;
+}
+
+.rooms-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 1024px) {
+  .rooms-container {
+    margin-left: 320px;
+    margin-right: auto;
+    max-width: calc(100vw - 320px - 48px);
+  }
+}
+
+/* CSS Grid布局 - 现代响应式设计 */
+.rooms-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "cta"
+    "cards"
+    "decoration";
+  gap: 80px;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .rooms-grid {
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+      "header cta"
+      "cards cards"
+      "decoration decoration";
+    gap: 60px 40px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .rooms-grid {
+    gap: 80px 60px;
+  }
+}
+
+/* 标题区域 */
+.rooms-header {
+  grid-area: header;
+}
+
+.rooms-header-content {
+  max-width: 600px;
+}
+
+.rooms-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #8b7355;
+  margin-bottom: 24px;
+}
+
+.rooms-label::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #8b7355);
+}
+
+.rooms-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: rgb(53, 53, 53);
+  margin: 0 0 24px 0;
+  font-family: "Shippori Mincho", serif;
+}
+
+.rooms-description {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgb(115, 115, 115);
+  font-weight: 300;
+  margin: 0;
+}
+
+/* CTA按钮区域 */
+.rooms-cta {
+  grid-area: cta;
+  display: flex;
+  align-items: end;
+  justify-content: start;
+}
+
+@media (min-width: 768px) {
+  .rooms-cta {
+    justify-content: end;
+  }
+}
+
+.rooms-cta-button {
+  background: linear-gradient(135deg, #8b7355 0%, #a68b5b 100%);
+  border: none;
+  color: white;
+  font-weight: 400;
+  letter-spacing: 1px;
+  padding: 16px 32px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(139, 115, 85, 0.25);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.rooms-cta-button:hover {
+  background: linear-gradient(135deg, #a68b5b 0%, #8b7355 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(139, 115, 85, 0.35);
+}
+
+/* 房间卡片容器 */
+.rooms-cards-container {
+  grid-area: cards;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .rooms-cards-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .rooms-cards-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+}
+
+/* 房间卡片 */
+.room-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.room-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.15);
+}
+
+.room-card-image {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+}
+
+.room-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.room-card:hover .room-card-overlay {
+  opacity: 1;
+}
+
+.room-card-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.room-card:hover .room-card-icon {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.room-card-label {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+}
+
+.room-card-name {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(53, 53, 53);
+  font-family: "Shippori Mincho", serif;
+  transition: all 0.3s ease;
+}
+
+.room-card:hover .room-card-name {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-4px);
+}
+
+/* 装饰元素 */
+.rooms-decoration {
+  grid-area: decoration;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.decoration-line {
+  flex: 1;
+  height: 1px;
+  max-width: 120px;
+  background: linear-gradient(90deg, transparent, rgba(139, 115, 85, 0.3), transparent);
+}
+
+.decoration-elements {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.decoration-element {
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.decoration-branch-left {
+  transform: rotate(15deg);
+}
+
+.decoration-branch-right {
+  transform: rotate(-15deg) scaleX(-1);
+}
+
+.decoration-splash {
+  opacity: 0.3;
+}
+
+.rooms-decoration:hover .decoration-element {
+  opacity: 0.6;
+}
+
+/* 响应式调整 */
+@media (max-width: 767px) {
+  .rooms-section-modern {
+    padding: 80px 0;
+  }
+
+  .rooms-grid {
+    gap: 60px;
+  }
+
+  .rooms-container {
+    padding: 0 16px;
+  }
+
+  .room-card-image {
+    height: 240px;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

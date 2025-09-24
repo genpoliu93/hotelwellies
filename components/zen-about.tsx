@@ -37,90 +37,97 @@ export function ZenAbout() {
   return (
     <section
       id="about"
-      className="concept-section"
+      className="about-section-modern"
       ref={sectionRef}
     >
-      <div className="concept-container lg:ml-80">
-        {/* 标题区域 - 完全按照nasu-yobou的样式 */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="concept-header"
-        >
-          <p className="concept-label">
-            {t("about.subtitle")}
-          </p>
-          <p className="concept-subtitle">
-            {t("about.title")}
-          </p>
-        </motion.div>
+      <div className="about-container">
+        {/* 使用CSS Grid创建现代布局 */}
+        <div className="about-grid">
+          {/* 标题区域 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="about-header"
+          >
+            <span className="about-label">
+              {t("about.subtitle")}
+            </span>
+            <h1 className="about-title">
+              {t("about.title")}
+            </h1>
+          </motion.div>
 
-        {/* 主内容区域 - 图片 + 大标题 (横向排列) */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="concept-main-content"
-        >
-          <div className="concept-image-1">
+          {/* 主图片区域 */}
+          <motion.div
+            initial={{ opacity: 0, scale: 1.1 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.2 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="about-hero-image"
+          >
             <div className="zoom-out effect">
               <div className="zoom-out__inner">
                 <Image
                   src="/images/hotel-terrace.webp"
                   alt="Hotel Wellies terrace"
-                  width={358}
-                  height={269}
-                  className="object-cover w-full h-full"
+                  width={600}
+                  height={400}
+                  className="object-cover w-full h-full rounded-lg"
                 />
               </div>
             </div>
-          </div>
-          <div className="concept-title">
-            <h2 dangerouslySetInnerHTML={{
-              __html: t("about.title").replace(/\s+/g, '<br>')
-            }} />
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* 文本内容区域 - 文字 + 竖向图片 */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="concept-text-content"
-        >
-          <div className="concept-text">
-            <p className="mb-6">{t("about.paragraph1")}</p>
-            <p className="mb-8">{t("about.paragraph2")}</p>
+          {/* 文本内容区域 */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="about-content"
+          >
+            <div className="about-text">
+              <p className="about-paragraph">
+                {t("about.paragraph1")}
+              </p>
+              <p className="about-paragraph">
+                {t("about.paragraph2")}
+              </p>
+            </div>
 
             {/* 签名区域 */}
-            <div className="concept-signature">
-              <div className="signature-name">
-                Hotel Wellies
-              </div>
-              <div className="signature-location">
-                Karuizawa, Japan
+            <div className="about-signature">
+              <div className="signature-line"></div>
+              <div className="signature-text">
+                <div className="signature-name">Hotel Wellies</div>
+                <div className="signature-location">Karuizawa, Japan</div>
               </div>
             </div>
-          </div>
-          <div className="concept-image-2">
+          </motion.div>
+
+          {/* 装饰图片区域 */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.0, delay: 0.6 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="about-accent-image"
+          >
             <div className="zoom-out effect">
               <div className="zoom-out__inner">
                 <Image
                   src="/images/garden-detail.jpg"
                   alt="Hotel Wellies garden detail"
-                  width={272}
-                  height={355}
-                  className="object-cover w-full h-full"
+                  width={300}
+                  height={400}
+                  className="object-cover w-full h-full rounded-lg shadow-lg"
                 />
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -87,8 +87,7 @@ export function ZenHero() {
   // 获取滚动进度用于"由近到远"效果
   const { scrollYProgress } = useScroll({
     target: heroRef,
-    offset: ["start start", "end start"],
-    layoutEffect: false
+    offset: ["start start", "end start"]
   });
 
   // 长焦镜头"由近到远"效果组合 - 优化范围，更柔和
