@@ -9,7 +9,7 @@ export function Footer() {
 
   return (
     <footer className="bg-muted py-12">
-      <div className="container">
+      <div className="container lg:ml-80">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/*  <div className="space-y-4">
             <h3 className="text-lg font-semibold">Hotel Wellies</h3>

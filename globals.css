@@ -58,14 +58,6 @@ body::-webkit-scrollbar {
   padding: 0 24px;
 }
 
-@media (min-width: 1024px) {
-  .about-container {
-    margin-left: 320px; /* 为SideMenu留出空间 */
-    margin-right: auto;
-    max-width: calc(100vw - 320px - 48px); /* 总宽度减去侧边栏和内边距 */
-  }
-}
-
 /* CSS Grid布局 - 现代响应式设计 */
 .about-grid {
   display: grid;

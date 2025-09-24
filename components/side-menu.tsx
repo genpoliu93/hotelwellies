@@ -107,7 +107,6 @@ export function SideMenu() {
     let currentSection = 'hero';
 
     const updateTextColor = (section: string) => {
-      console.log('Current section:', section); // 调试日志
       const darkSections = ['hero', 'rooms']; // hero和rooms使用白色文字
       setIsDarkText(!darkSections.includes(section));
     };
@@ -162,12 +161,6 @@ export function SideMenu() {
       entries.forEach((entry) => {
         const sectionId = entry.target.id;
 
-        // 调试日志
-        console.log(`Section ${sectionId}:`, {
-          isIntersecting: entry.isIntersecting,
-          intersectionRatio: entry.intersectionRatio
-        });
-
         if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
           if (sectionId === 'rooms') {
             currentSection = 'rooms';
@@ -187,9 +180,6 @@ export function SideMenu() {
         const section = document.getElementById(sectionId);
         if (section) {
           observer.observe(section);
-          console.log(`Observing section: ${sectionId}`); // 调试日志
-        } else {
-          console.warn(`Section not found: ${sectionId}`); // 调试日志
         }
       });
     };
@@ -227,7 +217,10 @@ export function SideMenu() {
         }`}
         style={{
           zIndex: Z_INDEX.NAVIGATION,
-          background: "transparent"
+          background: isDarkText
+            ? "rgba(255, 255, 255, 0.95)"
+            : "rgba(0, 0, 0, 0.2)",
+          backdropFilter: "blur(8px)"
         }}
       >
         <div className="space-y-12">

@@ -103,7 +103,7 @@ export function ZenRooms() {
               </motion.div>
 
               {/* 房间标签 - 移到右下角避免与side-menu重叠 */}
-              <div className="relative z-10 h-full flex items-end justify-end">
+              <div className="relative z-10 h-full flex items-end justify-end lg:mr-0">
                 <motion.div
                   initial={{ opacity: 0, x: 30 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -130,7 +130,7 @@ export function ZenRooms() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center max-w-2xl px-8"
+          className="text-center max-w-2xl px-8 lg:ml-80"
         >
           <h3 className="text-4xl md:text-5xl font-bold text-white mb-6">
             {t("rooms.title")}

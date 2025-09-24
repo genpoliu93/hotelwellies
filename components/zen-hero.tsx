@@ -120,15 +120,13 @@ export function ZenHero() {
   return (
     <section
       ref={heroRef}
-      className="relative h-screen"
+      className="relative h-screen overflow-hidden"
       id="hero"
     >
-      {/* 固定背景图片 - 长焦镜头由近到远效果 */}
+      {/* 背景图片 - 长焦镜头由近到远效果 - 限制在section内 */}
       <motion.div
-        className="fixed inset-0 z-0"
+        className="absolute inset-0 z-0"
         style={{
-          height: '100vh',
-          width: '100vw',
           scale: imageScale,
           opacity: imageOpacity,
           filter: useTransform(
@@ -185,8 +183,8 @@ export function ZenHero() {
         </AnimatePresence>
       </motion.div>
 
-      {/* 前景元素层 - 固定在banner上 */}
-      <div className="fixed inset-0 z-10 pointer-events-none">
+      {/* 前景元素层 - 相对定位在section内 */}
+      <div className="absolute inset-0 z-10 pointer-events-none">
         {/* 右上角预约按钮 - 仿 nasu-yobou */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}

@@ -40,7 +40,7 @@ export function ZenAbout() {
       className="about-section-modern"
       ref={sectionRef}
     >
-      <div className="about-container">
+      <div className="about-container lg:ml-80">
         {/* 使用CSS Grid创建现代布局 */}
         <div className="about-grid">
           {/* 标题区域 */}
