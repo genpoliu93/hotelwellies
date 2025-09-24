@@ -102,18 +102,109 @@ export function SideMenu() {
     setIsNavigating(false);
   }, [pathname, isNavigating]);
 
-  // 监听滚动，切换到第二个section时文字变黑色
+  // 使用混合检测方案：Intersection Observer + 精确的滚动位置检测
   useEffect(() => {
+    let currentSection = 'hero';
+
+    const updateTextColor = (section: string) => {
+      console.log('Current section:', section); // 调试日志
+      const darkSections = ['hero', 'rooms']; // hero和rooms使用白色文字
+      setIsDarkText(!darkSections.includes(section));
+    };
+
+    // 方案1: 基于滚动位置的精确检测
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
       const viewportHeight = window.innerHeight;
 
-      // 当滚动超过视窗高度的60%时，文字变为黑色
-      setIsDarkText(scrollPosition > viewportHeight * 0.6);
+      // 检测各个区域的大致位置
+      if (scrollPosition < viewportHeight * 0.8) {
+        // Hero区域
+        if (currentSection !== 'hero') {
+          currentSection = 'hero';
+          updateTextColor('hero');
+        }
+      } else {
+        // 检查是否在rooms区域
+        const roomsElement = document.getElementById('rooms');
+        if (roomsElement) {
+          const roomsRect = roomsElement.getBoundingClientRect();
+          const roomsTop = roomsRect.top + scrollPosition;
+          const roomsBottom = roomsTop + roomsRect.height;
+
+          if (scrollPosition >= roomsTop - viewportHeight * 0.3 &&
+              scrollPosition <= roomsBottom - viewportHeight * 0.3) {
+            // 在rooms区域内
+            if (currentSection !== 'rooms') {
+              currentSection = 'rooms';
+              updateTextColor('rooms');
+            }
+          } else {
+            // 在其他浅色区域
+            const newSection = scrollPosition > roomsBottom ? 'after-rooms' : 'before-rooms';
+            if (currentSection !== newSection) {
+              currentSection = newSection;
+              updateTextColor('other');
+            }
+          }
+        }
+      }
     };
 
+    // 方案2: Intersection Observer作为辅助
+    const observerOptions = {
+      root: null,
+      rootMargin: '-10% 0px -10% 0px',
+      threshold: [0, 0.1, 0.5, 0.9]
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const sectionId = entry.target.id;
+
+        // 调试日志
+        console.log(`Section ${sectionId}:`, {
+          isIntersecting: entry.isIntersecting,
+          intersectionRatio: entry.intersectionRatio
+        });
+
+        if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
+          if (sectionId === 'rooms') {
+            currentSection = 'rooms';
+            updateTextColor('rooms');
+          } else if (['about', 'features', 'testimonials', 'gallery', 'contact'].includes(sectionId)) {
+            currentSection = sectionId;
+            updateTextColor('other');
+          }
+        }
+      });
+    }, observerOptions);
+
+    // 延迟设置observer，确保DOM已渲染
+    const setupObserver = () => {
+      const sectionsToObserve = ['rooms', 'about', 'features', 'testimonials', 'gallery', 'contact'];
+      sectionsToObserve.forEach(sectionId => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          observer.observe(section);
+          console.log(`Observing section: ${sectionId}`); // 调试日志
+        } else {
+          console.warn(`Section not found: ${sectionId}`); // 调试日志
+        }
+      });
+    };
+
+    // 初始化
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    handleScroll(); // 立即执行一次
+
+    // 延迟设置observer
+    setTimeout(setupObserver, 100);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const headline = t("hero.title");
@@ -131,7 +222,7 @@ export function SideMenu() {
 
       {/* 智能文字颜色切换的导航菜单 */}
       <aside
-        className={`fixed inset-y-0 left-0 w-80 flex-col justify-between px-10 py-16 transition-all duration-500 hidden lg:flex ${
+        className={`fixed inset-y-0 left-0 w-80 flex-col justify-between px-10 py-16 transition-all duration-700 ease-in-out hidden lg:flex ${
           isDarkText ? 'text-stone-800' : 'text-white'
         }`}
         style={{

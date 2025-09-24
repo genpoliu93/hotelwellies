@@ -1,16 +1,17 @@
 "use client";
 
 import { useLanguage } from "@/lib/i18n/context";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ArrowRight, Bed, Users, Wifi, Coffee } from "lucide-react";
 
 export function ZenRooms() {
   const { t, locale } = useLanguage();
   const [hoveredRoom, setHoveredRoom] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   // 房间数据
   const rooms = [
@@ -57,133 +58,97 @@ export function ZenRooms() {
 
   return (
     <section
+      ref={sectionRef}
       id="rooms"
-      className="rooms-section-modern"
+      className="relative"
     >
-      <div className="rooms-container">
-        {/* 使用CSS Grid创建现代布局 */}
-        <div className="rooms-grid">
-          {/* 标题区域 */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="rooms-header"
-          >
-            <div className="rooms-header-content">
-              <span className="rooms-label">
-                <Bed className="h-4 w-4" />
-                {t("rooms.subtitle")}
-              </span>
-              <h2 className="rooms-title">
-                {t("rooms.title")}
-              </h2>
-              <p className="rooms-description">
-                {t("rooms.description")}
-              </p>
-            </div>
-          </motion.div>
+      {/* 容器高度确保有足够滚动空间 */}
+      <div style={{ height: `${rooms.length * 100}vh` }}>
+        {/* 3张房间图片使用sticky定位实现真正的覆盖效果 */}
+        {rooms.map((room, index) => {
+          // 为每张图片创建独立的滚动进度
+          const roomRef = useRef<HTMLDivElement>(null);
+          const { scrollYProgress: roomScrollProgress } = useScroll({
+            target: roomRef,
+            offset: ["start start", "end start"]
+          });
 
-          {/* CTA按钮区域 */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="rooms-cta"
-          >
-            <Button
-              className="rooms-cta-button"
-              size="lg"
-              asChild
+          // 背景图片视差变换
+          const backgroundY = useTransform(roomScrollProgress, [0, 1], ["0%", "30%"]);
+          const backgroundScale = useTransform(roomScrollProgress, [0, 1], [1, 1.1]);
+
+          return (
+            <div
+              key={room.id}
+              ref={roomRef}
+              className="sticky top-0 h-screen overflow-hidden"
+              style={{ zIndex: rooms.length - index }} // 确保正确的层级
             >
-              <Link href={`/${locale}/rooms`}>
-                {t("common.viewAllRooms")}{" "}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </motion.div>
-
-          {/* 房间卡片区域 */}
-          <div className="rooms-cards-container">
-            {rooms.map((room, index) => (
+              {/* 房间背景图片 */}
               <motion.div
-                key={room.id}
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.1,
-                  ease: [0.25, 0.46, 0.45, 0.94]
+                className="absolute inset-0"
+                style={{
+                  y: backgroundY,
+                  scale: backgroundScale,
                 }}
-                viewport={{ once: true, margin: "-50px" }}
-                className="room-card"
-                onMouseEnter={() => setHoveredRoom(room.id)}
-                onMouseLeave={() => setHoveredRoom(null)}
               >
-                <div className="room-card-image">
-                  <Image
-                    src={room.image}
-                    alt={room.name}
-                    fill
-                    className="object-cover"
-                  />
-
-                  {/* 简化的覆盖层 */}
-                  <div className="room-card-overlay"></div>
-
-                  {/* 房间图标 */}
-                  <div className={`room-card-icon ${room.iconBg}`}>
-                    {room.icon}
-                  </div>
-
-                  {/* 房间标签 */}
-                  <div className="room-card-label">
-                    <span className="room-card-name">
-                      {room.japaneseLabel}
-                    </span>
-                  </div>
-                </div>
+                <Image
+                  src={room.image}
+                  alt={room.japaneseLabel}
+                  fill
+                  className="object-cover"
+                  priority={index === 0}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
               </motion.div>
-            ))}
-          </div>
 
-          {/* 装饰元素 */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 1.0, delay: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="rooms-decoration"
-          >
-            <div className="decoration-line decoration-line-left"></div>
-            <div className="decoration-elements">
-              <Image
-                src="/images/ink-branch.svg"
-                alt="Decoration"
-                width={24}
-                height={24}
-                className="decoration-element decoration-branch-left"
-              />
-              <Image
-                src="/images/ink-splash.svg"
-                alt="Decoration"
-                width={32}
-                height={32}
-                className="decoration-element decoration-splash"
-              />
-              <Image
-                src="/images/ink-branch.svg"
-                alt="Decoration"
-                width={24}
-                height={24}
-                className="decoration-element decoration-branch-right"
-              />
+              {/* 房间标签 - 移到右下角避免与side-menu重叠 */}
+              <div className="relative z-10 h-full flex items-end justify-end">
+                <motion.div
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="p-8 md:p-16"
+                >
+                  <div className="text-right">
+                    <h2 className="text-4xl md:text-6xl font-bold text-white mb-2 leading-tight">
+                      {room.japaneseLabel}
+                    </h2>
+                  </div>
+                </motion.div>
+              </div>
             </div>
-            <div className="decoration-line decoration-line-right"></div>
-          </motion.div>
-        </div>
+          );
+        })}
+      </div>
+
+      {/* 底部CTA区域 */}
+      <div className="relative h-screen bg-gradient-to-br from-stone-900 to-black flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center max-w-2xl px-8"
+        >
+          <h3 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            {t("rooms.title")}
+          </h3>
+          <p className="text-xl text-white/80 mb-8">
+            他にも様々なタイプの客室をご用意しております
+          </p>
+          <Button
+            asChild
+            size="lg"
+            className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-8 py-4 text-lg"
+          >
+            <Link href={`/${locale}/rooms`} className="flex items-center gap-2">
+              {t("common.viewAllRooms")}
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </Button>
+        </motion.div>
       </div>
     </section>
   );
