@@ -113,7 +113,7 @@ export function ZenFeatures() {
         backgroundPosition: 'left center'
       }}
     >
-      <div className="container relative lg:ml-80">
+      <div className="container relative">
         {/* 标题区域 - 匹配nasu-yobou.jp样式 */}
         <div className="text-center mb-16 lg:mb-0 lg:text-left max-w-4xl">
           <motion.div

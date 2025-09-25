@@ -60,7 +60,7 @@ export function ZenRooms() {
     <section
       ref={sectionRef}
       id="rooms"
-      className="relative -ml-80 lg:-ml-80"
+      className="relative -ml-64 lg:-ml-64"
     >
       {/* 容器高度确保有足够滚动空间 */}
       <div style={{ height: `${rooms.length * 100}vh` }}>
@@ -130,7 +130,7 @@ export function ZenRooms() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center max-w-2xl px-8 lg:ml-80"
+          className="text-center max-w-2xl px-8 lg:ml-64"
         >
           <h3 className="text-4xl md:text-5xl font-bold text-white mb-6">
             {t("rooms.title")}

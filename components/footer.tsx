@@ -8,9 +8,9 @@ export function Footer() {
   const { t } = useLanguage();
 
   return (
-    <footer className="bg-muted py-12">
-      <div className="container lg:ml-80">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-gradient-to-br from-stone-900 to-slate-900 py-16 text-white">
+      <div className="container">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/*  <div className="space-y-4">
             <h3 className="text-lg font-semibold">Hotel Wellies</h3>
             <p className="text-sm text-muted-foreground">
@@ -41,13 +41,13 @@ export function Footer() {
             </div>
           </div>
  */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">{t("footer.quickLinks")}</h3>
-            <ul className="space-y-2 text-sm">
+          <div className="space-y-6">
+            <h3 className="text-xl font-light text-white tracking-wide">{t("footer.quickLinks")}</h3>
+            <ul className="space-y-3 text-sm">
               <li>
                 <Link
                   href="/"
-                  className="text-muted-foreground hover:text-primary"
+                  className="text-white/70 hover:text-white transition-colors duration-300 font-light tracking-wide"
                 >
                   {t("common.home")}
                 </Link>
@@ -55,7 +55,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#rooms"
-                  className="text-muted-foreground hover:text-primary"
+                  className="text-white/70 hover:text-white transition-colors duration-300 font-light tracking-wide"
                 >
                   {t("common.rooms")}
                 </Link>
@@ -63,7 +63,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#features"
-                  className="text-muted-foreground hover:text-primary"
+                  className="text-white/70 hover:text-white transition-colors duration-300 font-light tracking-wide"
                 >
                   {t("common.features")}
                 </Link>
@@ -71,7 +71,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#gallery"
-                  className="text-muted-foreground hover:text-primary"
+                  className="text-white/70 hover:text-white transition-colors duration-300 font-light tracking-wide"
                 >
                   {t("common.gallery")}
                 </Link>
@@ -79,7 +79,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#contact"
-                  className="text-muted-foreground hover:text-primary"
+                  className="text-white/70 hover:text-white transition-colors duration-300 font-light tracking-wide"
                 >
                   {t("common.contact")}
                 </Link>
@@ -93,7 +93,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-muted-foreground hover:text-primary"
+                  className="text-white/70 hover:text-white transition-colors duration-300 font-light tracking-wide"
                 >
                   {t("footer.bookingPolicy")}
                 </Link>
@@ -101,7 +101,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-muted-foreground hover:text-primary"
+                  className="text-white/70 hover:text-white transition-colors duration-300 font-light tracking-wide"
                 >
                   {t("footer.cancellationPolicy")}
                 </Link>
@@ -109,7 +109,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-muted-foreground hover:text-primary"
+                  className="text-white/70 hover:text-white transition-colors duration-300 font-light tracking-wide"
                 >
                   {t("footer.privacyPolicy")}
                 </Link>
@@ -117,7 +117,7 @@ export function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-muted-foreground hover:text-primary"
+                  className="text-white/70 hover:text-white transition-colors duration-300 font-light tracking-wide"
                 >
                   {t("footer.faq")}
                 </Link>
@@ -144,7 +144,7 @@ export function Footer() {
           </div> */}
         </div>
 
-        <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
+        <div className="mt-16 pt-8 border-t border-white/20 text-center text-sm text-white/60">
           <p>
             © {new Date().getFullYear()} Hotel Wellies.{" "}
             {t("footer.allRightsReserved")}

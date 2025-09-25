@@ -21,7 +21,7 @@ export default function Home() {
       <SideMenu />
       <ZenHero />
       {/* 滚动内容区域 - 会遮盖固定的 banner */}
-      <main className="relative z-20 bg-stone-50 pt-24 text-stone-800 lg:pt-0 lg:pl-80">
+      <main className="relative z-20 bg-stone-50 pt-24 text-stone-800 lg:pt-0 lg:pl-64">
         <ZenAbout />
         <ZenFeatures />
         <ZenRooms />

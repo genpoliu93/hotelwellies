@@ -212,7 +212,7 @@ export function SideMenu() {
 
       {/* 智能文字颜色切换的导航菜单 */}
       <aside
-        className={`fixed inset-y-0 left-0 w-80 flex-col justify-between px-10 py-16 transition-all duration-700 ease-in-out hidden lg:flex ${
+        className={`fixed inset-y-0 left-0 w-64 flex-col justify-between px-8 py-16 transition-all duration-700 ease-in-out hidden lg:flex ${
           isDarkText ? 'text-stone-800' : 'text-white'
         }`}
         style={{

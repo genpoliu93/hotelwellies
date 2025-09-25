@@ -58,6 +58,14 @@ body::-webkit-scrollbar {
   padding: 0 24px;
 }
 
+@media (min-width: 1024px) {
+  .about-container {
+    max-width: calc(100vw - 256px - 48px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 /* CSS Grid布局 - 现代响应式设计 */
 .about-grid {
   display: grid;
