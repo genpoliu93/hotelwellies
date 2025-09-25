@@ -12,7 +12,7 @@ const BOOKING_SYSTEM_URL = 'https://rsv.temanasi.jp/165/room/search';
  * @param params - 可选的URL参数
  */
 export const openBookingSystem = (
-  source: 'hero' | 'sidebar' | 'mobile-menu' | 'contact' = 'hero',
+  source: 'hero' | 'sidebar' | 'mobile-menu' | 'contact' | 'inquiry' = 'hero',
   params?: Record<string, string>
 ) => {
   try {
@@ -43,8 +43,8 @@ export const openBookingSystem = (
     }
 
     // 可选：发送跟踪事件（如果有分析工具）
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'booking_system_click', {
+    if (typeof window !== 'undefined' && 'gtag' in window) {
+      (window as any).gtag('event', 'booking_system_click', {
         event_category: 'engagement',
         event_label: source,
         value: 1

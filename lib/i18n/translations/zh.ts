@@ -611,4 +611,55 @@ export const zh = {
     // 其他选项
     other: "其他",
   },
+  inquiry: {
+    title: "预订与咨询",
+    subtitle: "预订 / 联系",
+    description: "请通过电话、在线预订\n或联系表单与我们联系",
+    phone: {
+      title: "电话",
+      number: "0287-74-5297",
+      hours: "9:00 - 19:00"
+    },
+    online: {
+      title: "在线预订",
+      description: "即时预订・空室确认",
+      button: "预订系统"
+    },
+    email: {
+      title: "邮件",
+      description: "通过下方表单发送",
+      note: "工作人员将回复您"
+    },
+    form: {
+      title: "联系表单",
+      description: "请填写以下项目并点击发送按钮",
+      inquiryType: "咨询类型",
+      reservation: "预订",
+      other: "其他",
+      checkInDate: "希望入住日期",
+      checkInTime: "入住时间",
+      checkInTimePlaceholder: "例：15:00左右",
+      adults: "成人",
+      children: "儿童",
+      selectOption: "请选择",
+      shuttle: "免费接送",
+      shuttleNotNeeded: "不需要",
+      shuttleNeeded: "需要",
+      name: "姓名",
+      kana: "姓名读音",
+      phone: "电话号码",
+      email: "邮箱地址",
+      emailConfirm: "邮箱确认",
+      message: "咨询内容",
+      privacyConsent: "同意个人信息处理政策",
+      confirmationConsent: "确认输入内容无误",
+      reservationNote: "了解预订需等待回复确认",
+      submit: "发送",
+      required: "「*」为必填项目",
+      validation: {
+        required: "请填写所有必填项目。",
+        emailMismatch: "邮箱地址不匹配。"
+      }
+    }
+  },
 };

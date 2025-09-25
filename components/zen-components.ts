@@ -5,4 +5,5 @@ export { ZenFeatures } from "./zen-features";
 export { ZenRooms } from "./zen-rooms";
 export { ZenTestimonials } from "./zen-testimonials";
 export { ZenGallery } from "./zen-gallery";
+export { ZenInquiry } from "./zen-inquiry";
 export { ZenContact } from "./zen-contact";

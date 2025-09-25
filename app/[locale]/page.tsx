@@ -5,6 +5,7 @@ import {
   ZenRooms,
   ZenTestimonials,
   ZenGallery,
+  ZenInquiry,
   ZenContact,
 } from "@/components/zen-components";
 import { Footer } from "@/components/footer";
@@ -28,6 +29,7 @@ export default function Home() {
         <ZenTestimonials />
         <ZenGallery />
         <ZenContact />
+        <ZenInquiry />
         <Footer />
       </main>
     </>
