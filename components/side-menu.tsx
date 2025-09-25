@@ -261,13 +261,13 @@ export function SideMenu() {
                     key={item.id}
                     type="button"
                     onClick={() => navigateToSection(item.id)}
-                    className={`group flex w-full items-center gap-3 text-left text-xs uppercase tracking-[0.45em] transition ${
+                    className={`group flex w-full items-center gap-2 text-left text-xs uppercase tracking-[0.2em] transition ${
                       isDarkText
                         ? 'text-stone-600 hover:text-stone-800'
                         : 'text-white/70 hover:text-white'
                     }`}
                   >
-                    <span className={`h-px w-8 transition-all group-hover:w-12 ${
+                    <span className={`h-px w-6 transition-all group-hover:w-8 ${
                       isDarkText
                         ? 'bg-stone-400 group-hover:bg-stone-800'
                         : 'bg-white/30 group-hover:bg-white'
@@ -282,7 +282,7 @@ export function SideMenu() {
                   key={item.id}
                   type="button"
                   onClick={() => navigateToRoute(item.href)}
-                  className={`group flex w-full items-center gap-3 text-left text-xs uppercase tracking-[0.45em] transition ${
+                  className={`group flex w-full items-center gap-2 text-left text-xs uppercase tracking-[0.2em] transition ${
                     isDarkText
                       ? 'text-stone-600 hover:text-stone-800'
                       : 'text-white/70 hover:text-white'
