@@ -160,7 +160,7 @@ export function ZenTestimonials() {
         />
       </div>
 
-      <div className="container relative z-10 lg:ml-80">
+      <div className="container relative z-10">
         {/* 标题区域 */}
         <div className="mb-16">
           <motion.div

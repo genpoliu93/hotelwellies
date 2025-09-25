@@ -66,7 +66,7 @@ export function ZenContact() {
 
   return (
     <section id="contact" className="py-24 bg-stone-100">
-      <div className="container lg:ml-80">
+      <div className="container">
         {/* 顶部统一标题区域 */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}

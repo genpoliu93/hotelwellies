@@ -60,7 +60,7 @@ export function ZenRooms() {
     <section
       ref={sectionRef}
       id="rooms"
-      className="relative"
+      className="relative -ml-80 lg:-ml-80"
     >
       {/* 容器高度确保有足够滚动空间 */}
       <div style={{ height: `${rooms.length * 100}vh` }}>
