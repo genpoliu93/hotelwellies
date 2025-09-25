@@ -37,8 +37,8 @@ export const ja = {
       "軽井沢の自然美に囲まれた、静かなテラスでくつろぎのひとときを",
   },
   about: {
-    title: "",
-    subtitle: "",
+    title: "ホテルについて",
+    subtitle: "私たちについて",
     description: "",
     tourismInfo: "",
     diningInfo:

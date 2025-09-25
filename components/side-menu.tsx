@@ -38,6 +38,7 @@ export function SideMenu() {
       { id: "rooms", label: t("rooms.title"), type: "section" },
       { id: "testimonials", label: t("testimonials.title"), type: "section" },
       { id: "gallery", label: t("gallery.title"), type: "section" },
+      { id: "inquiry", label: t("inquiry.title"), type: "section" },
       { id: "contact", label: t("common.contact"), type: "section" },
       {
         id: "news",
