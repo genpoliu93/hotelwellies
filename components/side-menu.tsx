@@ -288,7 +288,7 @@ export function SideMenu() {
                       : 'text-white/70 hover:text-white'
                   }`}
                 >
-                  <span className={`h-px w-8 transition-all group-hover:w-12 ${
+                  <span className={`h-px w-6 transition-all group-hover:w-8 ${
                     isDarkText
                       ? 'bg-stone-400 group-hover:bg-stone-800'
                       : 'bg-white/30 group-hover:bg-white'
