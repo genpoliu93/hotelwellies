@@ -15,6 +15,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { openBookingSystem } from "@/lib/booking-utils";
 
 // 轮播图片配置
 const carouselImages = [
@@ -195,14 +196,12 @@ export function ZenHero() {
           <Button
             variant="outline"
             className="bg-white/90 hover:bg-white text-stone-700 border-0 rounded-full px-4 py-2 text-sm font-medium tracking-wide shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-md"
-            asChild
+            onClick={() => openBookingSystem('hero')}
           >
-            <Link href={`/${locale}/booking`}>
-              <div className="flex flex-col items-center text-center">
-                <span className="text-xs">{t("common.bookNow")}</span>
-                <span className="text-xs opacity-60">Reserve</span>
-              </div>
-            </Link>
+            <div className="flex flex-col items-center text-center">
+              <span className="text-xs">{t("common.bookNow")}</span>
+              <span className="text-xs opacity-60">Reserve</span>
+            </div>
           </Button>
         </motion.div>
 

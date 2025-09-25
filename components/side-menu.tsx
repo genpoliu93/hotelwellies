@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useLanguage } from "@/lib/i18n/context";
 import { Z_INDEX } from "@/lib/z-index";
+import { openBookingSystem } from "@/lib/booking-utils";
 
 const SCROLL_OFFSET = 96;
 
@@ -332,7 +333,7 @@ export function SideMenu() {
                 ? 'border border-stone-300 bg-stone-100 text-stone-800 hover:bg-stone-200'
                 : 'border border-white/20 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm'
             }`}
-            onClick={() => navigateToSection("contact")}
+            onClick={() => openBookingSystem('sidebar')}
           >
             {t("common.bookNow")}
           </Button>
@@ -408,7 +409,7 @@ export function SideMenu() {
             <Button
               size="lg"
               className="w-full rounded-none bg-stone-900 py-3 text-xs uppercase tracking-[0.5em] text-white transition hover:bg-stone-700"
-              onClick={() => navigateToSection("contact")}
+              onClick={() => openBookingSystem('mobile-menu')}
             >
               {t("common.bookNow")}
             </Button>
