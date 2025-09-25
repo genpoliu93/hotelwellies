@@ -441,93 +441,154 @@ export function ZenGallery() {
   return (
     <section
       id="gallery"
-      className="py-24 bg-gradient-to-br from-slate-50 via-stone-50 to-gray-100 relative overflow-hidden"
+      className="py-32 bg-stone-50 relative overflow-hidden"
     >
-      {/* 背景装饰元素 */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="zen-bg-decoration absolute top-32 right-20 w-40 h-40 rounded-full bg-slate-400"></div>
-        <div className="zen-bg-decoration absolute bottom-32 left-20 w-28 h-28 rounded-full bg-stone-500"></div>
-        <div className="zen-bg-decoration absolute top-1/3 left-1/2 w-20 h-20 rounded-full bg-gray-400"></div>
+      {/* 日式线条装饰背景 */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* 主要流动线条 */}
+        <div className="absolute top-0 left-0 w-full h-full">
+          {/* 水平流线 */}
+          <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent opacity-60"></div>
+          <div className="absolute top-2/3 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent opacity-40"></div>
+
+          {/* 垂直流线 */}
+          <div className="absolute left-1/4 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-stone-200 to-transparent opacity-50"></div>
+          <div className="absolute right-1/3 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-stone-200 to-transparent opacity-30"></div>
+
+          {/* 对角线条 */}
+          <div className="absolute top-0 left-0 w-64 h-px bg-gradient-to-r from-stone-200 to-transparent opacity-30 transform rotate-45 origin-left"></div>
+          <div className="absolute bottom-0 right-0 w-48 h-px bg-gradient-to-l from-stone-200 to-transparent opacity-30 transform -rotate-45 origin-right"></div>
+        </div>
+
+        {/* 禅意圆形装饰 */}
+        <div className="absolute top-20 right-20 w-32 h-32 rounded-full border border-stone-200 opacity-20"></div>
+        <div className="absolute top-24 right-24 w-24 h-24 rounded-full border border-stone-300 opacity-15"></div>
+        <div className="absolute bottom-20 left-16 w-40 h-40 rounded-full border border-stone-200 opacity-10"></div>
       </div>
 
       <div className="container relative">
-        {/* 标题区域 */}
-        <div className="text-center mb-12">
+        {/* 日式标题区域 */}
+        <div className="text-center mb-16 relative">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="space-y-6"
+            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-50px" }}
+            className="space-y-8"
           >
-            <div className="flex justify-center items-center gap-4">
-              <div className="h-px w-8 bg-gradient-to-r from-transparent to-stone-400"></div>
-              <h3 className="text-sm uppercase tracking-[0.25em] text-stone-600 font-light flex items-center gap-2">
+            {/* 顶部装饰线条 */}
+            <div className="flex items-center justify-center gap-8 mb-6">
+              <motion.div
+                className="h-px bg-gradient-to-r from-transparent to-stone-300"
+                initial={{ width: 0 }}
+                whileInView={{ width: 80 }}
+                transition={{ duration: 1, delay: 0.5 }}
+              />
+              <div className="w-2 h-2 bg-stone-400 rounded-full opacity-60"></div>
+              <motion.div
+                className="h-px bg-gradient-to-l from-transparent to-stone-300"
+                initial={{ width: 0 }}
+                whileInView={{ width: 80 }}
+                transition={{ duration: 1, delay: 0.5 }}
+              />
+            </div>
+
+            <div className="relative">
+              <h3 className="text-sm uppercase tracking-[0.4em] text-stone-600 font-light mb-6 flex items-center justify-center gap-3">
                 <Camera className="h-4 w-4" />
                 {t("gallery.subtitle")}
               </h3>
-              <div className="h-px w-8 bg-gradient-to-l from-transparent to-stone-400"></div>
+
+              <h2 className="text-5xl font-extralight text-stone-800 tracking-wider mb-8 leading-tight">
+                {t("gallery.title")}
+              </h2>
+
+              <p className="text-stone-600 font-light max-w-2xl mx-auto leading-loose text-lg">
+                {t("gallery.description")}
+              </p>
             </div>
 
-            <h2 className="text-4xl font-light text-stone-800 tracking-wide">
-              {t("gallery.title")}
-            </h2>
-
-            <p className="text-stone-600 font-light max-w-2xl mx-auto">
-              {t("gallery.description")}
-            </p>
+            {/* 底部装饰线条 */}
+            <motion.div
+              className="mt-8 flex justify-center"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
+              <div className="w-24 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent"></div>
+            </motion.div>
           </motion.div>
         </div>
 
-        {/* 控制栏 */}
+        {/* 日式控制栏 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
-          className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 p-4 bg-white/50 backdrop-blur-sm rounded-lg border border-stone-200"
+          className="mb-12 bg-white/70 backdrop-blur-sm rounded-sm border border-stone-200 relative overflow-hidden"
         >
-          {/* 分类筛选 */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm text-stone-600 font-medium mr-2">
-              {t("gallery.filter")}:
-            </span>
-            {categories.map((cat) => (
-              <Button
-                key={cat.id}
-                variant={selectedCategory === cat.id ? "default" : "outline"}
-                size="sm"
-                onClick={() => handleCategoryChange(cat.id as ImageCategory)}
-                className="text-xs h-8"
-              >
-                <cat.icon className="h-3 w-3 mr-1" />
-                {cat.label}
-              </Button>
-            ))}
-          </div>
+          {/* 控制栏装饰线条 */}
+          <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent opacity-60"></div>
+          <div className="absolute bottom-0 left-1/3 right-1/3 h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent opacity-40"></div>
 
-          {/* 网格大小切换 */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-stone-600 font-medium mr-2">
-              {t("gallery.layout")}:
-            </span>
-            {Object.entries(gridConfigs).map(([key, config]) => (
-              <Button
-                key={key}
-                variant={gridSize === key ? "default" : "outline"}
-                size="sm"
-                onClick={() => setGridSize(key as GridSize)}
-                className="text-xs h-8"
-              >
-                {config.size}
-              </Button>
-            ))}
-          </div>
+          {/* 控制栏内容 */}
+          <div className="p-6 space-y-6">
+            {/* 第一行：分类筛选 */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+              <span className="text-sm text-stone-700 font-light tracking-wide flex-shrink-0">
+                {t("gallery.filter")}:
+              </span>
+              <div className="flex items-center gap-2 flex-wrap">
+                {categories.map((cat) => (
+                  <Button
+                    key={cat.id}
+                    variant={selectedCategory === cat.id ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => handleCategoryChange(cat.id as ImageCategory)}
+                    className={`text-xs h-8 px-3 font-light tracking-wide transition-all duration-300 rounded-sm ${
+                      selectedCategory === cat.id
+                        ? 'bg-stone-800 text-white hover:bg-stone-700'
+                        : 'text-stone-600 hover:text-stone-800 hover:bg-stone-100'
+                    }`}
+                  >
+                    <cat.icon className="h-3 w-3 mr-1.5" />
+                    {cat.label}
+                  </Button>
+                ))}
+              </div>
+            </div>
 
-          {/* 统计信息 */}
-          <div className="text-sm text-stone-600">
-            {t("gallery.showing")} {visibleImages.length} /{" "}
-            {filteredImages.length} {t("gallery.images")}
+            {/* 第二行：网格布局和统计信息 */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-stone-200/50">
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-stone-700 font-light tracking-wide flex-shrink-0">
+                  {t("gallery.layout")}:
+                </span>
+                <div className="flex items-center gap-1">
+                  {Object.entries(gridConfigs).map(([key, config]) => (
+                    <Button
+                      key={key}
+                      variant={gridSize === key ? "default" : "ghost"}
+                      size="sm"
+                      onClick={() => setGridSize(key as GridSize)}
+                      className={`text-xs h-8 px-3 font-light transition-all duration-300 rounded-sm ${
+                        gridSize === key
+                          ? 'bg-stone-700 text-white hover:bg-stone-600'
+                          : 'text-stone-600 hover:text-stone-800 hover:bg-stone-50'
+                      }`}
+                    >
+                      {config.size}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 统计信息 */}
+              <div className="text-sm text-stone-500 font-light tracking-wide">
+                {t("gallery.showing")} {visibleImages.length} / {filteredImages.length} {t("gallery.images")}
+              </div>
+            </div>
           </div>
         </motion.div>
 
@@ -563,30 +624,35 @@ export function ZenGallery() {
                     }}
                     viewport={{ once: true, margin: "-100px" }}
                     whileHover={{ y: -4, scale: 1.02 }}
-                    className={`${image.aspectRatio} relative group cursor-pointer overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-500`}
+                    className={`${image.aspectRatio} relative group cursor-pointer overflow-hidden rounded-sm border border-stone-200 hover:border-stone-400 transition-all duration-500 hover:shadow-lg`}
                     onClick={() => setSelectedImage(image.id)}
                   >
                     <Image
                       src={image.src}
                       alt={image.alt}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                       loading="lazy"
                       sizes={`(max-width: 640px) 50vw, (max-width: 768px) 33vw, ${gridConfigs[gridSize].itemWidth}`}
                     />
 
-                    {/* 覆盖层 */}
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center">
-                      <div className="text-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 opacity-0 group-hover:opacity-100">
-                        <Eye className="h-6 w-6 mx-auto mb-2 transition-opacity duration-300 delay-100" />
-                        <div className="font-light tracking-wide text-sm px-2">
+                    {/* 日式覆盖层 */}
+                    <div className="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/50 transition-all duration-500 flex items-center justify-center">
+                      <div className="text-center text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 opacity-0 group-hover:opacity-100">
+                        <div className="w-8 h-8 mx-auto mb-3 rounded-full border border-white/60 flex items-center justify-center">
+                          <Eye className="h-4 w-4" />
+                        </div>
+                        <div className="font-light tracking-wider text-xs px-3">
                           {image.alt}
                         </div>
                       </div>
                     </div>
 
-                    {/* 边框光效 */}
-                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/30 rounded-lg transition-all duration-500"></div>
+                    {/* 简约边框效果 */}
+                    <div className="absolute top-0 left-0 w-8 h-px bg-white opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+                    <div className="absolute top-0 left-0 w-px h-8 bg-white opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+                    <div className="absolute bottom-0 right-0 w-8 h-px bg-white opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
+                    <div className="absolute bottom-0 right-0 w-px h-8 bg-white opacity-0 group-hover:opacity-60 transition-opacity duration-500"></div>
                   </motion.div>
                 );
               })}
@@ -604,9 +670,9 @@ export function ZenGallery() {
           >
             <Button
               onClick={loadMore}
-              variant="outline"
+              variant="ghost"
               size="lg"
-              className="bg-white/50 hover:bg-white/70 backdrop-blur-sm"
+              className="bg-white/70 hover:bg-stone-100 backdrop-blur-sm border border-stone-200 hover:border-stone-300 text-stone-700 hover:text-stone-800 font-light tracking-wide transition-all duration-300"
             >
               {t("gallery.loadMore")} ({filteredImages.length - visibleCount}{" "}
               {t("gallery.remaining")})
@@ -614,44 +680,30 @@ export function ZenGallery() {
           </motion.div>
         )}
 
-        {/* 装饰线条 */}
-        <div className="mt-16 flex justify-center items-center space-x-8">
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-stone-400 to-transparent"></div>
-          <div className="relative flex items-center space-x-4">
-            <Image
-              src="/images/ink-branch.svg"
-              alt="Ink branch decoration"
-              width={30}
-              height={30}
-              className="opacity-30 transform rotate-12"
-            />
-            <div className="w-24 h-24 opacity-10">
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="40"
-                  fill="none"
-                  stroke="#000"
-                  strokeWidth="1"
-                />
-                <path
-                  d="M50,10 L50,90 M10,50 L90,50"
-                  stroke="#000"
-                  strokeWidth="1"
-                />
-              </svg>
-            </div>
-            <Image
-              src="/images/ink-branch.svg"
-              alt="Ink branch decoration"
-              width={30}
-              height={30}
-              className="opacity-30 transform -rotate-12 scale-x-[-1]"
-            />
+        {/* 日式结尾装饰 */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          viewport={{ once: true }}
+          className="mt-24 text-center"
+        >
+          <div className="flex items-center justify-center gap-6">
+            <div className="w-20 h-px bg-gradient-to-r from-transparent to-stone-300"></div>
+            <div className="w-1 h-1 bg-stone-400 rounded-full"></div>
+            <div className="w-2 h-2 bg-stone-300 rounded-full"></div>
+            <div className="w-1 h-1 bg-stone-400 rounded-full"></div>
+            <div className="w-20 h-px bg-gradient-to-l from-transparent to-stone-300"></div>
           </div>
-          <div className="h-px w-24 bg-gradient-to-r from-transparent via-stone-400 to-transparent"></div>
-        </div>
+
+          {/* 禅意符号 */}
+          <div className="mt-8 opacity-20">
+            <div className="w-12 h-12 mx-auto border border-stone-400 rounded-full relative">
+              <div className="absolute top-1/2 left-1/2 w-6 h-6 border-b border-l border-stone-400 rounded-bl-full transform -translate-x-1/2 -translate-y-1/2"></div>
+              <div className="absolute top-1/2 left-1/2 w-6 h-6 border-t border-r border-stone-400 rounded-tr-full transform -translate-x-1/2 -translate-y-1/2"></div>
+            </div>
+          </div>
+        </motion.div>
       </div>
 
       {/* 全屏弹出窗 */}
