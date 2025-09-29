@@ -65,7 +65,10 @@ export function ZenContact() {
   ];
 
   return (
-    <section id="contact" className="py-32 bg-stone-50 relative overflow-hidden">
+    <section
+      id="contact"
+      className="py-8 sm:py-12 lg:py-16 bg-stone-50 relative overflow-hidden"
+    >
       {/* 日式流线装饰 */}
       <div className="absolute inset-0 pointer-events-none">
         {/* 主要流线 */}
@@ -150,7 +153,9 @@ export function ZenContact() {
               <div className="group">
                 <div className="flex items-center gap-3 mb-3">
                   <MapPin className="h-4 w-4 text-stone-600" />
-                  <h4 className="text-stone-800 font-light text-sm tracking-wide">住所</h4>
+                  <h4 className="text-stone-800 font-light text-sm tracking-wide">
+                    住所
+                  </h4>
                 </div>
                 <div className="pl-7 border-l border-stone-200 ml-2">
                   <p className="text-stone-600 text-sm font-light leading-relaxed tracking-wide">

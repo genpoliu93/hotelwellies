@@ -127,279 +127,211 @@ export function ZenTestimonials() {
   };
 
   return (
-    <>
-      {/* CSS 动画定义 */}
-      <style jsx>{`
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%);
-          }
-          50% {
-            transform: translateX(100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
-        }
-      `}</style>
+    <section
+      id="testimonials"
+      className="py-8 sm:py-12 lg:py-16 overflow-hidden bg-stone-50 relative"
+    >
+      {/* 日式流线装饰 */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* 顶部流线 */}
+        <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent opacity-60"></div>
+        <div className="absolute top-1/3 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent opacity-40"></div>
 
-      <section
-        id="testimonials"
-        className="py-16 sm:py-20 lg:py-24 overflow-hidden bg-stone-50 relative"
-      >
-        {/* 日式流线装饰 */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* 顶部流线 */}
-          <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent opacity-60"></div>
-          <div className="absolute top-1/3 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent opacity-40"></div>
+        {/* 底部流线 */}
+        <div className="absolute bottom-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent opacity-60"></div>
 
-          {/* 底部流线 */}
-          <div className="absolute bottom-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent opacity-60"></div>
+        {/* 垂直线条 */}
+        <div className="absolute left-1/4 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-stone-200 to-transparent opacity-30"></div>
+        <div className="absolute right-1/4 top-1/3 bottom-1/3 w-px bg-gradient-to-b from-transparent via-stone-200 to-transparent opacity-30"></div>
+      </div>
 
-          {/* 垂直线条 */}
-          <div className="absolute left-1/4 top-1/4 bottom-1/4 w-px bg-gradient-to-b from-transparent via-stone-200 to-transparent opacity-30"></div>
-          <div className="absolute right-1/4 top-1/3 bottom-1/3 w-px bg-gradient-to-b from-transparent via-stone-200 to-transparent opacity-30"></div>
+      <div className="container relative z-10">
+        {/* 标题区域 */}
+        <div className="mb-12 md:mb-16 lg:mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-center"
+          >
+            {/* 简约标题装饰 */}
+            <div className="flex items-center justify-center gap-6 mb-8">
+              <motion.div
+                className="h-px bg-gradient-to-r from-transparent to-stone-300"
+                initial={{ width: 0 }}
+                whileInView={{ width: 60 }}
+                transition={{ duration: 1, delay: 0.5 }}
+              />
+              <div className="w-1 h-1 bg-stone-400 rounded-full"></div>
+              <motion.div
+                className="h-px bg-gradient-to-l from-transparent to-stone-300"
+                initial={{ width: 0 }}
+                whileInView={{ width: 60 }}
+                transition={{ duration: 1, delay: 0.5 }}
+              />
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight text-stone-800 tracking-wider mb-6 leading-tight">
+              {t("testimonials.title")}
+            </h2>
+
+            <p className="text-stone-600 font-light max-w-xl mx-auto text-base sm:text-lg leading-relaxed tracking-wide">
+              {t("testimonials.subtitle")}
+            </p>
+
+            {/* 底部装饰线 */}
+            <motion.div
+              className="mt-8 flex justify-center"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent"></div>
+            </motion.div>
+          </motion.div>
         </div>
 
-        <div className="container relative z-10">
-          {/* 标题区域 */}
-          <div className="mb-12 md:mb-16 lg:mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="text-center"
-            >
-              {/* 简约标题装饰 */}
-              <div className="flex items-center justify-center gap-6 mb-8">
+        {/* 评价展示区 */}
+        <div
+          ref={containerRef}
+          className="max-w-6xl mx-auto relative px-6 sm:px-8 md:px-10 lg:px-0"
+        >
+          <div className="overflow-hidden">
+            <div className="relative min-h-[400px] md:min-h-[500px]">
+              <AnimatePresence initial={false} custom={direction}>
                 <motion.div
-                  className="h-px bg-gradient-to-r from-transparent to-stone-300"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: 60 }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                />
-                <div className="w-1 h-1 bg-stone-400 rounded-full"></div>
-                <motion.div
-                  className="h-px bg-gradient-to-l from-transparent to-stone-300"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: 60 }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                />
-              </div>
+                  key={activeIndex}
+                  custom={direction}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    x: { type: "spring", stiffness: 300, damping: 30 },
+                    opacity: { duration: 0.4 },
+                  }}
+                  className="absolute w-full"
+                >
+                  <div className="relative bg-white border border-stone-200 shadow-sm overflow-hidden">
+                    {/* 顶部装饰线 */}
+                    <div className="h-px bg-gradient-to-r from-stone-200 via-stone-300 to-stone-200"></div>
 
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight text-stone-800 tracking-wider mb-6 leading-tight">
-                {t("testimonials.title")}
-              </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+                      {/* 图片部分 */}
+                      <div className="relative h-64 md:h-80 overflow-hidden group">
+                        <Image
+                          src={testimonials[activeIndex].image}
+                          alt={testimonials[activeIndex].name}
+                          fill
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
 
-              <p className="text-stone-600 font-light max-w-xl mx-auto text-base sm:text-lg leading-relaxed tracking-wide">
-                {t("testimonials.subtitle")}
-              </p>
+                        {/* 简洁覆盖层 */}
+                        <div className="absolute inset-0 bg-stone-900/10 group-hover:bg-stone-900/5 transition-colors duration-500"></div>
 
-              {/* 底部装饰线 */}
-              <motion.div
-                className="mt-8 flex justify-center"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 0.8 }}
-              >
-                <div className="w-16 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent"></div>
-              </motion.div>
-            </motion.div>
-          </div>
+                        {/* 边框线条 */}
+                        <div className="absolute inset-0 border-r border-stone-200"></div>
+                      </div>
 
-          {/* 评价展示区 */}
-          <div
-            ref={containerRef}
-            className="max-w-6xl mx-auto relative px-6 sm:px-8 md:px-10 lg:px-0"
-          >
-            <div className="overflow-hidden">
-              <div className="relative min-h-[400px] md:min-h-[500px]">
-                <AnimatePresence initial={false} custom={direction}>
-                  <motion.div
-                    key={activeIndex}
-                    custom={direction}
-                    variants={variants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{
-                      x: { type: "spring", stiffness: 300, damping: 30 },
-                      opacity: { duration: 0.4 },
-                    }}
-                    className="absolute w-full"
-                  >
-                    <div className="relative bg-white border border-stone-200 shadow-sm overflow-hidden">
-                      {/* 顶部装饰线 */}
-                      <div className="h-px bg-gradient-to-r from-stone-200 via-stone-300 to-stone-200"></div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-                        {/* 图片部分 */}
-                        <div className="relative h-64 md:h-80 overflow-hidden group">
-                          <Image
-                            src={testimonials[activeIndex].image}
-                            alt={testimonials[activeIndex].name}
-                            fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-105"
-                          />
-
-                          {/* 简洁覆盖层 */}
-                          <div className="absolute inset-0 bg-stone-900/10 group-hover:bg-stone-900/5 transition-colors duration-500"></div>
-
-                          {/* 边框线条 */}
-                          <div className="absolute inset-0 border-r border-stone-200"></div>
+                      {/* 文字部分 */}
+                      <div className="p-6 sm:p-8 md:p-12 space-y-6 md:space-y-8 relative">
+                        {/* 顶部装饰线 */}
+                        <div className="flex items-center gap-4 mb-6">
+                          <div className="w-12 h-px bg-stone-300"></div>
+                          <div className="w-1 h-1 bg-stone-400 rounded-full"></div>
                         </div>
 
-                        {/* 文字部分 */}
-                        <div className="p-6 sm:p-8 md:p-12 space-y-6 md:space-y-8 relative">
-                          {/* 顶部装饰线 */}
-                          <div className="flex items-center gap-4 mb-6">
-                            <div className="w-12 h-px bg-stone-300"></div>
-                            <div className="w-1 h-1 bg-stone-400 rounded-full"></div>
-                          </div>
+                        {/* 星级评分 */}
+                        <div className="flex items-center gap-1 mb-6">
+                          {[...Array(testimonials[activeIndex].rating)].map(
+                            (_, i) => (
+                              <Star
+                                key={i}
+                                className="h-4 w-4 fill-stone-400 text-stone-400"
+                              />
+                            )
+                          )}
+                        </div>
 
-                          {/* 星级评分 */}
-                          <div className="flex items-center gap-1 mb-6">
-                            {[...Array(testimonials[activeIndex].rating)].map(
-                              (_, i) => (
-                                <Star
-                                  key={i}
-                                  className="h-4 w-4 fill-stone-400 text-stone-400"
-                                />
-                              )
-                            )}
-                          </div>
+                        {/* 评价内容 */}
+                        <div className="space-y-6">
+                          <p className="text-lg font-light text-stone-700 leading-relaxed tracking-wide">
+                            "{testimonials[activeIndex].quote}"
+                          </p>
+                        </div>
 
-                          {/* 评价内容 */}
-                          <div className="space-y-6">
-                            <p className="text-lg font-light text-stone-700 leading-relaxed tracking-wide">
-                              "{testimonials[activeIndex].quote}"
-                            </p>
-                          </div>
-
-                          {/* 客户信息 */}
-                          <div className="pt-8 border-t border-stone-100">
-                            <div className="flex items-center gap-4">
-                              <div className="w-8 h-px bg-stone-300"></div>
-                              <div>
-                                <div className="text-sm font-medium text-stone-800 tracking-wide">
-                                  {testimonials[activeIndex].name}
-                                </div>
-                                <div className="text-xs text-stone-500 tracking-wider uppercase mt-1">
-                                  {testimonials[activeIndex].location}
-                                </div>
+                        {/* 客户信息 */}
+                        <div className="pt-8 border-t border-stone-100">
+                          <div className="flex items-center gap-4">
+                            <div className="w-8 h-px bg-stone-300"></div>
+                            <div>
+                              <div className="text-sm font-medium text-stone-800 tracking-wide">
+                                {testimonials[activeIndex].name}
+                              </div>
+                              <div className="text-xs text-stone-500 tracking-wider uppercase mt-1">
+                                {testimonials[activeIndex].location}
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
+          </div>
 
-            {/* 导航区域 */}
-            <div className="mt-12 sm:mt-16">
-              {/* 顶部装饰线 */}
-              <div className="flex items-center justify-center gap-6 mb-8">
-                <div className="w-20 h-px bg-gradient-to-r from-transparent to-stone-300"></div>
-                <div className="w-1 h-1 bg-stone-400 rounded-full"></div>
-                <div className="w-20 h-px bg-gradient-to-l from-transparent to-stone-300"></div>
+          {/* 简洁导航区域 */}
+          <div className="mt-12 sm:mt-16">
+            {/* 导航布局 */}
+            <div className="flex items-center justify-between gap-4">
+              {/* 左箭头 */}
+              <button
+                onClick={prevTestimonial}
+                className="flex-shrink-0 p-2.5 sm:p-2 border border-stone-200 hover:border-stone-300 active:border-stone-400 transition-colors duration-300 bg-white touch-manipulation rounded-sm"
+                aria-label="Previous testimonial"
+              >
+                <ChevronLeft className="w-4 h-4 text-stone-600" />
+              </button>
+
+              {/* 中间指示器区域 */}
+              <div className="flex items-center justify-center gap-3 sm:gap-4 flex-1">
+                {testimonials.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setDirection(idx > activeIndex ? 1 : -1);
+                      setActiveIndex(idx);
+                    }}
+                    className="group p-2"
+                    aria-label={`Go to testimonial ${idx + 1}`}
+                  >
+                    {/* 统一的圆点设计 */}
+                    <div
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        activeIndex === idx
+                          ? "bg-stone-600 scale-110"
+                          : "bg-stone-300 group-hover:bg-stone-400 group-active:scale-95"
+                      }`}
+                    ></div>
+                  </button>
+                ))}
               </div>
 
-              {/* 重新设计的响应式导航布局 */}
-              <div className="flex items-center justify-between gap-4">
-                {/* 左箭头 */}
-                <button
-                  onClick={prevTestimonial}
-                  className="flex-shrink-0 p-2.5 sm:p-2 border border-stone-200 hover:border-stone-300 active:border-stone-400 transition-colors duration-300 bg-white touch-manipulation rounded-sm"
-                  aria-label="Previous testimonial"
-                >
-                  <ChevronLeft className="w-4 h-4 text-stone-600" />
-                </button>
-
-                {/* 中间指示器区域 */}
-                <div className="flex items-center justify-center gap-2 sm:gap-4 flex-1 px-4">
-                  {testimonials.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        setDirection(idx > activeIndex ? 1 : -1);
-                        setActiveIndex(idx);
-                      }}
-                      className="group p-2 sm:p-1"
-                      aria-label={`Go to testimonial ${idx + 1}`}
-                    >
-                      {/* 移动端：简洁的圆点设计 */}
-                      <div className="sm:hidden">
-                        <div
-                          className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                            activeIndex === idx
-                              ? "bg-stone-600 scale-125"
-                              : "bg-stone-300 group-hover:bg-stone-400 group-active:scale-95"
-                          }`}
-                        ></div>
-                      </div>
-
-                      {/* 桌面端：现代简约设计 */}
-                      <div className="hidden sm:block relative">
-                        <div className="relative overflow-hidden">
-                          {/* 主要指示器 */}
-                          <div
-                            className={`w-8 h-1.5 rounded-full transition-all duration-500 ease-out ${
-                              activeIndex === idx
-                                ? "bg-stone-600 shadow-sm"
-                                : "bg-stone-200 group-hover:bg-stone-300"
-                            }`}
-                          ></div>
-
-                          {/* 激活时的光泽效果 */}
-                          {activeIndex === idx && (
-                            <div
-                              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full"
-                              style={{
-                                animation: "shimmer 2s ease-in-out infinite",
-                              }}
-                            ></div>
-                          )}
-                        </div>
-
-                        {/* 底部装饰点 */}
-                        <div className="flex justify-center mt-2">
-                          <div
-                            className={`w-1 h-1 rounded-full transition-all duration-300 ${
-                              activeIndex === idx
-                                ? "bg-stone-600 scale-110"
-                                : "bg-stone-300 group-hover:bg-stone-400"
-                            }`}
-                          ></div>
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-
-                {/* 右箭头 */}
-                <button
-                  onClick={nextTestimonial}
-                  className="flex-shrink-0 p-2.5 sm:p-2 border border-stone-200 hover:border-stone-300 active:border-stone-400 transition-colors duration-300 bg-white touch-manipulation rounded-sm"
-                  aria-label="Next testimonial"
-                >
-                  <ChevronRight className="w-4 h-4 text-stone-600" />
-                </button>
-              </div>
-            </div>
-
-            {/* 底部装饰 */}
-            <div className="mt-12 sm:mt-16 md:mt-20 flex items-center justify-center gap-8">
-              <div className="w-24 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent"></div>
-              <div className="w-2 h-2 border border-stone-400 rotate-45"></div>
-              <div className="w-24 h-px bg-gradient-to-l from-transparent via-stone-300 to-transparent"></div>
+              {/* 右箭头 */}
+              <button
+                onClick={nextTestimonial}
+                className="flex-shrink-0 p-2.5 sm:p-2 border border-stone-200 hover:border-stone-300 active:border-stone-400 transition-colors duration-300 bg-white touch-manipulation rounded-sm"
+                aria-label="Next testimonial"
+              >
+                <ChevronRight className="w-4 h-4 text-stone-600" />
+              </button>
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

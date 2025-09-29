@@ -230,7 +230,7 @@ export function ZenInquiry() {
     <section
       id="inquiry"
       ref={sectionRef}
-      className="relative py-20 md:py-28 lg:py-32 bg-stone-50 overflow-hidden"
+      className="relative py-8 sm:py-12 lg:py-16 bg-stone-50 overflow-hidden"
     >
       {/* 流线条装饰背景 */}
       <div className="absolute inset-0 pointer-events-none">

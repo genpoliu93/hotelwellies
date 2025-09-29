@@ -9,7 +9,9 @@ import { useState, useEffect } from "react";
 export function ZenFeatures() {
   const { t, locale } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [animationDirection, setAnimationDirection] = useState<'forward' | 'backward'>('forward');
+  const [animationDirection, setAnimationDirection] = useState<
+    "forward" | "backward"
+  >("forward");
   const [isPaused, setIsPaused] = useState(false);
 
   // 酒店服务项目数据 - 三语标签
@@ -21,7 +23,7 @@ export function ZenFeatures() {
       labels: {
         zh: "欢迎茶",
         en: "Welcome Tea",
-        ja: "ウェルカムティー"
+        ja: "ウェルカムティー",
       },
       japaneseSymbol: "茶",
       backgroundImage: "/images/food/welcometea.jpg",
@@ -36,7 +38,7 @@ export function ZenFeatures() {
       labels: {
         zh: "餐饮服务",
         en: "Dining Service",
-        ja: "お食事"
+        ja: "お食事",
       },
       japaneseSymbol: "食",
       backgroundImage: "/images/food/227477231.jpg",
@@ -51,7 +53,7 @@ export function ZenFeatures() {
       labels: {
         zh: "特别惊喜",
         en: "Special Surprise",
-        ja: "サプライズ"
+        ja: "サプライズ",
       },
       japaneseSymbol: "祝",
       backgroundImage: "/images/food/celebrity.jpg",
@@ -66,7 +68,7 @@ export function ZenFeatures() {
       labels: {
         zh: "自行车租赁",
         en: "Bicycle Rental",
-        ja: "貸自転車"
+        ja: "貸自転車",
       },
       japaneseSymbol: "輪",
       backgroundImage: "/images/walking-paths.webp",
@@ -81,7 +83,7 @@ export function ZenFeatures() {
     if (isPaused) return; // 如果暂停，不启动定时器
 
     const timer = setInterval(() => {
-      setAnimationDirection('forward');
+      setAnimationDirection("forward");
       setCurrentSlide((prev) => (prev + 1) % features.length);
     }, 4000);
 
@@ -93,10 +95,13 @@ export function ZenFeatures() {
     const currentIndex = currentSlide;
 
     // 判断动画方向
-    if (index > currentIndex || (currentIndex === features.length - 1 && index === 0)) {
-      setAnimationDirection('forward');
+    if (
+      index > currentIndex ||
+      (currentIndex === features.length - 1 && index === 0)
+    ) {
+      setAnimationDirection("forward");
     } else {
-      setAnimationDirection('backward');
+      setAnimationDirection("backward");
     }
 
     setCurrentSlide(index);
@@ -105,12 +110,12 @@ export function ZenFeatures() {
   return (
     <section
       id="features"
-      className="bg-white relative overflow-hidden"
+      className="py-8 sm:py-12 lg:py-16 bg-white relative overflow-hidden"
       style={{
         backgroundImage: "url('/images/service-bg.png')",
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: '511px',
-        backgroundPosition: 'left center'
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "511px",
+        backgroundPosition: "left center",
       }}
     >
       <div className="container relative px-6 sm:px-8 md:px-10 lg:px-12">
@@ -121,7 +126,7 @@ export function ZenFeatures() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="space-y-6 py-24"
+            className="space-y-6"
           >
             {/* 主标题 */}
             <div className="space-y-2">
@@ -136,9 +141,10 @@ export function ZenFeatures() {
             {/* 副标题 */}
             <div className="max-w-md lg:max-w-none">
               <p className="text-stone-600 font-light leading-relaxed text-base">
-                お客様の滞在をより思い出深く<br className="hidden lg:block" />
-                快適にするために、<br className="hidden lg:block" />
-                － 丁寧に企画されたサービス －
+                お客様の滞在をより思い出深く
+                <br className="hidden lg:block" />
+                快適にするために、
+                <br className="hidden lg:block" />－ 丁寧に企画されたサービス －
               </p>
             </div>
 
@@ -153,28 +159,41 @@ export function ZenFeatures() {
 
         {/* 主要内容区域 - 匹配nasu-yobou.jp的flex布局 */}
         <div className="lg:flex lg:flex-row-reverse lg:items-start lg:pb-24">
-
           {/* 轮播图片区域 - 70%宽度 */}
           <div className="lg:w-[70%] mb-12 lg:mb-0">
             <div className="relative w-full max-w-[716px] mx-auto lg:mx-0">
               {/* Swiper容器 - 精确匹配尺寸 */}
-              <div className="relative overflow-hidden w-full" style={{ height: '571px' }}>
+              <div
+                className="relative overflow-hidden w-full"
+                style={{ height: "571px" }}
+              >
                 {/* 图片slides - 从左到右擦除切换动画，支持hover暂停 */}
                 <div
                   className="relative w-full"
-                  style={{ height: '537px' }}
+                  style={{ height: "537px" }}
                   onMouseEnter={() => setIsPaused(true)}
                   onMouseLeave={() => setIsPaused(false)}
                 >
                   {/* 基础背景图片 - 根据动画方向显示前一张或后一张 */}
                   <div className="absolute inset-0">
                     <Image
-                      src={animationDirection === 'forward'
-                        ? features[(currentSlide - 1 + features.length) % features.length].backgroundImage
-                        : features[(currentSlide + 1) % features.length].backgroundImage}
-                      alt={animationDirection === 'forward'
-                        ? features[(currentSlide - 1 + features.length) % features.length].title
-                        : features[(currentSlide + 1) % features.length].title}
+                      src={
+                        animationDirection === "forward"
+                          ? features[
+                              (currentSlide - 1 + features.length) %
+                                features.length
+                            ].backgroundImage
+                          : features[(currentSlide + 1) % features.length]
+                              .backgroundImage
+                      }
+                      alt={
+                        animationDirection === "forward"
+                          ? features[
+                              (currentSlide - 1 + features.length) %
+                                features.length
+                            ].title
+                          : features[(currentSlide + 1) % features.length].title
+                      }
                       fill
                       className="object-cover"
                     />
@@ -185,12 +204,13 @@ export function ZenFeatures() {
                     key={`slide-${currentSlide}-${animationDirection}`}
                     className="absolute inset-0 z-10"
                     initial={{
-                      clipPath: animationDirection === 'forward'
-                        ? 'inset(0 100% 0 0)' // 前进：从右边隐藏
-                        : 'inset(0 0 0 100%)' // 后退：从左边隐藏
+                      clipPath:
+                        animationDirection === "forward"
+                          ? "inset(0 100% 0 0)" // 前进：从右边隐藏
+                          : "inset(0 0 0 100%)", // 后退：从左边隐藏
                     }}
                     animate={{
-                      clipPath: 'inset(0 0 0 0)' // 都是完全显示
+                      clipPath: "inset(0 0 0 0)", // 都是完全显示
                     }}
                     transition={{
                       duration: 2.0,
@@ -231,7 +251,6 @@ export function ZenFeatures() {
                   </motion.div>
                 </div>
 
-
                 {/* 分页器 - 匹配nasu-yobou.jp样式 */}
                 <div className="relative h-[34px] flex justify-center items-center">
                   <div className="flex gap-3">
@@ -241,8 +260,8 @@ export function ZenFeatures() {
                         onClick={() => goToSlide(index)}
                         className={`w-3 h-3 rounded-full transition-all duration-300 ${
                           index === currentSlide
-                            ? 'bg-stone-800 scale-125'
-                            : 'bg-stone-400 hover:bg-stone-600'
+                            ? "bg-stone-800 scale-125"
+                            : "bg-stone-400 hover:bg-stone-600"
                         }`}
                         aria-label={`Go to slide ${index + 1}`}
                       />
@@ -266,16 +285,17 @@ export function ZenFeatures() {
                   >
                     {features.map((feature, index) => {
                       const isActive = index === currentSlide;
-                      const isNext = index === (currentSlide + 1) % features.length;
+                      const isNext =
+                        index === (currentSlide + 1) % features.length;
 
                       // 根据当前语言显示对应标签
                       const getDisplayLabel = () => {
                         switch (locale) {
-                          case 'zh':
+                          case "zh":
                             return feature.labels.zh;
-                          case 'en':
+                          case "en":
                             return feature.labels.en;
-                          case 'ja':
+                          case "ja":
                             return feature.labels.ja;
                           default:
                             return feature.labels.en;
@@ -284,8 +304,8 @@ export function ZenFeatures() {
 
                       const slideClasses = `
                         nav-item
-                        ${isActive ? 'nav-item-active' : ''}
-                        ${isNext ? 'nav-item-next' : ''}
+                        ${isActive ? "nav-item-active" : ""}
+                        ${isNext ? "nav-item-next" : ""}
                       `.trim();
 
                       return (
@@ -295,7 +315,9 @@ export function ZenFeatures() {
                           onClick={() => goToSlide(index)}
                           role="tab"
                           aria-selected={isActive}
-                          aria-label={`${getDisplayLabel()} - ${index + 1} of ${features.length}`}
+                          aria-label={`${getDisplayLabel()} - ${index + 1} of ${
+                            features.length
+                          }`}
                           transition={{ duration: 0.3 }}
                         >
                           <span className="nav-item-text">
@@ -318,24 +340,52 @@ export function ZenFeatures() {
                   >
                     <button
                       className="swiper-button-prev over-prev"
-                      onClick={() => goToSlide((currentSlide - 1 + features.length) % features.length)}
+                      onClick={() =>
+                        goToSlide(
+                          (currentSlide - 1 + features.length) % features.length
+                        )
+                      }
                       tabIndex={0}
                       role="button"
                       aria-label="Previous slide"
                     >
-                      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                        <path d="M25 30L15 20L25 10" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                        fill="none"
+                      >
+                        <path
+                          d="M25 30L15 20L25 10"
+                          stroke="#666"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </button>
                     <button
                       className="swiper-button-next over-next"
-                      onClick={() => goToSlide((currentSlide + 1) % features.length)}
+                      onClick={() =>
+                        goToSlide((currentSlide + 1) % features.length)
+                      }
                       tabIndex={0}
                       role="button"
                       aria-label="Next slide"
                     >
-                      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                        <path d="M15 10L25 20L15 30" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                        fill="none"
+                      >
+                        <path
+                          d="M15 10L25 20L15 30"
+                          stroke="#666"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </button>
                   </div>
@@ -350,7 +400,6 @@ export function ZenFeatures() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

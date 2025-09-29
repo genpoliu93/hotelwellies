@@ -441,7 +441,7 @@ export function ZenGallery() {
   return (
     <section
       id="gallery"
-      className="py-20 sm:py-24 lg:py-32 bg-stone-50 relative overflow-hidden"
+      className="py-8 sm:py-12 lg:py-16 bg-stone-50 relative overflow-hidden"
     >
       {/* 日式线条装饰背景 */}
       <div className="absolute inset-0 pointer-events-none">
@@ -545,11 +545,13 @@ export function ZenGallery() {
                     key={cat.id}
                     variant={selectedCategory === cat.id ? "default" : "ghost"}
                     size="sm"
-                    onClick={() => handleCategoryChange(cat.id as ImageCategory)}
+                    onClick={() =>
+                      handleCategoryChange(cat.id as ImageCategory)
+                    }
                     className={`text-xs h-8 px-3 font-light tracking-wide transition-all duration-300 rounded-sm ${
                       selectedCategory === cat.id
-                        ? 'bg-stone-800 text-white hover:bg-stone-700'
-                        : 'text-stone-600 hover:text-stone-800 hover:bg-stone-100'
+                        ? "bg-stone-800 text-white hover:bg-stone-700"
+                        : "text-stone-600 hover:text-stone-800 hover:bg-stone-100"
                     }`}
                   >
                     <cat.icon className="h-3 w-3 mr-1.5" />
@@ -574,8 +576,8 @@ export function ZenGallery() {
                       onClick={() => setGridSize(key as GridSize)}
                       className={`text-xs h-8 px-3 font-light transition-all duration-300 rounded-sm ${
                         gridSize === key
-                          ? 'bg-stone-700 text-white hover:bg-stone-600'
-                          : 'text-stone-600 hover:text-stone-800 hover:bg-stone-50'
+                          ? "bg-stone-700 text-white hover:bg-stone-600"
+                          : "text-stone-600 hover:text-stone-800 hover:bg-stone-50"
                       }`}
                     >
                       {config.size}
@@ -586,7 +588,8 @@ export function ZenGallery() {
 
               {/* 统计信息 */}
               <div className="text-sm text-stone-500 font-light tracking-wide">
-                {t("gallery.showing")} {visibleImages.length} / {filteredImages.length} {t("gallery.images")}
+                {t("gallery.showing")} {visibleImages.length} /{" "}
+                {filteredImages.length} {t("gallery.images")}
               </div>
             </div>
           </div>
