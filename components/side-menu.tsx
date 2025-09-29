@@ -104,6 +104,29 @@ export function SideMenu() {
     setIsNavigating(false);
   }, [pathname, isNavigating]);
 
+  // 移动端菜单键盘和外部点击事件处理
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    // ESC 键关闭菜单
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    // 防止背景滚动
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = originalStyle;
+    };
+  }, [isMobileMenuOpen]);
+
   // 使用混合检测方案：Intersection Observer + 精确的滚动位置检测
   useEffect(() => {
     let currentSection = 'hero';
@@ -378,7 +401,25 @@ export function SideMenu() {
           style={{ zIndex: Z_INDEX.MODAL }}
           role="dialog"
           aria-modal="true"
+          onClick={(e) => {
+            // 点击背景区域关闭菜单
+            if (e.target === e.currentTarget) {
+              setIsMobileMenuOpen(false);
+            }
+          }}
         >
+          {/* 顶部关闭按钮 */}
+          <div className="flex justify-end mb-8">
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-stone-300 text-stone-700 hover:bg-stone-200 transition-colors"
+              aria-label="Close menu"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+
           <nav className="space-y-6">
             {navItems.map((item) => (
               <button
@@ -410,7 +451,10 @@ export function SideMenu() {
             <Button
               size="lg"
               className="w-full rounded-none bg-stone-900 py-3 text-xs uppercase tracking-[0.5em] text-white transition hover:bg-stone-700"
-              onClick={() => openBookingSystem('mobile-menu')}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                openBookingSystem('mobile-menu');
+              }}
             >
               {t("common.bookNow")}
             </Button>

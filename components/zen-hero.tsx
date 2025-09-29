@@ -8,10 +8,7 @@ import {
   useTransform,
   AnimatePresence,
 } from "framer-motion";
-import {
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
@@ -68,12 +65,16 @@ export function ZenHero() {
   // 获取滚动进度用于"由近到远"效果
   const { scrollYProgress } = useScroll({
     target: heroRef,
-    offset: ["start start", "end start"]
+    offset: ["start start", "end start"],
   });
 
   // 长焦镜头"由近到远"效果组合 - 优化范围，更柔和
   const imageScale = useTransform(scrollYProgress, [0, 1], [1.04, 0.96]); // 减小缩放范围
-  const imageOpacity = useTransform(scrollYProgress, [0, 0.8, 1], [1, 0.96, 0.8]); // 减小透明度变化
+  const imageOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.8, 1],
+    [1, 0.96, 0.8]
+  ); // 减小透明度变化
   const imageBlur = useTransform(scrollYProgress, [0, 0.6, 1], [0, 0.3, 2]); // 减小模糊变化
   const imageBrightness = useTransform(scrollYProgress, [0, 1], [1.02, 0.85]); // 减小亮度变化
   const imageSaturation = useTransform(scrollYProgress, [0, 1], [1.05, 0.9]); // 减小饱和度变化
@@ -123,33 +124,33 @@ export function ZenHero() {
             initial={{
               opacity: 0,
               scale: 1.06, // 减小初始缩放
-              filter: "blur(1px) contrast(0.95)"
+              filter: "blur(1px) contrast(0.95)",
             }}
             animate={{
               opacity: 1,
               scale: 1.02, // 减小最大缩放
-              filter: "blur(0px) contrast(1.03)"
+              filter: "blur(0px) contrast(1.03)",
             }}
             exit={{
               opacity: 0,
               scale: 0.96, // 减小退场缩放幅度
-              filter: "blur(2px) contrast(0.85)"
+              filter: "blur(2px) contrast(0.85)",
             }}
             transition={{
               duration: 3.0, // 延长切换时间，让效果更柔和
               ease: [0.25, 0.46, 0.45, 0.94],
               opacity: {
                 duration: 2.0, // 延长透明度变化
-                ease: "easeInOut"
+                ease: "easeInOut",
               },
               scale: {
                 duration: 3.5, // 延长缩放时间，更缓慢
-                ease: [0.4, 0.0, 0.2, 1]
+                ease: [0.4, 0.0, 0.2, 1],
               },
               filter: {
                 duration: 2.5, // 延长模糊效果
-                ease: "easeOut"
-              }
+                ease: "easeOut",
+              },
             }}
             className="absolute inset-0"
           >
@@ -242,10 +243,29 @@ export function ZenHero() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button
                 size="lg"
-                className="bg-white text-stone-800 hover:bg-white/90"
+                className="relative group bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 text-white font-medium tracking-wide shadow-lg hover:shadow-xl transition-all duration-300 border-0 overflow-hidden"
                 onClick={() => openBookingSystem("hero-primary")}
               >
-                {t("common.bookNow")}
+                {/* 金色光泽效果 */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+
+                {/* 按钮文字 */}
+                <span className="relative z-10 flex items-center gap-2">
+                  {t("common.bookNow")}
+                  <svg
+                    className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </span>
               </Button>
               <Button
                 variant="outline"
@@ -253,7 +273,9 @@ export function ZenHero() {
                 className="border-white/30 bg-transparent text-white hover:bg-white/10"
                 asChild
               >
-                <Link href={`/${locale}/rooms`}>{t("common.viewAllRooms")}</Link>
+                <Link href={`/${locale}/rooms`}>
+                  {t("common.viewAllRooms")}
+                </Link>
               </Button>
             </div>
           </motion.div>
