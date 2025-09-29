@@ -55,7 +55,8 @@ export function SideMenu() {
     return parts.length > 2 ? `/${parts.slice(2).join("/")}` : "";
   };
 
-  const isHomePage = () => getBasePathname() === "" || getBasePathname() === "/";
+  const isHomePage = () =>
+    getBasePathname() === "" || getBasePathname() === "/";
 
   const scrollToSection = (id: string) => {
     if (id === "hero") {
@@ -110,29 +111,29 @@ export function SideMenu() {
 
     // ESC 键关闭菜单
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         setIsMobileMenuOpen(false);
       }
     };
 
     // 防止背景滚动
     const originalStyle = window.getComputedStyle(document.body).overflow;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = originalStyle;
     };
   }, [isMobileMenuOpen]);
 
   // 使用混合检测方案：Intersection Observer + 精确的滚动位置检测
   useEffect(() => {
-    let currentSection = 'hero';
+    let currentSection = "hero";
 
     const updateTextColor = (section: string) => {
-      const darkSections = ['hero', 'rooms']; // hero和rooms使用白色文字
+      const darkSections = ["hero", "rooms"]; // hero和rooms使用白色文字
       setIsDarkText(!darkSections.includes(section));
     };
 
@@ -144,31 +145,34 @@ export function SideMenu() {
       // 检测各个区域的大致位置
       if (scrollPosition < viewportHeight * 0.8) {
         // Hero区域
-        if (currentSection !== 'hero') {
-          currentSection = 'hero';
-          updateTextColor('hero');
+        if (currentSection !== "hero") {
+          currentSection = "hero";
+          updateTextColor("hero");
         }
       } else {
         // 检查是否在rooms区域
-        const roomsElement = document.getElementById('rooms');
+        const roomsElement = document.getElementById("rooms");
         if (roomsElement) {
           const roomsRect = roomsElement.getBoundingClientRect();
           const roomsTop = roomsRect.top + scrollPosition;
           const roomsBottom = roomsTop + roomsRect.height;
 
-          if (scrollPosition >= roomsTop - viewportHeight * 0.3 &&
-              scrollPosition <= roomsBottom - viewportHeight * 0.3) {
+          if (
+            scrollPosition >= roomsTop - viewportHeight * 0.3 &&
+            scrollPosition <= roomsBottom - viewportHeight * 0.3
+          ) {
             // 在rooms区域内
-            if (currentSection !== 'rooms') {
-              currentSection = 'rooms';
-              updateTextColor('rooms');
+            if (currentSection !== "rooms") {
+              currentSection = "rooms";
+              updateTextColor("rooms");
             }
           } else {
             // 在其他浅色区域
-            const newSection = scrollPosition > roomsBottom ? 'after-rooms' : 'before-rooms';
+            const newSection =
+              scrollPosition > roomsBottom ? "after-rooms" : "before-rooms";
             if (currentSection !== newSection) {
               currentSection = newSection;
-              updateTextColor('other');
+              updateTextColor("other");
             }
           }
         }
@@ -178,8 +182,8 @@ export function SideMenu() {
     // 方案2: Intersection Observer作为辅助
     const observerOptions = {
       root: null,
-      rootMargin: '-10% 0px -10% 0px',
-      threshold: [0, 0.1, 0.5, 0.9]
+      rootMargin: "-10% 0px -10% 0px",
+      threshold: [0, 0.1, 0.5, 0.9],
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -187,12 +191,20 @@ export function SideMenu() {
         const sectionId = entry.target.id;
 
         if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
-          if (sectionId === 'rooms') {
-            currentSection = 'rooms';
-            updateTextColor('rooms');
-          } else if (['about', 'features', 'testimonials', 'gallery', 'contact'].includes(sectionId)) {
+          if (sectionId === "rooms") {
+            currentSection = "rooms";
+            updateTextColor("rooms");
+          } else if (
+            [
+              "about",
+              "features",
+              "testimonials",
+              "gallery",
+              "contact",
+            ].includes(sectionId)
+          ) {
             currentSection = sectionId;
-            updateTextColor('other');
+            updateTextColor("other");
           }
         }
       });
@@ -200,8 +212,15 @@ export function SideMenu() {
 
     // 延迟设置observer，确保DOM已渲染
     const setupObserver = () => {
-      const sectionsToObserve = ['rooms', 'about', 'features', 'testimonials', 'gallery', 'contact'];
-      sectionsToObserve.forEach(sectionId => {
+      const sectionsToObserve = [
+        "rooms",
+        "about",
+        "features",
+        "testimonials",
+        "gallery",
+        "contact",
+      ];
+      sectionsToObserve.forEach((sectionId) => {
         const section = document.getElementById(sectionId);
         if (section) {
           observer.observe(section);
@@ -210,7 +229,7 @@ export function SideMenu() {
     };
 
     // 初始化
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     handleScroll(); // 立即执行一次
 
     // 延迟设置observer
@@ -218,7 +237,7 @@ export function SideMenu() {
 
     return () => {
       observer.disconnect();
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -234,18 +253,17 @@ export function SideMenu() {
 
   return (
     <>
-
       {/* 智能文字颜色切换的导航菜单 */}
       <aside
         className={`fixed inset-y-0 left-0 w-64 flex-col justify-between px-8 py-12 transition-all duration-700 ease-in-out hidden lg:flex ${
-          isDarkText ? 'text-stone-800' : 'text-white'
+          isDarkText ? "text-stone-800" : "text-white"
         }`}
         style={{
           zIndex: Z_INDEX.NAVIGATION,
           background: isDarkText
             ? "rgba(255, 255, 255, 0.95)"
             : "rgba(0, 0, 0, 0.2)",
-          backdropFilter: "blur(8px)"
+          backdropFilter: "blur(8px)",
         }}
       >
         <div className="space-y-10 flex-1 min-h-0">
@@ -259,9 +277,11 @@ export function SideMenu() {
                 className="h-14 w-14 rounded-full bg-white/90 object-contain p-1 shadow-lg transition-transform duration-300 group-hover:scale-105"
               />
               <div className="space-y-1 min-w-0 flex-1">
-                <p className={`text-xs uppercase tracking-[0.4em] ${
-                  isDarkText ? 'text-stone-600' : 'text-white/60'
-                }`}>
+                <p
+                  className={`text-xs uppercase tracking-[0.4em] ${
+                    isDarkText ? "text-stone-600" : "text-white/60"
+                  }`}
+                >
                   Karuizawa
                 </p>
                 <p className="text-xl font-light tracking-[0.2em]">
@@ -269,9 +289,11 @@ export function SideMenu() {
                 </p>
               </div>
             </div>
-            <p className={`text-xs leading-relaxed ${
-              isDarkText ? 'text-stone-700' : 'text-white/80'
-            }`}>
+            <p
+              className={`text-xs leading-relaxed ${
+                isDarkText ? "text-stone-700" : "text-white/80"
+              }`}
+            >
               {subHeadline}
             </p>
           </Link>
@@ -286,15 +308,17 @@ export function SideMenu() {
                     onClick={() => navigateToSection(item.id)}
                     className={`group flex w-full items-center gap-2 text-left text-xs uppercase tracking-[0.2em] transition ${
                       isDarkText
-                        ? 'text-stone-600 hover:text-stone-800'
-                        : 'text-white/70 hover:text-white'
+                        ? "text-stone-600 hover:text-stone-800"
+                        : "text-white/70 hover:text-white"
                     }`}
                   >
-                    <span className={`h-px w-6 transition-all group-hover:w-8 ${
-                      isDarkText
-                        ? 'bg-stone-400 group-hover:bg-stone-800'
-                        : 'bg-white/30 group-hover:bg-white'
-                    }`} />
+                    <span
+                      className={`h-px w-6 transition-all group-hover:w-8 ${
+                        isDarkText
+                          ? "bg-stone-400 group-hover:bg-stone-800"
+                          : "bg-white/30 group-hover:bg-white"
+                      }`}
+                    />
                     <span className="flex-1 truncate">{item.label}</span>
                   </button>
                 );
@@ -307,15 +331,17 @@ export function SideMenu() {
                   onClick={() => navigateToRoute(item.href)}
                   className={`group flex w-full items-center gap-2 text-left text-xs uppercase tracking-[0.2em] transition ${
                     isDarkText
-                      ? 'text-stone-600 hover:text-stone-800'
-                      : 'text-white/70 hover:text-white'
+                      ? "text-stone-600 hover:text-stone-800"
+                      : "text-white/70 hover:text-white"
                   }`}
                 >
-                  <span className={`h-px w-6 transition-all group-hover:w-8 ${
-                    isDarkText
-                      ? 'bg-stone-400 group-hover:bg-stone-800'
-                      : 'bg-white/30 group-hover:bg-white'
-                  }`} />
+                  <span
+                    className={`h-px w-6 transition-all group-hover:w-8 ${
+                      isDarkText
+                        ? "bg-stone-400 group-hover:bg-stone-800"
+                        : "bg-white/30 group-hover:bg-white"
+                    }`}
+                  />
                   <span className="flex-1 truncate">{item.label}</span>
                 </button>
               );
@@ -324,28 +350,40 @@ export function SideMenu() {
         </div>
 
         <div className="space-y-4 flex-shrink-0">
-          <div className={`space-y-2 text-xs uppercase tracking-[0.35em] ${
-            isDarkText ? 'text-stone-600' : 'text-white/60'
-          }`}>
+          <div
+            className={`space-y-2 text-xs uppercase tracking-[0.35em] ${
+              isDarkText ? "text-stone-600" : "text-white/60"
+            }`}
+          >
             <span className="block">{sinceText}</span>
-            <span className={`block font-medium text-xs ${
-              isDarkText ? 'text-stone-800' : 'text-white'
-            }`}>{headline}</span>
+            <span
+              className={`block font-medium text-xs ${
+                isDarkText ? "text-stone-800" : "text-white"
+              }`}
+            >
+              {headline}
+            </span>
           </div>
-          <div className={`space-y-2 text-sm ${
-            isDarkText ? 'text-stone-700' : 'text-white/80'
-          }`}>
-            <p className={`flex items-center gap-2 text-xs ${
-              isDarkText ? 'text-stone-800' : 'text-white'
-            }`}>
+          <div
+            className={`space-y-2 text-sm ${
+              isDarkText ? "text-stone-700" : "text-white/80"
+            }`}
+          >
+            <p
+              className={`flex items-center gap-2 text-xs ${
+                isDarkText ? "text-stone-800" : "text-white"
+              }`}
+            >
               <Phone className="h-3 w-3" />
               <span>{phone}</span>
             </p>
             <div className="flex items-center gap-2">
               <LanguageSwitcher />
-              <span className={`text-xs uppercase tracking-[0.35em] ${
-                isDarkText ? 'text-stone-600' : 'text-white/60'
-              }`}>
+              <span
+                className={`text-xs uppercase tracking-[0.35em] ${
+                  isDarkText ? "text-stone-600" : "text-white/60"
+                }`}
+              >
                 {languageLabel}
               </span>
             </div>
@@ -354,10 +392,10 @@ export function SideMenu() {
             size="sm"
             className={`w-full rounded-lg py-2 text-xs uppercase tracking-[0.4em] transition ${
               isDarkText
-                ? 'border border-stone-300 bg-stone-100 text-stone-800 hover:bg-stone-200'
-                : 'border border-white/20 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm'
+                ? "border border-stone-300 bg-stone-100 text-stone-800 hover:bg-stone-200"
+                : "border border-white/20 bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm"
             }`}
-            onClick={() => openBookingSystem('sidebar')}
+            onClick={() => openBookingSystem("sidebar")}
           >
             {t("common.bookNow")}
           </Button>
@@ -377,7 +415,9 @@ export function SideMenu() {
             className="h-10 w-10 rounded-full bg-white object-contain p-1"
           />
           <div className="flex flex-col leading-tight text-stone-700">
-            <span className="text-sm uppercase tracking-[0.35em]">Hotel Wellies</span>
+            <span className="text-sm uppercase tracking-[0.35em]">
+              Hotel Wellies
+            </span>
             <span className="text-[0.65rem] uppercase tracking-[0.45em] text-stone-400">
               Karuizawa
             </span>
@@ -391,13 +431,17 @@ export function SideMenu() {
           aria-expanded={isMobileMenuOpen}
           aria-label="Toggle menu"
         >
-          {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {isMobileMenuOpen ? (
+            <X className="h-5 w-5" />
+          ) : (
+            <Menu className="h-5 w-5" />
+          )}
         </button>
       </div>
 
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 flex flex-col bg-stone-50/95 px-6 py-24 text-stone-800 backdrop-blur-lg lg:hidden"
+          className="fixed inset-0 flex flex-col bg-stone-50/95 text-stone-800 backdrop-blur-lg lg:hidden"
           style={{ zIndex: Z_INDEX.MODAL }}
           role="dialog"
           aria-modal="true"
@@ -408,57 +452,72 @@ export function SideMenu() {
             }
           }}
         >
-          {/* 顶部关闭按钮 */}
-          <div className="flex justify-end mb-8">
+          {/* 顶部固定区域：关闭按钮 */}
+          <div className="flex-shrink-0 flex justify-end p-4 sm:p-6">
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-stone-300 text-stone-700 hover:bg-stone-200 transition-colors"
+              className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-stone-300 text-stone-700 hover:bg-stone-200 transition-colors"
               aria-label="Close menu"
             >
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5 sm:h-6 sm:w-6" />
             </button>
           </div>
 
-          <nav className="space-y-6">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() =>
-                  item.type === "section"
-                    ? navigateToSection(item.id)
-                    : navigateToRoute(item.href)
-                }
-                className="w-full border-b border-stone-200 pb-4 text-left text-sm uppercase tracking-[0.45em] text-stone-600 transition hover:text-stone-900"
-              >
-                {item.label}
-              </button>
-            ))}
-          </nav>
+          {/* 可滚动的主要内容区域 */}
+          <div className="flex-1 overflow-y-auto px-4 sm:px-6 pb-4">
+            <div className="min-h-full flex flex-col">
+              {/* 导航菜单 */}
+              <nav className="flex-shrink-0 space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+                {navItems.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() =>
+                      item.type === "section"
+                        ? navigateToSection(item.id)
+                        : navigateToRoute(item.href)
+                    }
+                    className="w-full border-b border-stone-200 pb-3 sm:pb-4 text-left text-sm sm:text-base uppercase tracking-[0.35em] sm:tracking-[0.45em] text-stone-600 transition hover:text-stone-900"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </nav>
 
-          <div className="mt-auto space-y-6 pt-12">
-            <div className="flex items-center justify-between">
-              <LanguageSwitcher />
-              <span className="text-xs uppercase tracking-[0.4em] text-stone-500">
-                {languageLabel}
-              </span>
+              {/* 底部信息区域 - 使用 flex-grow 确保推到底部，但仍在可视范围内 */}
+              <div className="flex-grow flex flex-col justify-end">
+                <div className="space-y-4 sm:space-y-6 pt-4 sm:pt-6">
+                  <div className="flex items-center justify-between">
+                    <LanguageSwitcher />
+                    <span className="text-xs uppercase tracking-[0.35em] sm:tracking-[0.4em] text-stone-500">
+                      {languageLabel}
+                    </span>
+                  </div>
+                  <p className="flex items-center gap-3 text-sm text-stone-600">
+                    <Phone className="h-4 w-4" />
+                    <span>{phone}</span>
+                  </p>
+                  <Button
+                    size="lg"
+                    className="w-full rounded-none bg-stone-900 py-3 text-xs uppercase tracking-[0.4em] sm:tracking-[0.5em] text-white transition hover:bg-stone-700"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      openBookingSystem("mobile-menu");
+                    }}
+                  >
+                    {t("common.bookNow")}
+                  </Button>
+                </div>
+              </div>
             </div>
-            <p className="flex items-center gap-3 text-sm text-stone-600">
-              <Phone className="h-4 w-4" />
-              <span>{phone}</span>
-            </p>
-            <Button
-              size="lg"
-              className="w-full rounded-none bg-stone-900 py-3 text-xs uppercase tracking-[0.5em] text-white transition hover:bg-stone-700"
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                openBookingSystem('mobile-menu');
-              }}
-            >
-              {t("common.bookNow")}
-            </Button>
           </div>
+
+          {/* 底部安全区域 - 确保内容不被系统UI遮挡 */}
+          <div
+            className="flex-shrink-0 h-4 sm:h-6"
+            style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+          />
         </div>
       )}
     </>
