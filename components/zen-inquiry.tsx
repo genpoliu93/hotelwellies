@@ -30,6 +30,25 @@ export function ZenInquiry() {
   const { t, locale } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
 
+  // 生成check-in时间选项 (15:00-22:00, 每15分钟)
+  const generateCheckInTimeOptions = () => {
+    const options = [];
+    for (let hour = 15; hour <= 22; hour++) {
+      for (let minute = 0; minute < 60; minute += 15) {
+        const timeString = `${hour.toString().padStart(2, "0")}:${minute
+          .toString()
+          .padStart(2, "0")}`;
+        options.push({
+          value: timeString,
+          label: timeString,
+        });
+      }
+    }
+    return options;
+  };
+
+  const checkInTimeOptions = generateCheckInTimeOptions();
+
   // 流动视差效果
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -516,11 +535,7 @@ export function ZenInquiry() {
                           {t("inquiry.form.checkInTime")} *
                         </label>
                         <div>
-                          <input
-                            type="text"
-                            placeholder={t(
-                              "inquiry.form.checkInTimePlaceholder"
-                            )}
+                          <select
                             value={formData.checkInTime}
                             onChange={(e) => {
                               setFormData({
@@ -531,9 +546,18 @@ export function ZenInquiry() {
                             }}
                             className={getFieldClassName(
                               "checkInTime",
-                              "w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light placeholder:text-stone-400 transition-colors"
+                              "w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors"
                             )}
-                          />
+                          >
+                            <option value="">
+                              {t("inquiry.form.selectCheckInTime")}
+                            </option>
+                            {checkInTimeOptions.map((option) => (
+                              <option key={option.value} value={option.value}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </select>
                           {showErrors && errors.checkInTime && (
                             <p className="text-red-500 text-xs mt-2 font-light">
                               {errors.checkInTime}

@@ -632,7 +632,8 @@ export const ja = {
   inquiry: {
     title: "ご予約・お問い合わせ",
     subtitle: "Reserve / Contact",
-    description: "お電話、オンライン予約、またはフォームより\nお気軽にお問い合わせください",
+    description:
+      "お電話、オンライン予約、またはフォームより\nお気軽にお問い合わせください",
     phone: {
       title: "お電話",
       number: "0287-74-5297",
@@ -657,6 +658,7 @@ export const ja = {
       checkInDate: "ご宿泊希望日",
       checkInTime: "チェックイン時間",
       checkInTimePlaceholder: "例: 15:00頃",
+      selectCheckInTime: "チェックイン時間を選択してください",
       adults: "大人",
       children: "子供",
       selectOption: "選択",

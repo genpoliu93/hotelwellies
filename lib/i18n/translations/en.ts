@@ -645,31 +645,34 @@ export const en = {
   inquiry: {
     title: "Reservations & Inquiries",
     subtitle: "Reserve / Contact",
-    description: "Feel free to contact us by phone, online booking,\nor through our contact form",
+    description:
+      "Feel free to contact us by phone, online booking,\nor through our contact form",
     phone: {
       title: "Phone",
       number: "0287-74-5297",
-      hours: "9:00 - 19:00"
+      hours: "9:00 - 19:00",
     },
     online: {
       title: "Online Booking",
       description: "Instant booking & room availability",
-      button: "Booking System"
+      button: "Booking System",
     },
     email: {
       title: "Email",
       description: "Send via form below",
-      note: "We will respond promptly"
+      note: "We will respond promptly",
     },
     form: {
       title: "Contact Form",
-      description: "Please fill in the following items and press the send button",
+      description:
+        "Please fill in the following items and press the send button",
       inquiryType: "Inquiry Type",
       reservation: "Reservation",
       other: "Other",
       checkInDate: "Preferred Check-in Date",
       checkInTime: "Check-in Time",
       checkInTimePlaceholder: "e.g. Around 15:00",
+      selectCheckInTime: "Please select check-in time",
       adults: "Adults",
       children: "Children",
       selectOption: "Select",
@@ -683,14 +686,16 @@ export const en = {
       emailConfirm: "Email Confirmation",
       message: "Message",
       privacyConsent: "I agree to the privacy policy",
-      confirmationConsent: "I have confirmed that the input information is correct",
-      reservationNote: "I understand that the reservation will be confirmed upon reply",
+      confirmationConsent:
+        "I have confirmed that the input information is correct",
+      reservationNote:
+        "I understand that the reservation will be confirmed upon reply",
       submit: "Send",
-      required: "\"*\" indicates required fields",
+      required: '"*" indicates required fields',
       validation: {
         required: "Please fill in all required fields.",
-        emailMismatch: "Email addresses do not match."
-      }
-    }
+        emailMismatch: "Email addresses do not match.",
+      },
+    },
   },
 };

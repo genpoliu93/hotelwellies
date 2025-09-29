@@ -618,17 +618,17 @@ export const zh = {
     phone: {
       title: "电话",
       number: "0287-74-5297",
-      hours: "9:00 - 19:00"
+      hours: "9:00 - 19:00",
     },
     online: {
       title: "在线预订",
       description: "即时预订・空室确认",
-      button: "预订系统"
+      button: "预订系统",
     },
     email: {
       title: "邮件",
       description: "通过下方表单发送",
-      note: "工作人员将回复您"
+      note: "工作人员将回复您",
     },
     form: {
       title: "联系表单",
@@ -639,6 +639,7 @@ export const zh = {
       checkInDate: "希望入住日期",
       checkInTime: "入住时间",
       checkInTimePlaceholder: "例：15:00左右",
+      selectCheckInTime: "请选择入住时间",
       adults: "成人",
       children: "儿童",
       selectOption: "请选择",
@@ -658,8 +659,8 @@ export const zh = {
       required: "「*」为必填项目",
       validation: {
         required: "请填写所有必填项目。",
-        emailMismatch: "邮箱地址不匹配。"
-      }
-    }
+        emailMismatch: "邮箱地址不匹配。",
+      },
+    },
   },
 };
