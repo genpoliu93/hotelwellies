@@ -4,7 +4,7 @@
  */
 
 // 外部预订系统URL
-const BOOKING_SYSTEM_URL = 'https://rsv.temanasi.jp/165/room/search';
+const BOOKING_SYSTEM_URL = "https://rsv.temanasi.jp/165/room/search";
 
 /**
  * 跳转到外部预订系统的最佳实践函数
@@ -12,7 +12,13 @@ const BOOKING_SYSTEM_URL = 'https://rsv.temanasi.jp/165/room/search';
  * @param params - 可选的URL参数
  */
 export const openBookingSystem = (
-  source: 'hero' | 'sidebar' | 'mobile-menu' | 'contact' | 'inquiry' = 'hero',
+  source:
+    | "hero"
+    | "hero-primary"
+    | "sidebar"
+    | "mobile-menu"
+    | "contact"
+    | "inquiry" = "hero",
   params?: Record<string, string>
 ) => {
   try {
@@ -20,8 +26,8 @@ export const openBookingSystem = (
 
     // 添加来源跟踪参数
     const urlParams = new URLSearchParams();
-    urlParams.set('source', source);
-    urlParams.set('referrer', 'hotelwellies');
+    urlParams.set("source", source);
+    urlParams.set("referrer", "hotelwellies");
 
     // 添加其他可选参数
     if (params) {
@@ -34,25 +40,26 @@ export const openBookingSystem = (
     const fullUrl = `${url}?${urlParams.toString()}`;
 
     // 安全地打开新窗口
-    const newWindow = window.open(fullUrl, '_blank', 'noopener,noreferrer');
+    const newWindow = window.open(fullUrl, "_blank", "noopener,noreferrer");
 
     // 检查弹窗是否被阻止
     if (!newWindow || newWindow.closed) {
-      console.warn('Booking system popup was blocked. Redirecting in current window.');
+      console.warn(
+        "Booking system popup was blocked. Redirecting in current window."
+      );
       window.location.href = fullUrl;
     }
 
     // 可选：发送跟踪事件（如果有分析工具）
-    if (typeof window !== 'undefined' && 'gtag' in window) {
-      (window as any).gtag('event', 'booking_system_click', {
-        event_category: 'engagement',
+    if (typeof window !== "undefined" && "gtag" in window) {
+      (window as any).gtag("event", "booking_system_click", {
+        event_category: "engagement",
         event_label: source,
-        value: 1
+        value: 1,
       });
     }
-
   } catch (error) {
-    console.error('Failed to open booking system:', error);
+    console.error("Failed to open booking system:", error);
     // 降级处理：直接跳转到预订页面
     window.location.href = BOOKING_SYSTEM_URL;
   }
@@ -68,10 +75,13 @@ export const getBookingSystemUrl = () => BOOKING_SYSTEM_URL;
  */
 export const checkBookingSystemAvailability = async (): Promise<boolean> => {
   try {
-    const response = await fetch(BOOKING_SYSTEM_URL, { method: 'HEAD', mode: 'no-cors' });
+    const response = await fetch(BOOKING_SYSTEM_URL, {
+      method: "HEAD",
+      mode: "no-cors",
+    });
     return true; // 如果没有抛出错误，说明可以访问
   } catch (error) {
-    console.warn('Booking system availability check failed:', error);
+    console.warn("Booking system availability check failed:", error);
     return false;
   }
 };
