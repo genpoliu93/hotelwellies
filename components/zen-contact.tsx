@@ -77,7 +77,7 @@ export function ZenContact() {
         <div className="absolute right-1/3 top-1/3 bottom-1/3 w-px bg-gradient-to-b from-transparent via-stone-200 to-transparent opacity-30"></div>
       </div>
 
-      <div className="container relative z-10">
+      <div className="container relative z-10 px-6 sm:px-8 md:px-10 lg:px-12">
         {/* 日式标题区域 */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

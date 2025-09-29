@@ -149,7 +149,7 @@ export function ZenRooms() {
 
       {/* 移动端：卡片式房型展示 */}
       <div className="lg:hidden bg-gradient-to-b from-stone-950 via-stone-900 to-stone-800 py-16">
-        <div className="space-y-10 px-4 sm:px-6">
+        <div className="space-y-10 px-6 sm:px-8 md:px-10">
           {rooms.map((room) => (
             <div
               key={room.id}

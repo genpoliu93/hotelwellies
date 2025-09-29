@@ -466,7 +466,7 @@ export function ZenGallery() {
         <div className="absolute bottom-20 left-16 w-40 h-40 rounded-full border border-stone-200 opacity-10"></div>
       </div>
 
-      <div className="container relative">
+      <div className="container relative px-6 sm:px-8 md:px-10 lg:px-12">
         {/* 日式标题区域 */}
         <div className="text-center mb-12 sm:mb-14 lg:mb-16 relative">
           <motion.div

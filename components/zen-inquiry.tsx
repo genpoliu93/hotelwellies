@@ -269,7 +269,7 @@ export function ZenInquiry() {
         />
       </div>
 
-      <div className="container max-w-6xl relative z-10">
+      <div className="container max-w-6xl relative z-10 px-6 sm:px-8 md:px-10 lg:px-12">
         {/* 优化标题区域 - 更流线的设计 */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -418,7 +418,7 @@ export function ZenInquiry() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
           viewport={{ once: true, margin: "-50px" }}
-          className="max-w-6xl mx-auto relative px-4 sm:px-6 lg:px-0"
+          className="max-w-6xl mx-auto relative px-0"
         >
           {/* 表单背景装饰线条 */}
           <div className="absolute -top-8 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent opacity-60"></div>
