@@ -129,7 +129,7 @@ export function ZenTestimonials() {
   return (
     <section
       id="testimonials"
-      className="py-24 overflow-hidden bg-stone-50 relative"
+      className="py-16 sm:py-20 lg:py-24 overflow-hidden bg-stone-50 relative"
     >
       {/* 日式流线装饰 */}
       <div className="absolute inset-0 pointer-events-none">
@@ -147,7 +147,7 @@ export function ZenTestimonials() {
 
       <div className="container relative z-10">
         {/* 标题区域 */}
-        <div className="mb-20">
+        <div className="mb-12 md:mb-16 lg:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -172,11 +172,11 @@ export function ZenTestimonials() {
               />
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-extralight text-stone-800 tracking-wider mb-6 leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight text-stone-800 tracking-wider mb-6 leading-tight">
               {t("testimonials.title")}
             </h2>
 
-            <p className="text-stone-600 font-light max-w-xl mx-auto text-lg leading-relaxed tracking-wide">
+            <p className="text-stone-600 font-light max-w-xl mx-auto text-base sm:text-lg leading-relaxed tracking-wide">
               {t("testimonials.subtitle")}
             </p>
 
@@ -193,7 +193,7 @@ export function ZenTestimonials() {
         </div>
 
         {/* 评价展示区 */}
-        <div ref={containerRef} className="max-w-6xl mx-auto relative">
+        <div ref={containerRef} className="max-w-6xl mx-auto relative px-4 sm:px-6 lg:px-0">
           <div className="overflow-hidden">
             <div className="relative min-h-[400px] md:min-h-[500px]">
               <AnimatePresence initial={false} custom={direction}>
@@ -232,7 +232,7 @@ export function ZenTestimonials() {
                       </div>
 
                       {/* 文字部分 */}
-                      <div className="p-8 md:p-12 space-y-8 relative">
+                      <div className="p-6 sm:p-8 md:p-12 space-y-6 md:space-y-8 relative">
                         {/* 顶部装饰线 */}
                         <div className="flex items-center gap-4 mb-6">
                           <div className="w-12 h-px bg-stone-300"></div>
@@ -281,7 +281,7 @@ export function ZenTestimonials() {
           </div>
 
           {/* 导航区域 */}
-          <div className="mt-16">
+          <div className="mt-12 sm:mt-16">
             {/* 顶部装饰线 */}
             <div className="flex items-center justify-center gap-6 mb-8">
               <div className="w-20 h-px bg-gradient-to-r from-transparent to-stone-300"></div>
@@ -289,7 +289,7 @@ export function ZenTestimonials() {
               <div className="w-20 h-px bg-gradient-to-l from-transparent to-stone-300"></div>
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-between">
               <button
                 onClick={prevTestimonial}
                 className="p-2 border border-stone-200 hover:border-stone-300 transition-colors duration-300 bg-white"
@@ -335,7 +335,7 @@ export function ZenTestimonials() {
           </div>
 
           {/* 底部装饰 */}
-          <div className="mt-20 flex items-center justify-center gap-8">
+          <div className="mt-12 sm:mt-16 md:mt-20 flex items-center justify-center gap-8">
             <div className="w-24 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent"></div>
             <div className="w-2 h-2 border border-stone-400 rotate-45"></div>
             <div className="w-24 h-px bg-gradient-to-l from-transparent via-stone-300 to-transparent"></div>

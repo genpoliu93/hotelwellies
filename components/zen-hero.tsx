@@ -45,45 +45,25 @@ const carouselImages = [
   },
 ];
 
-// 定义卡片属性类型
-type InfoCardProps = {
-  titleKey: string; // 翻译键
-  descKey: string; // 翻译键
-};
-
-// 卡片子组件 (修改为竖向文字布局)
-const InfoCard = ({ titleKey, descKey }: InfoCardProps) => {
-  const { t } = useLanguage();
-
-  return (
-    <div
-      className="bg-black/50 backdrop-blur-md rounded-lg p-2 md:p-4 border border-white/20 shadow-lg w-20 h-48 md:w-32 md:h-72 flex flex-col items-center justify-center"
-    >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.7, delay: 0.2 }}
-        className="h-full flex flex-col justify-around items-center text-center"
-      >
-        <h3 className="text-white text-sm md:text-xl font-light writing-vertical">
-          {t(titleKey)}
-        </h3>
-        <hr className="w-1/2 border-white/30 my-1 md:my-2" />
-        <p
-          className="text-white/80 font-extralight text-xs md:text-sm leading-snug writing-vertical"
-          style={{ maxHeight: "80px", overflowY: "auto" }}
-        >
-          {t(descKey)}
-        </p>
-      </motion.div>
-    </div>
-  );
-};
-
 export function ZenHero() {
   const { t, locale } = useLanguage();
   const heroRef = useRef<HTMLElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const heroTitle = t("hero.title");
+  const heroSubtitle = t("hero.subtitle");
+  const highlightKeys = [
+    "hero.highlight1",
+    "hero.highlight2",
+    "hero.highlight3",
+  ];
+  const heroHighlights = highlightKeys
+    .map((key) => ({ key, value: t(key) }))
+    .filter(({ key, value }) => value && value !== key)
+    .map(({ value }) => value);
+
+  const rawSince = t("common.since");
+  const sinceLabel = rawSince === "common.since" ? "Since 2013" : rawSince;
 
   // 获取滚动进度用于"由近到远"效果
   const { scrollYProgress } = useScroll({
@@ -121,7 +101,7 @@ export function ZenHero() {
   return (
     <section
       ref={heroRef}
-      className="relative h-screen overflow-hidden"
+      className="relative h-screen min-h-[540px] overflow-hidden"
       id="hero"
     >
       {/* 背景图片 - 长焦镜头由近到远效果 - 限制在section内 */}
@@ -184,50 +164,138 @@ export function ZenHero() {
         </AnimatePresence>
       </motion.div>
 
-      {/* 前景元素层 - 相对定位在section内 */}
-      <div className="absolute inset-0 z-10 pointer-events-none">
-        {/* 右上角预约按钮 - 仿 nasu-yobou */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="absolute top-6 right-6 pointer-events-auto"
-        >
-          <Button
-            variant="outline"
-            className="bg-white/90 hover:bg-white text-stone-700 border-0 rounded-full px-4 py-2 text-sm font-medium tracking-wide shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-md"
-            onClick={() => openBookingSystem('hero')}
+      {/* 前景元素层 */}
+      <div className="absolute inset-0 z-10 flex flex-col justify-between pointer-events-none">
+        <div className="flex items-start justify-between px-4 py-4 sm:px-6 md:px-10 lg:pl-72 lg:pr-12 pointer-events-auto">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="space-y-1 text-[11px] font-light uppercase tracking-[0.35em] text-white/70"
           >
-            <div className="flex flex-col items-center text-center">
-              <span className="text-xs">{t("common.bookNow")}</span>
-              <span className="text-xs opacity-60">Reserve</span>
-            </div>
-          </Button>
-        </motion.div>
+            <span>{sinceLabel}</span>
+            <span className="text-white">Hotel Wellies</span>
+            <span className="text-white/60">Karuizawa, Japan</span>
+          </motion.div>
 
-        {/* 左上角标题 - 仿 nasu-yobou 极小字体 */}
-        <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="absolute top-4 left-4 text-white text-xs font-medium tracking-wider leading-tight"
-          style={{
-            fontSize: '10px',
-            letterSpacing: '1.3px',
-            fontFamily: '"Shippori Mincho", serif',
-            lineHeight: '16px'
-          }}
-        >
-          <div className="space-y-1">
-            <div>{t("hero.title").split(' ')[0]}</div>
-            <div>{t("hero.title").split(' ').slice(1).join(' ')}</div>
-            <div className="text-white/80 mt-2">Hotel Wellies【公式】</div>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            <Button
+              variant="outline"
+              className="rounded-full border-white/20 bg-white/90 px-4 py-2 text-xs font-medium uppercase tracking-[0.35em] text-stone-700 shadow-sm transition hover:bg-white"
+              onClick={() => openBookingSystem("hero")}
+            >
+              {t("common.bookNow")}
+            </Button>
+          </motion.div>
+        </div>
+
+        <div className="flex flex-1 items-center justify-center lg:justify-end">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="pointer-events-auto max-w-3xl px-6 text-white sm:px-10 md:px-16 lg:px-24 lg:mr-12 xl:mr-20"
+          >
+            {heroSubtitle && heroSubtitle !== "hero.subtitle" && (
+              <span className="text-xs uppercase tracking-[0.45em] text-white/70">
+                {heroSubtitle}
+              </span>
+            )}
+            <h1 className="mt-4 text-3xl font-light leading-tight sm:text-5xl lg:text-6xl">
+              {heroTitle}
+            </h1>
+            {(() => {
+              const descriptionRaw = t("hero.description");
+              if (!descriptionRaw || descriptionRaw === "hero.description") {
+                return null;
+              }
+              const segments = descriptionRaw.split("\n");
+              return (
+                <p className="mt-4 text-sm leading-relaxed text-white/80 sm:text-base">
+                  {segments.map((line, index) => (
+                    <span key={index}>
+                      {line}
+                      {index < segments.length - 1 && <br />}
+                    </span>
+                  ))}
+                </p>
+              );
+            })()}
+
+            {heroHighlights.length > 0 && (
+              <div className="mt-6 flex flex-wrap gap-3">
+                {heroHighlights.map((highlight) => (
+                  <span
+                    key={highlight}
+                    className="rounded-full border border-white/30 bg-white/10 px-4 py-2 text-[11px] uppercase tracking-[0.35em] text-white/80"
+                  >
+                    {highlight}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button
+                size="lg"
+                className="bg-white text-stone-800 hover:bg-white/90"
+                onClick={() => openBookingSystem("hero-primary")}
+              >
+                {t("common.bookNow")}
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-white/30 bg-transparent text-white hover:bg-white/10"
+                asChild
+              >
+                <Link href={`/${locale}/rooms`}>{t("common.viewAllRooms")}</Link>
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+
+        <div className="pointer-events-auto flex flex-col items-center gap-4 px-4 pb-8 sm:flex-row sm:justify-between sm:px-10 lg:pl-72 lg:pr-12">
+          <div className="flex items-center gap-2">
+            {carouselImages.map((image, index) => (
+              <button
+                key={image.src}
+                type="button"
+                onClick={() => setCurrentIndex(index)}
+                className={`h-1.5 w-8 rounded-full transition-all ${
+                  currentIndex === index ? "bg-white" : "bg-white/40"
+                }`}
+                aria-label={`Slide ${index + 1}`}
+              />
+            ))}
           </div>
-        </motion.h1>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={goToPrevious}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white/20"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={goToNext}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white/20"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* 占位空间 - 确保页面有滚动高度 */}
-      <div className="h-screen"></div>
+      <div className="h-screen" />
     </section>
   );
 }

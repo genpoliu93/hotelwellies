@@ -441,7 +441,7 @@ export function ZenGallery() {
   return (
     <section
       id="gallery"
-      className="py-32 bg-stone-50 relative overflow-hidden"
+      className="py-20 sm:py-24 lg:py-32 bg-stone-50 relative overflow-hidden"
     >
       {/* 日式线条装饰背景 */}
       <div className="absolute inset-0 pointer-events-none">
@@ -468,7 +468,7 @@ export function ZenGallery() {
 
       <div className="container relative">
         {/* 日式标题区域 */}
-        <div className="text-center mb-16 relative">
+        <div className="text-center mb-12 sm:mb-14 lg:mb-16 relative">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -499,11 +499,11 @@ export function ZenGallery() {
                 {t("gallery.subtitle")}
               </h3>
 
-              <h2 className="text-5xl font-extralight text-stone-800 tracking-wider mb-8 leading-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extralight text-stone-800 tracking-wider mb-8 leading-tight">
                 {t("gallery.title")}
               </h2>
 
-              <p className="text-stone-600 font-light max-w-2xl mx-auto leading-loose text-lg">
+              <p className="text-stone-600 font-light max-w-2xl mx-auto leading-loose text-base sm:text-lg">
                 {t("gallery.description")}
               </p>
             </div>
@@ -526,14 +526,14 @@ export function ZenGallery() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
-          className="mb-12 bg-white/70 backdrop-blur-sm rounded-sm border border-stone-200 relative overflow-hidden"
+          className="mb-8 sm:mb-10 lg:mb-12 bg-white/70 backdrop-blur-sm rounded-sm border border-stone-200 relative overflow-hidden"
         >
           {/* 控制栏装饰线条 */}
           <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent opacity-60"></div>
           <div className="absolute bottom-0 left-1/3 right-1/3 h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent opacity-40"></div>
 
           {/* 控制栏内容 */}
-          <div className="p-6 space-y-6">
+          <div className="p-4 sm:p-6 space-y-5 sm:space-y-6">
             {/* 第一行：分类筛选 */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <span className="text-sm text-stone-700 font-light tracking-wide flex-shrink-0">
@@ -595,13 +595,13 @@ export function ZenGallery() {
         {/* 智能瀑布流布局 */}
         <div
           ref={gridRef}
-          className="flex justify-center"
+          className="flex justify-center w-full px-2 sm:px-4 lg:px-0"
           style={{ gap: gridConfigs[gridSize].gap }}
         >
           {imageColumns.map((column, columnIndex) => (
             <div
               key={columnIndex}
-              className="flex flex-col"
+              className="flex flex-col min-w-0"
               style={{
                 gap: gridConfigs[gridSize].gap,
                 width: `calc((100% - ${gridConfigs[gridSize].gap} * ${
@@ -666,7 +666,7 @@ export function ZenGallery() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-center mt-12"
+            className="text-center mt-10 sm:mt-12"
           >
             <Button
               onClick={loadMore}
@@ -686,7 +686,7 @@ export function ZenGallery() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
           viewport={{ once: true }}
-          className="mt-24 text-center"
+          className="mt-16 sm:mt-20 lg:mt-24 text-center"
         >
           <div className="flex items-center justify-center gap-6">
             <div className="w-20 h-px bg-gradient-to-r from-transparent to-stone-300"></div>

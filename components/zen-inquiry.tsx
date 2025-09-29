@@ -4,12 +4,7 @@ import { useState, useRef } from "react";
 import { useLanguage } from "@/lib/i18n/context";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import {
-  Phone,
-  Mail,
-  Calendar,
-  Clock
-} from "lucide-react";
+import { Phone, Mail, Calendar, Clock } from "lucide-react";
 import { openBookingSystem } from "@/lib/booking-utils";
 
 // 表单数据类型
@@ -38,7 +33,7 @@ export function ZenInquiry() {
   // 流动视差效果
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end start"],
   });
 
   const titleY = useTransform(scrollYProgress, [0, 1], ["0%", "-15%"]);
@@ -65,30 +60,40 @@ export function ZenInquiry() {
   });
 
   // 错误状态
-  const [errors, setErrors] = useState<Partial<Record<keyof InquiryFormData, string>>>({});
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof InquiryFormData, string>>
+  >({});
   const [showErrors, setShowErrors] = useState(false);
 
   // 生成邮件内容
   const generateEmailContent = () => {
-    const subject = encodeURIComponent(`Hotel Wellies - ${formData.inquiryType === "reservation" ? "ご予約" : "お問い合わせ"}`);
+    const subject = encodeURIComponent(
+      `Hotel Wellies - ${
+        formData.inquiryType === "reservation" ? "ご予約" : "お問い合わせ"
+      }`
+    );
 
     // 使用简洁清晰的格式，避免特殊字符在某些邮件客户端中显示问题
     let body = `Hotel Wellies お問い合わせ\n`;
     body += `=======================================\n\n`;
 
-    body += `お問い合わせ区分: ${formData.inquiryType === "reservation" ? "ご予約" : "一般お問い合わせ"}\n\n`;
+    body += `お問い合わせ区分: ${
+      formData.inquiryType === "reservation" ? "ご予約" : "一般お問い合わせ"
+    }\n\n`;
 
     if (formData.inquiryType === "reservation") {
       body += `--- ご予約詳細 ---\n`;
       body += `ご宿泊希望日: ${formData.checkInDate}\n`;
       body += `ご利用人数: 大人${formData.adults}名、子供${formData.children}名\n`;
       body += `チェックイン時間: ${formData.checkInTime}\n`;
-      body += `無料送迎: ${formData.shuttle === "needed" ? "送迎希望" : "不要"}\n\n`;
+      body += `無料送迎: ${
+        formData.shuttle === "needed" ? "送迎希望" : "不要"
+      }\n\n`;
     }
 
     body += `--- お客様情報 ---\n`;
     body += `お名前: ${formData.name}\n`;
-    if (locale === 'ja' && formData.kana) {
+    if (locale === "ja" && formData.kana) {
       body += `フリガナ: ${formData.kana}\n`;
     }
     body += `メールアドレス: ${formData.email}\n`;
@@ -106,7 +111,7 @@ export function ZenInquiry() {
 
     return {
       subject,
-      body: encodeURIComponent(body)
+      body: encodeURIComponent(body),
     };
   };
 
@@ -116,56 +121,56 @@ export function ZenInquiry() {
 
     // 基本必填字段验证
     if (!formData.name.trim()) {
-      newErrors.name = t('inquiry.form.validation.required');
+      newErrors.name = t("inquiry.form.validation.required");
     }
-    if (locale === 'ja' && !formData.kana.trim()) {
-      newErrors.kana = t('inquiry.form.validation.required');
+    if (locale === "ja" && !formData.kana.trim()) {
+      newErrors.kana = t("inquiry.form.validation.required");
     }
     if (!formData.email.trim()) {
-      newErrors.email = t('inquiry.form.validation.required');
+      newErrors.email = t("inquiry.form.validation.required");
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'メールアドレスの形式が正しくありません';
+      newErrors.email = "メールアドレスの形式が正しくありません";
     }
     if (!formData.emailConfirm.trim()) {
-      newErrors.emailConfirm = t('inquiry.form.validation.required');
+      newErrors.emailConfirm = t("inquiry.form.validation.required");
     } else if (formData.email !== formData.emailConfirm) {
-      newErrors.emailConfirm = t('inquiry.form.validation.emailMismatch');
+      newErrors.emailConfirm = t("inquiry.form.validation.emailMismatch");
     }
     if (!formData.phone.trim()) {
-      newErrors.phone = t('inquiry.form.validation.required');
+      newErrors.phone = t("inquiry.form.validation.required");
     }
     if (!formData.message.trim()) {
-      newErrors.message = t('inquiry.form.validation.required');
+      newErrors.message = t("inquiry.form.validation.required");
     }
 
     // 预约专用字段验证
     if (formData.inquiryType === "reservation") {
       if (!formData.checkInDate) {
-        newErrors.checkInDate = t('inquiry.form.validation.required');
+        newErrors.checkInDate = t("inquiry.form.validation.required");
       }
       if (!formData.adults) {
-        newErrors.adults = t('inquiry.form.validation.required');
+        newErrors.adults = t("inquiry.form.validation.required");
       }
       if (!formData.children) {
-        newErrors.children = t('inquiry.form.validation.required');
+        newErrors.children = t("inquiry.form.validation.required");
       }
       if (!formData.checkInTime.trim()) {
-        newErrors.checkInTime = t('inquiry.form.validation.required');
+        newErrors.checkInTime = t("inquiry.form.validation.required");
       }
       if (!formData.shuttle) {
-        newErrors.shuttle = t('inquiry.form.validation.required');
+        newErrors.shuttle = t("inquiry.form.validation.required");
       }
       if (!formData.reservationNote) {
-        newErrors.reservationNote = '予約確定に関する了承が必要です';
+        newErrors.reservationNote = "予約確定に関する了承が必要です";
       }
     }
 
     // 同意项验证
     if (!formData.privacyConsent) {
-      newErrors.privacyConsent = '個人情報の取り扱いに同意してください';
+      newErrors.privacyConsent = "個人情報の取り扱いに同意してください";
     }
     if (!formData.confirmationConsent) {
-      newErrors.confirmationConsent = '入力内容の確認が必要です';
+      newErrors.confirmationConsent = "入力内容の確認が必要です";
     }
 
     setErrors(newErrors);
@@ -180,9 +185,12 @@ export function ZenInquiry() {
     if (!validateForm()) {
       // 滚动到第一个错误字段
       setTimeout(() => {
-        const firstErrorField = document.querySelector('.error-field');
+        const firstErrorField = document.querySelector(".error-field");
         if (firstErrorField) {
-          firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          firstErrorField.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
         }
       }, 100);
       return;
@@ -197,7 +205,7 @@ export function ZenInquiry() {
   // 清除特定字段错误
   const clearFieldError = (fieldName: keyof InquiryFormData) => {
     if (errors[fieldName]) {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[fieldName];
         return newErrors;
@@ -206,16 +214,23 @@ export function ZenInquiry() {
   };
 
   // 获取字段样式
-  const getFieldClassName = (fieldName: keyof InquiryFormData, baseClassName: string) => {
+  const getFieldClassName = (
+    fieldName: keyof InquiryFormData,
+    baseClassName: string
+  ) => {
     const hasError = showErrors && errors[fieldName];
-    return `${baseClassName} ${hasError ? 'error-field border-red-400 focus:border-red-500 bg-red-50/30' : 'border-stone-200 focus:border-stone-400 bg-transparent'}`;
+    return `${baseClassName} ${
+      hasError
+        ? "error-field border-red-400 focus:border-red-500 bg-red-50/30"
+        : "border-stone-200 focus:border-stone-400 bg-transparent"
+    }`;
   };
 
   return (
     <section
       id="inquiry"
       ref={sectionRef}
-      className="relative py-32 bg-stone-50 overflow-hidden"
+      className="relative py-20 md:py-28 lg:py-32 bg-stone-50 overflow-hidden"
     >
       {/* 流线条装饰背景 */}
       <div className="absolute inset-0 pointer-events-none">
@@ -261,7 +276,7 @@ export function ZenInquiry() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
           viewport={{ once: true, margin: "-50px" }}
-          className="text-center mb-32"
+          className="text-center mb-16 sm:mb-24 lg:mb-32"
           style={{ y: titleY }}
         >
           {/* 流线式标题装饰 */}
@@ -283,17 +298,19 @@ export function ZenInquiry() {
             </div>
           </div>
 
-          <h2 className="text-5xl font-extralight text-stone-800 tracking-wider mb-8 leading-tight">
-            {t('inquiry.title')}
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extralight text-stone-800 tracking-wider mb-8 leading-tight">
+            {t("inquiry.title")}
           </h2>
 
-          <p className="text-stone-600 font-light max-w-2xl mx-auto leading-loose text-lg">
-            {t('inquiry.description').split('\n').map((line, index) => (
-              <span key={index}>
-                {index > 0 && <br />}
-                <span className="tracking-wide">{line}</span>
-              </span>
-            ))}
+          <p className="text-stone-600 font-light max-w-2xl mx-auto leading-loose text-base sm:text-lg">
+            {t("inquiry.description")
+              .split("\n")
+              .map((line, index) => (
+                <span key={index}>
+                  {index > 0 && <br />}
+                  <span className="tracking-wide">{line}</span>
+                </span>
+              ))}
           </p>
 
           {/* 底部流线装饰 */}
@@ -313,72 +330,84 @@ export function ZenInquiry() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true, margin: "-50px" }}
-          className="relative mb-32"
+          className="relative mb-16 sm:mb-24 lg:mb-32"
         >
           {/* 连接线装饰 */}
           <div className="absolute top-1/2 left-1/4 right-1/4 h-px bg-gradient-to-r from-stone-200 via-stone-300 to-stone-200 opacity-40 hidden md:block"></div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16">
             {/* 电话 */}
             <motion.div
-              className="text-center p-8 group relative"
+              className="text-center p-6 sm:p-8 group relative"
               whileHover={{ y: -4 }}
               transition={{ duration: 0.3 }}
             >
               {/* 背景流线装饰 */}
-              <div className="absolute inset-0 rounded-full border border-stone-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-110"></div>
+              <div className="absolute inset-0 rounded-full border border-stone-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-110 pointer-events-none"></div>
 
               <div className="w-16 h-16 bg-stone-800 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-stone-700 transition-all duration-300 relative z-10">
                 <Phone className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-stone-800 font-medium mb-3 tracking-wide">{t('inquiry.phone.title')}</h3>
+              <h3 className="text-stone-800 font-medium mb-3 tracking-wide">
+                {t("inquiry.phone.title")}
+              </h3>
               <a
-                href={`tel:${t('inquiry.phone.number')}`}
+                href={`tel:${t("inquiry.phone.number")}`}
                 className="text-xl font-light text-stone-700 hover:text-stone-900 transition-colors block mb-3"
               >
-                {t('inquiry.phone.number')}
+                {t("inquiry.phone.number")}
               </a>
               <div className="flex items-center justify-center gap-2 text-sm text-stone-500">
                 <Clock className="h-4 w-4" />
-                <span>{t('inquiry.phone.hours')}</span>
+                <span>{t("inquiry.phone.hours")}</span>
               </div>
             </motion.div>
 
             {/* 在线预订 */}
             <motion.div
-              className="text-center p-8 group relative"
+              className="text-center p-6 sm:p-8 group relative"
               whileHover={{ y: -4 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="absolute inset-0 rounded-full border border-stone-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-110"></div>
+              <div className="absolute inset-0 rounded-full border border-stone-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-110 pointer-events-none"></div>
 
               <div className="w-16 h-16 bg-stone-800 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-stone-700 transition-all duration-300 relative z-10">
                 <Calendar className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-stone-800 font-medium mb-4 tracking-wide">{t('inquiry.online.title')}</h3>
-              <p className="text-stone-600 text-sm mb-4">{t('inquiry.online.description')}</p>
+              <h3 className="text-stone-800 font-medium mb-4 tracking-wide">
+                {t("inquiry.online.title")}
+              </h3>
+              <p className="text-stone-600 text-sm mb-4">
+                {t("inquiry.online.description")}
+              </p>
               <Button
-                onClick={() => openBookingSystem('inquiry')}
-                className="bg-stone-800 hover:bg-stone-700 text-white font-light px-8 py-2 text-sm tracking-wider transition-all duration-300"
+                onClick={() => openBookingSystem("inquiry")}
+                className="bg-stone-800 hover:bg-stone-700 text-white font-light px-8 py-2 text-sm tracking-wider transition-all duration-300 relative z-20"
               >
-                {t('inquiry.online.button')}
+                {t("inquiry.online.button")}
               </Button>
             </motion.div>
 
             {/* 邮件 */}
             <motion.div
-              className="text-center p-8 group relative"
+              className="text-center p-6 sm:p-8 group relative"
               whileHover={{ y: -4 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="absolute inset-0 rounded-full border border-stone-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-110"></div>
+              <div className="absolute inset-0 rounded-full border border-stone-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 scale-110 pointer-events-none"></div>
 
               <div className="w-16 h-16 bg-stone-800 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-stone-700 transition-all duration-300 relative z-10">
                 <Mail className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-stone-800 font-medium mb-3 tracking-wide">{t('inquiry.email.title')}</h3>
-              <p className="text-stone-600 text-sm mb-2">{t('inquiry.email.description')}</p>
-              <p className="text-stone-500 text-xs">{t('inquiry.email.note')}</p>
+              <h3 className="text-stone-800 font-medium mb-3 tracking-wide">
+                {t("inquiry.email.title")}
+              </h3>
+              <p className="text-stone-600 text-sm mb-2">
+                {t("inquiry.email.description")}
+              </p>
+              <p className="text-stone-500 text-xs">
+                {t("inquiry.email.note")}
+              </p>
             </motion.div>
           </div>
         </motion.div>
@@ -389,7 +418,7 @@ export function ZenInquiry() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
           viewport={{ once: true, margin: "-50px" }}
-          className="max-w-6xl mx-auto relative"
+          className="max-w-6xl mx-auto relative px-4 sm:px-6 lg:px-0"
         >
           {/* 表单背景装饰线条 */}
           <div className="absolute -top-8 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent opacity-60"></div>
@@ -398,17 +427,23 @@ export function ZenInquiry() {
             {/* 表单头部装饰 */}
             <div className="h-1 bg-gradient-to-r from-stone-300 via-stone-400 to-stone-300"></div>
 
-            <div className="p-20">
-              <form onSubmit={handleSubmit} className="space-y-12">
+            <div className="p-6 sm:p-10 lg:p-20">
+              <form
+                onSubmit={handleSubmit}
+                className="space-y-10 md:space-y-12"
+              >
                 {/* お問い合わせ区分 */}
                 <div className="space-y-5">
                   <label className="block text-stone-800 font-medium text-sm tracking-wider uppercase">
-                    {t('inquiry.form.inquiryType')} *
+                    {t("inquiry.form.inquiryType")} *
                   </label>
-                  <div className="flex gap-8">
+                  <div className="flex flex-wrap gap-4 sm:gap-8">
                     {[
-                      { value: "reservation", label: t('inquiry.form.reservation') },
-                      { value: "other", label: t('inquiry.form.other') }
+                      {
+                        value: "reservation",
+                        label: t("inquiry.form.reservation"),
+                      },
+                      { value: "other", label: t("inquiry.form.other") },
                     ].map((option) => (
                       <motion.label
                         key={option.value}
@@ -421,10 +456,17 @@ export function ZenInquiry() {
                           name="inquiryType"
                           value={option.value}
                           checked={formData.inquiryType === option.value}
-                          onChange={(e) => setFormData({...formData, inquiryType: e.target.value as any})}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              inquiryType: e.target.value as any,
+                            })
+                          }
                           className="w-4 h-4 text-stone-800 border-stone-300 focus:ring-stone-500 focus:ring-1"
                         />
-                        <span className="text-stone-700 font-light tracking-wide group-hover:text-stone-900 transition-colors">{option.label}</span>
+                        <span className="text-stone-700 font-light tracking-wide group-hover:text-stone-900 transition-colors">
+                          {option.label}
+                        </span>
                       </motion.label>
                     ))}
                   </div>
@@ -435,113 +477,160 @@ export function ZenInquiry() {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
-                    className="space-y-12 pt-12 border-t border-stone-200 relative"
+                    className="space-y-10 md:space-y-12 pt-10 md:pt-12 border-t border-stone-200 relative"
                   >
                     {/* 装饰线 */}
                     <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-stone-200 to-transparent"></div>
 
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                       <div className="space-y-3">
                         <label className="block text-stone-800 font-medium text-sm tracking-wider uppercase">
-                          {t('inquiry.form.checkInDate')} *
+                          {t("inquiry.form.checkInDate")} *
                         </label>
                         <div>
                           <input
                             type="date"
                             value={formData.checkInDate}
                             onChange={(e) => {
-                              setFormData({...formData, checkInDate: e.target.value});
-                              clearFieldError('checkInDate');
+                              setFormData({
+                                ...formData,
+                                checkInDate: e.target.value,
+                              });
+                              clearFieldError("checkInDate");
                             }}
-                            className={getFieldClassName('checkInDate', 'w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors')}
+                            className={getFieldClassName(
+                              "checkInDate",
+                              "w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors"
+                            )}
                           />
                           {showErrors && errors.checkInDate && (
-                            <p className="text-red-500 text-xs mt-2 font-light">{errors.checkInDate}</p>
+                            <p className="text-red-500 text-xs mt-2 font-light">
+                              {errors.checkInDate}
+                            </p>
                           )}
                         </div>
                       </div>
 
                       <div className="space-y-3">
                         <label className="block text-stone-800 font-medium text-sm tracking-wider uppercase">
-                          {t('inquiry.form.checkInTime')} *
+                          {t("inquiry.form.checkInTime")} *
                         </label>
                         <div>
                           <input
                             type="text"
-                            placeholder={t('inquiry.form.checkInTimePlaceholder')}
+                            placeholder={t(
+                              "inquiry.form.checkInTimePlaceholder"
+                            )}
                             value={formData.checkInTime}
                             onChange={(e) => {
-                              setFormData({...formData, checkInTime: e.target.value});
-                              clearFieldError('checkInTime');
+                              setFormData({
+                                ...formData,
+                                checkInTime: e.target.value,
+                              });
+                              clearFieldError("checkInTime");
                             }}
-                            className={getFieldClassName('checkInTime', 'w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light placeholder:text-stone-400 transition-colors')}
+                            className={getFieldClassName(
+                              "checkInTime",
+                              "w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light placeholder:text-stone-400 transition-colors"
+                            )}
                           />
                           {showErrors && errors.checkInTime && (
-                            <p className="text-red-500 text-xs mt-2 font-light">{errors.checkInTime}</p>
+                            <p className="text-red-500 text-xs mt-2 font-light">
+                              {errors.checkInTime}
+                            </p>
                           )}
                         </div>
                       </div>
 
                       <div className="space-y-3">
                         <label className="block text-stone-800 font-medium text-sm tracking-wider uppercase">
-                          {t('inquiry.form.adults')} *
+                          {t("inquiry.form.adults")} *
                         </label>
                         <div>
                           <select
                             value={formData.adults}
                             onChange={(e) => {
-                              setFormData({...formData, adults: e.target.value});
-                              clearFieldError('adults');
+                              setFormData({
+                                ...formData,
+                                adults: e.target.value,
+                              });
+                              clearFieldError("adults");
                             }}
-                            className={getFieldClassName('adults', 'w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors')}
+                            className={getFieldClassName(
+                              "adults",
+                              "w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors"
+                            )}
                           >
-                          <option value="">{t('inquiry.form.selectOption')}</option>
-                            {[1,2,3,4].map(num => (
-                              <option key={num} value={num}>{num}名</option>
+                            <option value="">
+                              {t("inquiry.form.selectOption")}
+                            </option>
+                            {[1, 2, 3, 4].map((num) => (
+                              <option key={num} value={num}>
+                                {num}名
+                              </option>
                             ))}
                           </select>
                           {showErrors && errors.adults && (
-                            <p className="text-red-500 text-xs mt-2 font-light">{errors.adults}</p>
+                            <p className="text-red-500 text-xs mt-2 font-light">
+                              {errors.adults}
+                            </p>
                           )}
                         </div>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                       <div className="space-y-3">
                         <label className="block text-stone-800 font-medium text-sm tracking-wider uppercase">
-                          {t('inquiry.form.children')} *
+                          {t("inquiry.form.children")} *
                         </label>
                         <div>
                           <select
                             value={formData.children}
                             onChange={(e) => {
-                              setFormData({...formData, children: e.target.value});
-                              clearFieldError('children');
+                              setFormData({
+                                ...formData,
+                                children: e.target.value,
+                              });
+                              clearFieldError("children");
                             }}
-                            className={getFieldClassName('children', 'w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors')}
+                            className={getFieldClassName(
+                              "children",
+                              "w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors"
+                            )}
                           >
-                          <option value="">{t('inquiry.form.selectOption')}</option>
-                            {[0,1,2,3,4].map(num => (
-                              <option key={num} value={num}>{num}名</option>
+                            <option value="">
+                              {t("inquiry.form.selectOption")}
+                            </option>
+                            {[0, 1, 2, 3, 4].map((num) => (
+                              <option key={num} value={num}>
+                                {num}名
+                              </option>
                             ))}
                           </select>
                           {showErrors && errors.children && (
-                            <p className="text-red-500 text-xs mt-2 font-light">{errors.children}</p>
+                            <p className="text-red-500 text-xs mt-2 font-light">
+                              {errors.children}
+                            </p>
                           )}
                         </div>
                       </div>
 
                       <div className="space-y-5 md:col-span-2">
                         <label className="block text-stone-800 font-medium text-sm tracking-wider uppercase">
-                          {t('inquiry.form.shuttle')} *
+                          {t("inquiry.form.shuttle")} *
                         </label>
                         <div>
                           <div className="flex gap-8">
                             {[
-                              { value: "not_needed", label: t('inquiry.form.shuttleNotNeeded') },
-                              { value: "needed", label: t('inquiry.form.shuttleNeeded') }
+                              {
+                                value: "not_needed",
+                                label: t("inquiry.form.shuttleNotNeeded"),
+                              },
+                              {
+                                value: "needed",
+                                label: t("inquiry.form.shuttleNeeded"),
+                              },
                             ].map((option) => (
                               <motion.label
                                 key={option.value}
@@ -555,17 +644,24 @@ export function ZenInquiry() {
                                   value={option.value}
                                   checked={formData.shuttle === option.value}
                                   onChange={(e) => {
-                                    setFormData({...formData, shuttle: e.target.value as any});
-                                    clearFieldError('shuttle');
+                                    setFormData({
+                                      ...formData,
+                                      shuttle: e.target.value as any,
+                                    });
+                                    clearFieldError("shuttle");
                                   }}
                                   className="w-4 h-4 text-stone-800 border-stone-300 focus:ring-stone-500 focus:ring-1"
                                 />
-                                <span className="text-stone-700 font-light tracking-wide group-hover:text-stone-900 transition-colors">{option.label}</span>
+                                <span className="text-stone-700 font-light tracking-wide group-hover:text-stone-900 transition-colors">
+                                  {option.label}
+                                </span>
                               </motion.label>
                             ))}
                           </div>
                           {showErrors && errors.shuttle && (
-                            <p className="text-red-500 text-xs mt-2 font-light">{errors.shuttle}</p>
+                            <p className="text-red-500 text-xs mt-2 font-light">
+                              {errors.shuttle}
+                            </p>
                           )}
                         </div>
                       </div>
@@ -574,44 +670,54 @@ export function ZenInquiry() {
                 )}
 
                 {/* 基本情報 */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                   <div className="space-y-3">
                     <label className="block text-stone-800 font-medium text-sm tracking-wider uppercase">
-                      {t('inquiry.form.name')} *
+                      {t("inquiry.form.name")} *
                     </label>
                     <div>
                       <input
                         type="text"
                         value={formData.name}
                         onChange={(e) => {
-                          setFormData({...formData, name: e.target.value});
-                          clearFieldError('name');
+                          setFormData({ ...formData, name: e.target.value });
+                          clearFieldError("name");
                         }}
-                        className={getFieldClassName('name', 'w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors')}
+                        className={getFieldClassName(
+                          "name",
+                          "w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors"
+                        )}
                       />
                       {showErrors && errors.name && (
-                        <p className="text-red-500 text-xs mt-2 font-light">{errors.name}</p>
+                        <p className="text-red-500 text-xs mt-2 font-light">
+                          {errors.name}
+                        </p>
                       )}
                     </div>
                   </div>
 
-                  {locale === 'ja' && (
+                  {locale === "ja" && (
                     <div className="space-y-3">
                       <label className="block text-stone-800 font-medium text-sm tracking-wider uppercase">
-                        {t('inquiry.form.kana')} *
+                        {t("inquiry.form.kana")} *
                       </label>
                       <div>
                         <input
                           type="text"
                           value={formData.kana}
                           onChange={(e) => {
-                            setFormData({...formData, kana: e.target.value});
-                            clearFieldError('kana');
+                            setFormData({ ...formData, kana: e.target.value });
+                            clearFieldError("kana");
                           }}
-                          className={getFieldClassName('kana', 'w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors')}
+                          className={getFieldClassName(
+                            "kana",
+                            "w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors"
+                          )}
                         />
                         {showErrors && errors.kana && (
-                          <p className="text-red-500 text-xs mt-2 font-light">{errors.kana}</p>
+                          <p className="text-red-500 text-xs mt-2 font-light">
+                            {errors.kana}
+                          </p>
                         )}
                       </div>
                     </div>
@@ -619,87 +725,109 @@ export function ZenInquiry() {
 
                   <div className="space-y-3">
                     <label className="block text-stone-800 font-medium text-sm tracking-wider uppercase">
-                      {t('inquiry.form.phone')} *
+                      {t("inquiry.form.phone")} *
                     </label>
                     <div>
                       <input
                         type="tel"
                         value={formData.phone}
                         onChange={(e) => {
-                          setFormData({...formData, phone: e.target.value});
-                          clearFieldError('phone');
+                          setFormData({ ...formData, phone: e.target.value });
+                          clearFieldError("phone");
                         }}
-                        className={getFieldClassName('phone', 'w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors')}
+                        className={getFieldClassName(
+                          "phone",
+                          "w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors"
+                        )}
                       />
                       {showErrors && errors.phone && (
-                        <p className="text-red-500 text-xs mt-2 font-light">{errors.phone}</p>
+                        <p className="text-red-500 text-xs mt-2 font-light">
+                          {errors.phone}
+                        </p>
                       )}
                     </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                   <div className="space-y-3">
                     <label className="block text-stone-800 font-medium text-sm tracking-wider uppercase">
-                      {t('inquiry.form.email')} *
+                      {t("inquiry.form.email")} *
                     </label>
                     <div>
                       <input
                         type="email"
                         value={formData.email}
                         onChange={(e) => {
-                          setFormData({...formData, email: e.target.value});
-                          clearFieldError('email');
+                          setFormData({ ...formData, email: e.target.value });
+                          clearFieldError("email");
                         }}
-                        className={getFieldClassName('email', 'w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors')}
+                        className={getFieldClassName(
+                          "email",
+                          "w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors"
+                        )}
                       />
                       {showErrors && errors.email && (
-                        <p className="text-red-500 text-xs mt-2 font-light">{errors.email}</p>
+                        <p className="text-red-500 text-xs mt-2 font-light">
+                          {errors.email}
+                        </p>
                       )}
                     </div>
                   </div>
 
                   <div className="space-y-3">
                     <label className="block text-stone-800 font-medium text-sm tracking-wider uppercase">
-                      {t('inquiry.form.emailConfirm')} *
+                      {t("inquiry.form.emailConfirm")} *
                     </label>
                     <div>
                       <input
                         type="email"
                         value={formData.emailConfirm}
                         onChange={(e) => {
-                          setFormData({...formData, emailConfirm: e.target.value});
-                          clearFieldError('emailConfirm');
+                          setFormData({
+                            ...formData,
+                            emailConfirm: e.target.value,
+                          });
+                          clearFieldError("emailConfirm");
                         }}
-                        className={getFieldClassName('emailConfirm', 'w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors')}
+                        className={getFieldClassName(
+                          "emailConfirm",
+                          "w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light transition-colors"
+                        )}
                       />
                       {showErrors && errors.emailConfirm && (
-                        <p className="text-red-500 text-xs mt-2 font-light">{errors.emailConfirm}</p>
+                        <p className="text-red-500 text-xs mt-2 font-light">
+                          {errors.emailConfirm}
+                        </p>
                       )}
                     </div>
                   </div>
 
                   <div className="space-y-3">
                     <label className="block text-stone-800 font-medium text-sm tracking-wider uppercase">
-                      {t('inquiry.form.message')} *
+                      {t("inquiry.form.message")} *
                     </label>
                     <div>
                       <textarea
                         rows={4}
                         value={formData.message}
                         onChange={(e) => {
-                          setFormData({...formData, message: e.target.value});
-                          clearFieldError('message');
+                          setFormData({ ...formData, message: e.target.value });
+                          clearFieldError("message");
                         }}
-                        className={getFieldClassName('message', 'w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light resize-none transition-colors')}
+                        className={getFieldClassName(
+                          "message",
+                          "w-full px-0 py-4 border-0 border-b focus:ring-0 text-stone-800 font-light resize-none transition-colors"
+                        )}
                       />
                       {showErrors && errors.message && (
-                        <p className="text-red-500 text-xs mt-2 font-light">{errors.message}</p>
+                        <p className="text-red-500 text-xs mt-2 font-light">
+                          {errors.message}
+                        </p>
                       )}
                     </div>
                   </div>
                 </div>
-
 
                 {/* 同意チェックボックス */}
                 <div className="space-y-5 pt-10 border-t border-stone-200 relative">
@@ -711,17 +839,22 @@ export function ZenInquiry() {
                         type="checkbox"
                         checked={formData.privacyConsent}
                         onChange={(e) => {
-                          setFormData({...formData, privacyConsent: e.target.checked});
-                          clearFieldError('privacyConsent');
+                          setFormData({
+                            ...formData,
+                            privacyConsent: e.target.checked,
+                          });
+                          clearFieldError("privacyConsent");
                         }}
                         className="mt-1 w-4 h-4 text-stone-800 border-stone-300 rounded-sm focus:ring-stone-500 focus:ring-1"
                       />
                       <span className="text-sm text-stone-700 font-light leading-relaxed group-hover:text-stone-900 transition-colors">
-                        {t('inquiry.form.privacyConsent')}
+                        {t("inquiry.form.privacyConsent")}
                       </span>
                     </label>
                     {showErrors && errors.privacyConsent && (
-                      <p className="text-red-500 text-xs mt-2 font-light ml-8">{errors.privacyConsent}</p>
+                      <p className="text-red-500 text-xs mt-2 font-light ml-8">
+                        {errors.privacyConsent}
+                      </p>
                     )}
                   </div>
 
@@ -731,17 +864,22 @@ export function ZenInquiry() {
                         type="checkbox"
                         checked={formData.confirmationConsent}
                         onChange={(e) => {
-                          setFormData({...formData, confirmationConsent: e.target.checked});
-                          clearFieldError('confirmationConsent');
+                          setFormData({
+                            ...formData,
+                            confirmationConsent: e.target.checked,
+                          });
+                          clearFieldError("confirmationConsent");
                         }}
                         className="mt-1 w-4 h-4 text-stone-800 border-stone-300 rounded-sm focus:ring-stone-500 focus:ring-1"
                       />
                       <span className="text-sm text-stone-700 font-light leading-relaxed group-hover:text-stone-900 transition-colors">
-                        {t('inquiry.form.confirmationConsent')}
+                        {t("inquiry.form.confirmationConsent")}
                       </span>
                     </label>
                     {showErrors && errors.confirmationConsent && (
-                      <p className="text-red-500 text-xs mt-2 font-light ml-8">{errors.confirmationConsent}</p>
+                      <p className="text-red-500 text-xs mt-2 font-light ml-8">
+                        {errors.confirmationConsent}
+                      </p>
                     )}
                   </div>
 
@@ -752,17 +890,22 @@ export function ZenInquiry() {
                           type="checkbox"
                           checked={formData.reservationNote}
                           onChange={(e) => {
-                            setFormData({...formData, reservationNote: e.target.checked});
-                            clearFieldError('reservationNote');
+                            setFormData({
+                              ...formData,
+                              reservationNote: e.target.checked,
+                            });
+                            clearFieldError("reservationNote");
                           }}
                           className="mt-1 w-4 h-4 text-stone-800 border-stone-300 rounded-sm focus:ring-stone-500 focus:ring-1"
                         />
                         <span className="text-sm text-stone-700 font-light leading-relaxed group-hover:text-stone-900 transition-colors">
-                          {t('inquiry.form.reservationNote')}
+                          {t("inquiry.form.reservationNote")}
                         </span>
                       </label>
                       {showErrors && errors.reservationNote && (
-                        <p className="text-red-500 text-xs mt-2 font-light ml-8">{errors.reservationNote}</p>
+                        <p className="text-red-500 text-xs mt-2 font-light ml-8">
+                          {errors.reservationNote}
+                        </p>
                       )}
                     </div>
                   )}
@@ -772,22 +915,19 @@ export function ZenInquiry() {
                 <div className="pt-12 text-center relative">
                   <div className="absolute top-0 left-1/3 right-1/3 h-px bg-gradient-to-r from-transparent via-stone-300 to-transparent"></div>
 
-                  <motion.div
-                    whileHover={{ y: -2 }}
-                    whileTap={{ y: 0 }}
-                  >
+                  <motion.div whileHover={{ y: -2 }} whileTap={{ y: 0 }}>
                     <Button
                       type="submit"
                       className="bg-stone-800 hover:bg-stone-700 text-white font-light px-16 py-4 text-sm tracking-widest uppercase transition-all duration-300 shadow-lg hover:shadow-xl"
                     >
-                      {t('inquiry.form.submit')}
+                      {t("inquiry.form.submit")}
                     </Button>
                   </motion.div>
                 </div>
 
                 <div className="text-center pt-6">
                   <p className="text-xs text-stone-500 font-light tracking-wide">
-                    {t('inquiry.form.required')}
+                    {t("inquiry.form.required")}
                   </p>
                 </div>
               </form>
