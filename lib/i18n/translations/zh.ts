@@ -162,7 +162,7 @@ export const zh = {
     phoneTitle: "电话",
     emailTitle: "邮箱",
     hoursTitle: "营业时间",
-    hours: "9:00 - 19:00",
+    hours: "9:00 - 22:00",
     sendMessage: "发送消息",
     name: "姓名",
     subject: "主题",
@@ -617,8 +617,8 @@ export const zh = {
     description: "请通过电话、在线预订\n或联系表单与我们联系",
     phone: {
       title: "电话",
-      number: "0287-74-5297",
-      hours: "9:00 - 19:00",
+      number: "0267-46-1670",
+      hours: "9:00 - 22:00",
     },
     online: {
       title: "在线预订",

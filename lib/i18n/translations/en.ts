@@ -171,7 +171,7 @@ export const en = {
     emailTitle: "Email Us",
     phoneTitle: "Call Us",
     hoursTitle: "Business Hours",
-    hours: "9:00 - 19:00",
+    hours: "9:00 - 22:00",
     subtitle: "For any questions or needs, please feel free to contact us.",
     address:
       "Address 2350-160 Nagakura, Karuizawa, Kitasaku District, Nagano 389-0111",
@@ -649,8 +649,8 @@ export const en = {
       "Feel free to contact us by phone, online booking,\nor through our contact form",
     phone: {
       title: "Phone",
-      number: "0287-74-5297",
-      hours: "9:00 - 19:00",
+      number: "0267-46-1670",
+      hours: "9:00 - 22:00",
     },
     online: {
       title: "Online Booking",

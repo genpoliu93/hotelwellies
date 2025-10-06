@@ -138,19 +138,9 @@ export function ZenFeatures() {
               </h2>
             </div>
 
-            {/* 副标题 */}
+            {/* 描述内容 */}
             <div className="max-w-md lg:max-w-none">
               <p className="text-stone-600 font-light leading-relaxed text-base">
-                お客様の滞在をより思い出深く
-                <br className="hidden lg:block" />
-                快適にするために、
-                <br className="hidden lg:block" />－ 丁寧に企画されたサービス －
-              </p>
-            </div>
-
-            {/* 描述内容 */}
-            <div className="w-fit ml-auto">
-              <p className="text-stone-700 font-light leading-relaxed text-sm max-w-lg">
                 {t("services.description")}
               </p>
             </div>
