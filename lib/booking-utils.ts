@@ -40,15 +40,8 @@ export const openBookingSystem = (
     const fullUrl = `${url}?${urlParams.toString()}`;
 
     // 安全地打开新窗口
-    const newWindow = window.open(fullUrl, "_blank", "noopener,noreferrer");
-
-    // 检查弹窗是否被阻止
-    if (!newWindow || newWindow.closed) {
-      console.warn(
-        "Booking system popup was blocked. Redirecting in current window."
-      );
-      window.location.href = fullUrl;
-    }
+    // 注意：使用 noopener 会导致 window.open 返回 null，但这是正常的安全行为
+    window.open(fullUrl, "_blank", "noopener,noreferrer");
 
     // 可选：发送跟踪事件（如果有分析工具）
     if (typeof window !== "undefined" && "gtag" in window) {
@@ -60,8 +53,8 @@ export const openBookingSystem = (
     }
   } catch (error) {
     console.error("Failed to open booking system:", error);
-    // 降级处理：直接跳转到预订页面
-    window.location.href = BOOKING_SYSTEM_URL;
+    // 如果打开新窗口失败，静默失败而不是跳转原窗口
+    // 用户可以通过其他方式访问预订系统
   }
 };
 
