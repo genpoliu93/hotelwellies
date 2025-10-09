@@ -44,7 +44,7 @@ export function FloatingBookingButton() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="fixed top-4 right-4 z-50 lg:right-8"
+          className="fixed top-20 right-4 z-50 lg:top-4 lg:right-8"
           style={{ zIndex: Z_INDEX.MODAL }}
         >
           <Button
