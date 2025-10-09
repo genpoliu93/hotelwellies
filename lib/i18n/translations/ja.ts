@@ -135,6 +135,35 @@ export const ja = {
     perNight: "/ 一泊",
     viewDetails: "詳細を見る",
     ...zenTextKeysJA.rooms,
+    new: {
+      deluxeDouble: "デラックス　ダブルルーム",
+      deluxeDoubleDescription:
+        "モダンな設備と快適なダブルベッドを備えた広々としたデラックスルーム。カップルに最適な贅沢な空間です。",
+      superiorDouble: "スーペリア　ダブルルーム",
+      superiorDoubleDescription:
+        "上質な快適さとスタイリッシュな内装を備えたダブルルーム。リラックスした滞在に理想的です。",
+      economyDouble: "エコノミー　ダブルルーム",
+      economyDoubleDescription:
+        "快適で予算に優しいダブルルーム。必要な設備を備えた快適な滞在をお約束します。",
+      economyTwin: "エコノミー　ツインルーム",
+      economyTwinDescription:
+        "2つのシングルベッドを備えた実用的なツインルーム。ご友人や同僚との旅行に最適です。",
+      superiorTwin: "スーペリア　ツインルーム",
+      superiorTwinDescription:
+        "2つの快適なベッドとアップグレードされた設備を備えたプレミアムツインルーム。",
+      deluxeTriple: "デラックス　トリプルルーム",
+      deluxeTripleDescription:
+        "3名様までご利用いただける広々としたデラックスルーム。優雅な内装と十分なスペースを提供します。",
+      tripleRoom1F: "トリプルルーム（1階）",
+      tripleRoom1FDescription:
+        "アクセスしやすい1階のトリプルルーム。ご家族や少人数グループに最適です。",
+      familyRoom1F: "ファミリールーム（1階）",
+      familyRoom1FDescription:
+        "1階の広々としたファミリールーム。ご家族全員が快適に過ごせるよう設計されています。",
+      familyRoom2F: "ファミリールーム（2階）",
+      familyRoom2FDescription:
+        "2階の広々としたファミリールーム。静かな環境でご家族全員がリラックスできます。",
+    },
   },
   testimonials: {
     title: "お客様の声",

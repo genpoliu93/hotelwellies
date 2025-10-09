@@ -9,114 +9,180 @@ import {
   Camera,
   Bed,
   Users,
-  Coffee,
+  Home,
   Eye,
   ArrowLeft,
   ArrowRight,
   Loader2,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-// 房间数据配置
-const roomData = {
-  deluxe: {
-    nameKey: "rooms.deluxeRoom",
-    descriptionKey: "rooms.deluxeRoomDescription",
+// 新房型数据配置
+const newRoomData = {
+  deluxeDouble: {
+    nameKey: "rooms.new.deluxeDouble",
+    descriptionKey: "rooms.new.deluxeDoubleDescription",
     japaneseLabel: "デラックス　ダブルルーム",
     gradientFrom: "from-purple-500/80",
     gradientTo: "to-pink-600/80",
     iconBg: "bg-purple-500/20",
-    icon: <Bed className="h-6 w-6 text-white" />,
+    icon: <Sparkles className="h-6 w-6 text-white" />,
     images: [
-      "/images/room/豪华双人间 deluxe room/698005445.jpg",
-      "/images/room/豪华双人间 deluxe room/698005446.jpg",
-      "/images/room/豪华双人间 deluxe room/698005447.jpg",
-      "/images/room/豪华双人间 deluxe room/698005448.jpg",
-      "/images/room/豪华双人间 deluxe room/698005449.jpg",
-      "/images/room/豪华双人间 deluxe room/698005450.jpg",
-      "/images/room/豪华双人间 deluxe room/698005451.jpg",
-      "/images/room/豪华双人间 deluxe room/698005452.jpg",
-      "/images/room/豪华双人间 deluxe room/698005453.jpg",
-      "/images/room/豪华双人间 deluxe room/698005494.jpg",
+      "/images/newroompic/Deluxe Double Room/HXS_0526.jpg",
+      "/images/newroompic/Deluxe Double Room/HXS_0527.jpg",
+      "/images/newroompic/Deluxe Double Room/HXS_0530.jpg",
+      "/images/newroompic/Deluxe Double Room/HXS_0531.jpg",
+      "/images/newroompic/Deluxe Double Room/HXS_0533.jpg",
+      "/images/newroompic/Deluxe Double Room/HXS_0535.jpg",
+      "/images/newroompic/Deluxe Double Room/HXS_0536.jpg",
+      "/images/newroompic/Deluxe Double Room/HXS_0538.jpg",
+      "/images/newroompic/Deluxe Double Room/HXS_0539.jpg",
     ],
   },
-  family: {
-    nameKey: "rooms.familyRoom",
-    descriptionKey: "rooms.familyRoomDescription",
-    japaneseLabel: "ファミリールーム",
-    gradientFrom: "from-green-500/80",
-    gradientTo: "to-emerald-600/80",
-    iconBg: "bg-green-500/20",
-    icon: <Users className="h-6 w-6 text-white" />,
-    images: [
-      "/images/room/家庭间 family room/227463919.jpg",
-      "/images/room/家庭间 family room/227529317.jpg",
-      "/images/room/家庭间 family room/696369374.jpg",
-      "/images/room/家庭间 family room/696379363.jpg",
-      "/images/room/家庭间 family room/696379467.jpg",
-      "/images/room/家庭间 family room/696379480.jpg",
-    ],
-  },
-  standardTwin: {
-    nameKey: "rooms.standardTwin",
-    descriptionKey: "rooms.standardTwinDescription",
-    japaneseLabel: "スタンダードツインルーム",
+  superiorDouble: {
+    nameKey: "rooms.new.superiorDouble",
+    descriptionKey: "rooms.new.superiorDoubleDescription",
+    japaneseLabel: "スーペリア　ダブルルーム",
     gradientFrom: "from-blue-500/80",
-    gradientTo: "to-cyan-600/80",
+    gradientTo: "to-indigo-600/80",
     iconBg: "bg-blue-500/20",
     icon: <Bed className="h-6 w-6 text-white" />,
     images: [
-      "/images/room/标准双床间 standard twin/696481372.jpg",
-      "/images/room/标准双床间 standard twin/696481625.jpg",
-      "/images/room/标准双床间 standard twin/696502147.jpg",
-      "/images/room/标准双床间 standard twin/696502274.jpg",
-      "/images/room/标准双床间 standard twin/696502654.jpg",
-      "/images/room/标准双床间 standard twin/696502902.jpg",
-      "/images/room/标准双床间 standard twin/696515704.jpg",
-      "/images/room/标准双床间 standard twin/696516294.jpg",
-      "/images/room/标准双床间 standard twin/698007219.jpg",
-      "/images/room/标准双床间 standard twin/698007221.jpg",
-      "/images/room/标准双床间 standard twin/698007223.jpg",
-      "/images/room/标准双床间 standard twin/698007224.jpg",
+      "/images/newroompic/Superior Double Room/HXS_0561.jpg",
+      "/images/newroompic/Superior Double Room/HXS_0563.jpg",
+      "/images/newroompic/Superior Double Room/HXS_0565.jpg",
+      "/images/newroompic/Superior Double Room/HXS_0569.jpg",
+      "/images/newroompic/Superior Double Room/HXS_0590.jpg",
+      "/images/newroompic/Superior Double Room/HXS_0693.jpg",
+      "/images/newroompic/Superior Double Room/HXS_0694.jpg",
+      "/images/newroompic/Superior Double Room/HXS_0695.jpg",
+      "/images/newroompic/Superior Double Room/HXS_0699.jpg",
+      "/images/newroompic/Superior Double Room/HXS_0714.jpg",
     ],
   },
-  mountainDouble: {
-    nameKey: "rooms.mountainDouble",
-    descriptionKey: "rooms.mountainDoubleDescription",
-    japaneseLabel: "山景スタンダードダブルルーム",
+  economyDouble: {
+    nameKey: "rooms.new.economyDouble",
+    descriptionKey: "rooms.new.economyDoubleDescription",
+    japaneseLabel: "エコノミー　ダブルルーム",
+    gradientFrom: "from-green-500/80",
+    gradientTo: "to-teal-600/80",
+    iconBg: "bg-green-500/20",
+    icon: <Home className="h-6 w-6 text-white" />,
+    images: [
+      "/images/newroompic/Economy Double Room/HXS_0591.jpg",
+      "/images/newroompic/Economy Double Room/HXS_0592.jpg",
+      "/images/newroompic/Economy Double Room/HXS_0593.jpg",
+      "/images/newroompic/Economy Double Room/HXS_0595.jpg",
+      "/images/newroompic/Economy Double Room/HXS_0608.jpg",
+    ],
+  },
+  economyTwin: {
+    nameKey: "rooms.new.economyTwin",
+    descriptionKey: "rooms.new.economyTwinDescription",
+    japaneseLabel: "エコノミー　ツインルーム",
+    gradientFrom: "from-cyan-500/80",
+    gradientTo: "to-blue-600/80",
+    iconBg: "bg-cyan-500/20",
+    icon: <Bed className="h-6 w-6 text-white" />,
+    images: [
+      "/images/newroompic/Economy Twin Room/HXS_0507.jpg",
+      "/images/newroompic/Economy Twin Room/HXS_0511.jpg",
+      "/images/newroompic/Economy Twin Room/HXS_0513.jpg",
+      "/images/newroompic/Economy Twin Room/HXS_0514.jpg",
+      "/images/newroompic/Economy Twin Room/HXS_0614.jpg",
+      "/images/newroompic/Economy Twin Room/HXS_0657.jpg",
+      "/images/newroompic/Economy Twin Room/HXS_0659.jpg",
+      "/images/newroompic/Economy Twin Room/HXS_0672.jpg",
+      "/images/newroompic/Economy Twin Room/HXS_0674.jpg",
+      "/images/newroompic/Economy Twin Room/HXS_0680.jpg",
+    ],
+  },
+  superiorTwin: {
+    nameKey: "rooms.new.superiorTwin",
+    descriptionKey: "rooms.new.superiorTwinDescription",
+    japaneseLabel: "スーペリア　ツインルーム",
     gradientFrom: "from-amber-500/80",
     gradientTo: "to-orange-600/80",
     iconBg: "bg-amber-500/20",
-    icon: <Coffee className="h-6 w-6 text-white" />,
+    icon: <Bed className="h-6 w-6 text-white" />,
     images: [
-      "/images/room/山景标准双人间standard double room with mountain/227464393.jpg",
-      "/images/room/山景标准双人间standard double room with mountain/696481372.jpg",
-      "/images/room/山景标准双人间standard double room with mountain/696481625.jpg",
-      "/images/room/山景标准双人间standard double room with mountain/696499779.jpg",
-      "/images/room/山景标准双人间standard double room with mountain/696501268.jpg",
-      "/images/room/山景标准双人间standard double room with mountain/696501894.jpg",
+      "/images/newroompic/Superior  Twin Room/HXS_0493.jpg",
+      "/images/newroompic/Superior  Twin Room/HXS_0494.jpg",
     ],
   },
-  mountainTwin: {
-    nameKey: "rooms.mountainTwin",
-    descriptionKey: "rooms.mountainTwinDescription",
-    japaneseLabel: "山景スタンダードツインルーム",
-    gradientFrom: "from-teal-500/80",
-    gradientTo: "to-slate-600/80",
-    iconBg: "bg-teal-500/20",
-    icon: <Eye className="h-6 w-6 text-white" />,
+  deluxeTriple: {
+    nameKey: "rooms.new.deluxeTriple",
+    descriptionKey: "rooms.new.deluxeTripleDescription",
+    japaneseLabel: "デラックス　トリプルルーム",
+    gradientFrom: "from-violet-500/80",
+    gradientTo: "to-purple-600/80",
+    iconBg: "bg-violet-500/20",
+    icon: <Users className="h-6 w-6 text-white" />,
     images: [
-      "/images/room/山景标准双床间 standard twin room with mountain/227529317.jpg",
-      "/images/room/山景标准双床间 standard twin room with mountain/227529321.jpg",
-      "/images/room/山景标准双床间 standard twin room with mountain/696369256.jpg",
-      "/images/room/山景标准双床间 standard twin room with mountain/696369374.jpg",
-      "/images/room/山景标准双床间 standard twin room with mountain/696370198.jpg",
-      "/images/room/山景标准双床间 standard twin room with mountain/696373842.jpg",
-      "/images/room/山景标准双床间 standard twin room with mountain/696373913.jpg",
-      "/images/room/山景标准双床间 standard twin room with mountain/696373960.jpg",
-      "/images/room/山景标准双床间 standard twin room with mountain/696374246.jpg",
-      "/images/room/山景标准双床间 standard twin room with mountain/696374391.jpg",
+      "/images/newroompic/Deluxe Triple Room/HXS_0420.jpg",
+      "/images/newroompic/Deluxe Triple Room/HXS_0423.jpg",
+      "/images/newroompic/Deluxe Triple Room/HXS_0424.jpg",
+      "/images/newroompic/Deluxe Triple Room/HXS_0425.jpg",
+      "/images/newroompic/Deluxe Triple Room/HXS_0428.jpg",
+      "/images/newroompic/Deluxe Triple Room/HXS_0431.jpg",
+      "/images/newroompic/Deluxe Triple Room/HXS_0432.jpg",
+      "/images/newroompic/Deluxe Triple Room/HXS_0433.jpg",
+    ],
+  },
+  tripleRoom1F: {
+    nameKey: "rooms.new.tripleRoom1F",
+    descriptionKey: "rooms.new.tripleRoom1FDescription",
+    japaneseLabel: "トリプルルーム（1階）",
+    gradientFrom: "from-rose-500/80",
+    gradientTo: "to-pink-600/80",
+    iconBg: "bg-rose-500/20",
+    icon: <Users className="h-6 w-6 text-white" />,
+    images: [
+      "/images/newroompic/Triple Room 1F/HXS_0429.jpg",
+      "/images/newroompic/Triple Room 1F/HXS_0764.jpg",
+      "/images/newroompic/Triple Room 1F/HXS_0765.jpg",
+      "/images/newroompic/Triple Room 1F/HXS_0777.jpg",
+      "/images/newroompic/Triple Room 1F/HXS_0779.jpg",
+      "/images/newroompic/Triple Room 1F/HXS_0781.jpg",
+    ],
+  },
+  familyRoom1F: {
+    nameKey: "rooms.new.familyRoom1F",
+    descriptionKey: "rooms.new.familyRoom1FDescription",
+    japaneseLabel: "ファミリールーム（1階）",
+    gradientFrom: "from-emerald-500/80",
+    gradientTo: "to-green-600/80",
+    iconBg: "bg-emerald-500/20",
+    icon: <Users className="h-6 w-6 text-white" />,
+    images: [
+      "/images/newroompic/Family Room 1F/HXS_0465.jpg",
+      "/images/newroompic/Family Room 1F/HXS_0466.jpg",
+      "/images/newroompic/Family Room 1F/HXS_0467.jpg",
+      "/images/newroompic/Family Room 1F/HXS_0469.jpg",
+      "/images/newroompic/Family Room 1F/HXS_0470.jpg",
+      "/images/newroompic/Family Room 1F/HXS_0472.jpg",
+    ],
+  },
+  familyRoom2F: {
+    nameKey: "rooms.new.familyRoom2F",
+    descriptionKey: "rooms.new.familyRoom2FDescription",
+    japaneseLabel: "ファミリールーム（2階）",
+    gradientFrom: "from-teal-500/80",
+    gradientTo: "to-cyan-600/80",
+    iconBg: "bg-teal-500/20",
+    icon: <Users className="h-6 w-6 text-white" />,
+    images: [
+      "/images/newroompic/Family Room 2F/HXS_0629.jpg",
+      "/images/newroompic/Family Room 2F/HXS_0631.jpg",
+      "/images/newroompic/Family Room 2F/HXS_0633.jpg",
+      "/images/newroompic/Family Room 2F/HXS_0634.jpg",
+      "/images/newroompic/Family Room 2F/HXS_0636.jpg",
+      "/images/newroompic/Family Room 2F/HXS_0637.jpg",
+      "/images/newroompic/Family Room 2F/HXS_0639.jpg",
+      "/images/newroompic/Family Room 2F/HXS_0640.jpg",
+      "/images/newroompic/Family Room 2F/HXS_0654.jpg",
     ],
   },
 };
@@ -154,7 +220,7 @@ const OptimizedImageCard = memo(
         animate={{ opacity: 1, scale: 1 }}
         transition={{
           duration: 0.4,
-          delay: Math.min(delay, 0.5), // 限制最大延迟
+          delay: Math.min(delay, 0.5),
           ease: "easeOut",
         }}
         className="group relative aspect-square overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer will-change-transform"
@@ -181,7 +247,7 @@ const OptimizedImageCard = memo(
           quality={75}
         />
 
-        {/* 悬停覆盖层 - 简化动画 */}
+        {/* 悬停覆盖层 */}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300">
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div className="bg-white/90 backdrop-blur-sm p-3 rounded-full">
@@ -208,9 +274,9 @@ const CategorySelector = memo(
     selectedCategory,
     onCategoryChange,
   }: {
-    categories: (keyof typeof roomData)[];
-    selectedCategory: keyof typeof roomData;
-    onCategoryChange: (category: keyof typeof roomData) => void;
+    categories: (keyof typeof newRoomData)[];
+    selectedCategory: keyof typeof newRoomData;
+    onCategoryChange: (category: keyof typeof newRoomData) => void;
   }) => {
     const { t } = useLanguage();
 
@@ -221,19 +287,19 @@ const CategorySelector = memo(
         transition={{ duration: 0.6 }}
         className="flex justify-center mb-12"
       >
-        <div className="inline-flex bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-lg border border-stone-200">
+        <div className="inline-flex flex-wrap gap-3 bg-white/80 backdrop-blur-sm rounded-2xl p-3 shadow-lg border border-stone-200 max-w-5xl">
           {categories.map((category) => {
-            const room = roomData[category];
+            const room = newRoomData[category];
             const isSelected = selectedCategory === category;
 
             return (
               <Button
                 key={category}
                 variant={isSelected ? "default" : "ghost"}
-                size="lg"
+                size="sm"
                 onClick={() => onCategoryChange(category)}
                 className={`
-                relative rounded-full px-6 py-3 mx-1 font-light text-sm tracking-wide
+                relative rounded-xl px-4 py-2 text-xs tracking-wide
                 transition-all duration-300 will-change-transform
                 ${
                   isSelected
@@ -260,28 +326,27 @@ CategorySelector.displayName = "CategorySelector";
 export function RoomGallery() {
   const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] =
-    useState<keyof typeof roomData>("deluxe");
+    useState<keyof typeof newRoomData>("deluxeDouble");
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const currentRoom = useMemo(
-    () => roomData[selectedCategory],
+    () => newRoomData[selectedCategory],
     [selectedCategory]
   );
   const categories = useMemo(
-    () => Object.keys(roomData) as (keyof typeof roomData)[],
+    () => Object.keys(newRoomData) as (keyof typeof newRoomData)[],
     []
   );
 
   // 优化的分类切换
   const handleCategoryChange = useCallback(
-    async (category: keyof typeof roomData) => {
+    async (category: keyof typeof newRoomData) => {
       if (category === selectedCategory) return;
 
       setIsLoading(true);
       setSelectedCategory(category);
 
-      // 模拟加载延迟以提供更好的用户反馈
       setTimeout(() => {
         setIsLoading(false);
       }, 200);
@@ -289,7 +354,7 @@ export function RoomGallery() {
     [selectedCategory]
   );
 
-  // 图片预览导航 - 优化
+  // 图片预览导航
   const navigateImage = useCallback(
     (direction: "prev" | "next") => {
       if (selectedImage === null) return;
@@ -308,7 +373,7 @@ export function RoomGallery() {
     [selectedImage, currentRoom.images]
   );
 
-  // 键盘导航 - 优化
+  // 键盘导航
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
       if (selectedImage === null) return;
@@ -333,12 +398,6 @@ export function RoomGallery() {
 
   return (
     <section className="py-16 relative">
-      {/* 简化的背景装饰 */}
-      <div className="absolute inset-0 opacity-3">
-        <div className="absolute top-32 left-20 w-24 h-24 rounded-full bg-stone-300"></div>
-        <div className="absolute bottom-32 right-20 w-16 h-16 rounded-full bg-slate-400"></div>
-      </div>
-
       <div className="container relative">
         {/* 分类选择器 */}
         <CategorySelector
@@ -388,7 +447,7 @@ export function RoomGallery() {
           </div>
         )}
 
-        {/* 图片网格 - 优化渲染 */}
+        {/* 图片网格 */}
         {!isLoading && (
           <motion.div
             key={`${selectedCategory}-gallery`}
@@ -404,14 +463,14 @@ export function RoomGallery() {
                 index={index}
                 roomName={t(currentRoom.nameKey)}
                 onClick={() => setSelectedImage(index)}
-                delay={index * 0.03} // 减少延迟间隔
+                delay={index * 0.03}
               />
             ))}
           </motion.div>
         )}
       </div>
 
-      {/* 图片预览模态框 - 简化动画 */}
+      {/* 图片预览模态框 */}
       <AnimatePresence>
         {selectedImage !== null && (
           <motion.div
@@ -459,7 +518,7 @@ export function RoomGallery() {
               <ArrowRight className="h-6 w-6" />
             </Button>
 
-            {/* 图片容器 - 优化加载 */}
+            {/* 图片容器 */}
             <motion.div
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}

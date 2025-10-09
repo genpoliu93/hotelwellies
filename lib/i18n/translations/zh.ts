@@ -130,6 +130,34 @@ export const zh = {
     perNight: "/ 晚",
     viewDetails: "查看详情",
     ...zenTextKeysZH.rooms,
+    new: {
+      deluxeDouble: "豪华双人间",
+      deluxeDoubleDescription:
+        "宽敞优雅的豪华客房，配备现代化设施和舒适的双人床，非常适合追求奢华的情侣入住。",
+      superiorDouble: "高级双人间",
+      superiorDoubleDescription:
+        "设备齐全的双人间，舒适度高，装饰时尚，是放松身心的理想选择。",
+      economyDouble: "经济双人间",
+      economyDoubleDescription:
+        "舒适且经济实惠的双人间，配备基本设施，为您提供愉快的住宿体验。",
+      economyTwin: "经济双床间",
+      economyTwinDescription:
+        "实用的双床间，配有两张单人床，非常适合朋友或同事一起旅行。",
+      superiorTwin: "高级双床间",
+      superiorTwinDescription:
+        "优质双床间，配有两张舒适的床和升级的设施，提供更高的舒适度。",
+      deluxeTriple: "豪华三人间",
+      deluxeTripleDescription:
+        "宽敞的豪华客房可容纳三位客人，拥有优雅的家具和充足的空间。",
+      tripleRoom1F: "三人间（1楼）",
+      tripleRoom1FDescription: "便利的一楼三人间，适合家庭或小团体，交通便利。",
+      familyRoom1F: "家庭间（1楼）",
+      familyRoom1FDescription:
+        "一楼宽敞的家庭间，专为舒适而设计，所有家庭成员都可轻松抵达。",
+      familyRoom2F: "家庭间（2楼）",
+      familyRoom2FDescription:
+        "二楼宽敞的家庭间，为全家提供宁静的空间和放松的环境。",
+    },
   },
   testimonials: {
     title: "客户评价",

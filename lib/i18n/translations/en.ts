@@ -142,6 +142,35 @@ export const en = {
     perNight: "/ night",
     viewDetails: "View Details",
     ...zenTextKeysEN.rooms,
+    new: {
+      deluxeDouble: "Deluxe Double Room",
+      deluxeDoubleDescription:
+        "Spacious and elegant deluxe room with modern amenities and a comfortable double bed, perfect for couples seeking luxury.",
+      superiorDouble: "Superior Double Room",
+      superiorDoubleDescription:
+        "Well-appointed double room with superior comfort and stylish decor, ideal for a relaxing stay.",
+      economyDouble: "Economy Double Room",
+      economyDoubleDescription:
+        "Comfortable and budget-friendly double room with essential amenities for a pleasant stay.",
+      economyTwin: "Economy Twin Room",
+      economyTwinDescription:
+        "Practical twin room with two single beds, perfect for friends or colleagues traveling together.",
+      superiorTwin: "Superior Twin Room",
+      superiorTwinDescription:
+        "Premium twin room featuring two comfortable beds and upgraded amenities for enhanced comfort.",
+      deluxeTriple: "Deluxe Triple Room",
+      deluxeTripleDescription:
+        "Spacious deluxe room accommodating three guests with elegant furnishings and ample space.",
+      tripleRoom1F: "Triple Room (1st Floor)",
+      tripleRoom1FDescription:
+        "Convenient ground floor triple room, ideal for families or small groups with easy access.",
+      familyRoom1F: "Family Room (1st Floor)",
+      familyRoom1FDescription:
+        "Spacious family room on the ground floor, designed for comfort with easy accessibility for all family members.",
+      familyRoom2F: "Family Room (2nd Floor)",
+      familyRoom2FDescription:
+        "Generous family room on the second floor, offering tranquility and space for the whole family to relax.",
+    },
   },
   testimonials: {
     title: "Guest Reviews",

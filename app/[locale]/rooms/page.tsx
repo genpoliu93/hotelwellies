@@ -17,7 +17,6 @@ export default async function RoomsPage({
 }) {
   const { locale } = await params;
   const t = translations[locale];
-  const rooms = t.rooms as any;
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-stone-50 via-slate-50 to-stone-100 pt-24 text-stone-800 lg:pt-0">
@@ -41,11 +40,10 @@ export default async function RoomsPage({
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white space-y-6 max-w-4xl mx-auto px-4">
               <h1 className="text-5xl md:text-6xl font-light tracking-wide mb-6">
-                {rooms.galleryTitle || "Room Gallery"}
+                {t.rooms.galleryTitle}
               </h1>
               <p className="text-xl md:text-2xl font-light text-white/90 max-w-2xl mx-auto leading-relaxed">
-                {rooms.gallerySubtitle ||
-                  "Discover the comfort and elegance of our rooms"}
+                {t.rooms.gallerySubtitle}
               </p>
 
               {/* 装饰线条 */}
