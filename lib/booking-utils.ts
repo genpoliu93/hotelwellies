@@ -18,7 +18,8 @@ export const openBookingSystem = (
     | "sidebar"
     | "mobile-menu"
     | "contact"
-    | "inquiry" = "hero",
+    | "inquiry"
+    | "floating-button" = "hero",
   params?: Record<string, string>
 ) => {
   try {
