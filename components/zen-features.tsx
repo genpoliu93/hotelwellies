@@ -131,10 +131,8 @@ export function ZenFeatures() {
             {/* 主标题 */}
             <div className="space-y-2">
               <h2 className="text-4xl lg:text-5xl font-light text-stone-800 tracking-wide">
-                {t("services.title")}
-                <span className="block text-lg text-stone-600 font-light mt-2 tracking-[0.2em]">
-                  {t("services.subtitle")}
-                </span>
+                {t("services.subtitle")}
+                <span className="block text-lg text-stone-600 font-light mt-2 tracking-[0.2em]"></span>
               </h2>
             </div>
 
