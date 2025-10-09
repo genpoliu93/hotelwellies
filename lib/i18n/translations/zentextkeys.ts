@@ -3,9 +3,9 @@
 export const zenTextKeysEN = {
   about: {
     paragraph1:
-      "Discover a unique British retreat in the heart of Karuizawa, where English charm meets Japanese tranquility. Just one hour from Tokyo, our boutique hotel offers an authentic taste of Britain amidst the beautiful highland scenery, creating an unforgettable sanctuary for those seeking something truly special.",
+      'The name "Wellies" originates from the famous British general, the Duke of Wellington (1769–1852). During his battles against Napoleon, he found wet feet uncomfortable and commissioned special boots to be made. These became known as "Wellington Boots," later shortened to the affectionate nickname "Wellies." Originally crafted as military footwear, these boots eventually evolved into practical, colorful rubber boots that became an iconic British fashion item. Today, they are recognized as a trendy item on London\'s Regent Street and King\'s Road, as well as New York\'s Fifth Avenue.',
     paragraph2:
-      "Experience the essence of British hospitality through our carefully preserved traditions - from proper afternoon tea service to cozy pub atmosphere with a warming fireplace. Every detail, from our thoughtfully curated collections to our hearty English breakfasts, reflects our dedication to bringing you the genuine warmth and elegance of British culture in this peaceful mountain setting.",
+      'Our hotel\'s name "Wellies" was chosen by the previous owner, Chris, inspired by this rich British cultural heritage. We have now inherited this name and continue to operate the hotel in Karuizawa, cherishing the spirit it represents.',
   },
   features: {
     description:
@@ -81,9 +81,9 @@ export const zenTextKeysEN = {
 export const zenTextKeysJA = {
   about: {
     paragraph1:
-      "Wellies Hotelはオーナーが変更され、内装を一新して2025年5月にリニューアルオープンいたしました。英国風のクラシックな雰囲気はそのままに、客室やレセプションエリアを中心に快適な空間へと改装しております。",
+      "「ウエリーズ（Wellies）」という名前は、イギリスの有名な将軍であるウェリントン侯爵（1769–1852）に由来しています。彼がナポレオンとの戦いで足が濡れることを不快に感じたため、特別に長靴を作らせました。これが「ウェリントンブーツ」と呼ばれるようになり、さらに短縮されて「ウエリーズ」という愛称で親しまれるようになりました。このブーツはもともと軍隊用の長靴として作られたものでしたが、やがて実用的でカラフルなゴム製の長靴として、イギリスを代表するファッションアイテムとなりました。現在では、ロンドンの表参道やキングス・ロード、ニューヨークの5番街でもトレンディなアイテムとして知られています。",
     paragraph2:
-      "日本語・英語・中国語に対応しておりますので、海外からのお客様にも安心してご滞在いただけます。",
+      "このホテルの名称「ウエリーズ」は、前オーナーであるクリスが、そんな英国文化にインスピレーションを得て名付けたものです。現在は私たちがその名前を受け継ぎ、軽井沢のこの場所でその精神を大切にしながらホテルを運営しています。",
   },
   features: {
     description:
@@ -159,9 +159,9 @@ export const zenTextKeysJA = {
 export const zenTextKeysZH = {
   about: {
     paragraph1:
-      "在轻井泽的中心地带发现独特的英式度假胜地，这里英国魅力与日本宁静完美相遇。距离东京仅一小时车程，我们的精品酒店在美丽的高原风景中提供正宗的英国体验，为追求特别之处的客人创造难忘的避世之所。",
+      '"Wellies"这个名字源自英国著名将军威灵顿公爵（1769-1852）。在与拿破仑的战斗中，他对湿脚感到不适，因此特别订制了长靴。这种靴子被称为"威灵顿靴"，后来简称为"Wellies"这个亲切的昵称。这种靴子最初是作为军用长靴制作的，后来演变成实用且色彩丰富的橡胶靴，成为英国代表性的时尚单品。如今，它在伦敦的摄政街、国王路，以及纽约第五大道都被视为时尚潮流单品。',
     paragraph2:
-      "通过我们精心保持的传统体验英式酒店服务的精髓——从正宗的下午茶服务到配有温暖壁炉的舒适酒吧氛围。每一个细节，从我们精心策划的收藏品到丰盛的英式早餐，都体现了我们在这宁静山间环境中为您带来英国文化真正温暖与优雅的执着追求。",
+      '我们酒店的名称"Wellies"是由前任业主克里斯从这一英国文化传统中获得灵感而命名的。现在我们继承了这个名字，在轻井泽的这个地方珍惜其精神，用心经营着这家酒店。',
   },
   features: {
     description: "我们提供各种服务，使您的住宿舒适难忘。",

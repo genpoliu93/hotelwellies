@@ -3,7 +3,7 @@ import { RoomGallery } from "@/components/room-gallery";
 import Image from "next/image";
 import type { Locale } from "@/lib/i18n/translations";
 import { translations } from "@/lib/i18n/translations";
-import { SideMenu } from "@/components/side-menu";
+import { AutoHideSideMenu } from "@/components/auto-hide-side-menu";
 
 // 为静态导出生成所有支持的语言页面
 export function generateStaticParams() {
@@ -20,8 +20,8 @@ export default async function RoomsPage({
   const rooms = t.rooms as any;
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-stone-50 via-slate-50 to-stone-100 pt-24 text-stone-800 lg:pt-0 lg:pl-72">
-      <SideMenu />
+    <main className="min-h-screen bg-gradient-to-br from-stone-50 via-slate-50 to-stone-100 pt-24 text-stone-800 lg:pt-0">
+      <AutoHideSideMenu />
       <div className="relative">
         {/* Hero Section */}
         <div className="h-[400px] relative w-full overflow-hidden">

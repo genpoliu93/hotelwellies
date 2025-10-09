@@ -18,7 +18,15 @@ type NavItem =
   | { id: string; label: string; type: "section" }
   | { id: string; label: string; type: "route"; href: string };
 
-export function SideMenu() {
+interface SideMenuProps {
+  autoHide?: boolean;
+  isVisible?: boolean;
+}
+
+export function SideMenu({
+  autoHide = false,
+  isVisible = true,
+}: SideMenuProps = {}) {
   const { t, locale } = useLanguage();
   const pathname = usePathname();
   const router = useRouter();
@@ -255,15 +263,17 @@ export function SideMenu() {
     <>
       {/* 智能文字颜色切换的导航菜单 */}
       <aside
-        className={`fixed inset-y-0 left-0 w-64 flex-col justify-between px-8 py-12 transition-all duration-700 ease-in-out hidden lg:flex ${
+        className={`fixed inset-y-0 left-0 w-64 flex-col justify-between px-8 py-12 transition-all ease-in-out hidden lg:flex ${
           isDarkText ? "text-stone-800" : "text-white"
-        }`}
+        } ${autoHide ? "duration-300" : "duration-700"}`}
         style={{
           zIndex: Z_INDEX.NAVIGATION,
           background: isDarkText
             ? "rgba(255, 255, 255, 0.95)"
             : "rgba(0, 0, 0, 0.2)",
           backdropFilter: "blur(8px)",
+          transform:
+            autoHide && !isVisible ? "translateX(-100%)" : "translateX(0)",
         }}
       >
         <div className="space-y-10 flex-1 min-h-0">
