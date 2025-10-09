@@ -10,6 +10,7 @@ import {
 } from "@/components/zen-components";
 import { Footer } from "@/components/footer";
 import { SideMenu } from "@/components/side-menu";
+import { FloatingBookingButton } from "@/components/floating-booking-button";
 
 // 为静态导出生成所有支持的语言页面
 export function generateStaticParams() {
@@ -20,6 +21,7 @@ export default function Home() {
   return (
     <>
       <SideMenu />
+      <FloatingBookingButton />
       <ZenHero />
       {/* 滚动内容区域 - 会遮盖固定的 banner */}
       <main className="relative z-20 bg-stone-50 pt-24 text-stone-800 lg:pt-0 lg:pl-64">
