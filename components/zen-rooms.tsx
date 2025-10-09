@@ -339,34 +339,84 @@ export function ZenRooms() {
         </div>
       </div>
 
-      {/* 底部CTA区域 */}
-      <div className="relative flex items-center justify-center bg-gradient-to-br from-stone-900 to-black py-16 lg:h-screen lg:py-0">
+      {/* 底部CTA区域 - 重新设计的背景 */}
+      <div className="relative flex items-center justify-center overflow-hidden py-16 lg:h-screen lg:py-0">
+        {/* 渐变背景 */}
+        <div className="absolute inset-0 bg-gradient-to-br from-stone-100 via-slate-50 to-stone-200" />
+
+        {/* 装饰性图案 */}
+        <div className="absolute inset-0 opacity-[0.03]">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-blue-500 to-purple-500 rounded-full blur-3xl" />
+        </div>
+
+        {/* 网格纹理 */}
+        <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,0,0.5)_1px,transparent_1px)] bg-[length:40px_40px]" />
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="max-w-2xl px-6 text-center text-white sm:px-8 lg:px-12 lg:ml-64"
+          className="relative z-10 max-w-3xl px-6 text-center sm:px-8 lg:px-12 lg:ml-64"
         >
-          <h3 className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-6">
-            {t("rooms.title")}
-          </h3>
-          <p className="text-base sm:text-lg text-white/80 mb-8 leading-relaxed">
-            他にも様々なタイプの客室をご用意しております
-          </p>
-          <Button
-            asChild
-            size="lg"
-            className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-8 py-4 text-base sm:text-lg"
+          {/* 装饰性顶部标签 */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 border border-amber-200"
           >
-            <Link
-              href={`/${locale}/rooms`}
-              className="flex items-center justify-center gap-2"
+            <Sparkles className="h-4 w-4 text-amber-600" />
+            <span className="text-xs font-medium text-amber-900 tracking-wider uppercase">
+              {t("rooms.title")}
+            </span>
+          </motion.div>
+
+          <h3 className="text-3xl sm:text-4xl md:text-5xl font-light mb-6 text-stone-800 tracking-wide">
+            {t("rooms.subtitle")}
+          </h3>
+          <p className="text-base sm:text-lg text-stone-600 mb-10 leading-relaxed max-w-2xl mx-auto">
+            {locale === "ja" && "他にも様々なタイプの客室をご用意しております"}
+            {locale === "en" &&
+              "Explore our diverse range of beautifully designed rooms"}
+            {locale === "zh" && "探索我们精心设计的各种客房类型"}
+          </p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <Button
+              asChild
+              size="lg"
+              className="group bg-gradient-to-r from-stone-800 to-stone-900 hover:from-stone-900 hover:to-black text-white px-10 py-6 text-base sm:text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
             >
-              {t("common.viewAllRooms")}
-              <ArrowRight className="h-5 w-5" />
-            </Link>
-          </Button>
+              <Link
+                href={`/${locale}/rooms`}
+                className="flex items-center justify-center gap-3"
+              >
+                {t("common.viewMoreRoomPhotos")}
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
+          </motion.div>
+
+          {/* 装饰性底部元素 */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            viewport={{ once: true }}
+            className="mt-12 flex justify-center items-center gap-2"
+          >
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-stone-300" />
+            <div className="w-1.5 h-1.5 rounded-full bg-stone-400" />
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-stone-300" />
+          </motion.div>
         </motion.div>
       </div>
     </section>

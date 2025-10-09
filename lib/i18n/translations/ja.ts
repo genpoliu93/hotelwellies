@@ -12,6 +12,7 @@ export const ja = {
     bookNow: "今すぐ予約",
     learnMore: "詳細を見る",
     viewAllRooms: "すべての客室を見る",
+    viewMoreRoomPhotos: "もっと客室写真を見る",
     sendMessage: "メッセージを送信",
     subscribe: "登録",
     selectRoom: "この部屋を選択",

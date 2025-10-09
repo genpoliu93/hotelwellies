@@ -13,6 +13,7 @@ export const en = {
     bookNow: "Book Now",
     learnMore: "Learn More",
     viewAllRooms: "View All Rooms",
+    viewMoreRoomPhotos: "View More Room Photos",
     sendMessage: "Send Message",
     subscribe: "Subscribe",
     selectRoom: "Select Room",

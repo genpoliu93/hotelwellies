@@ -12,6 +12,7 @@ export const zh = {
     bookNow: "立即预订",
     learnMore: "了解更多",
     viewAllRooms: "查看所有客房",
+    viewMoreRoomPhotos: "查看更多客房照片",
     sendMessage: "发送消息",
     subscribe: "订阅",
     selectRoom: "选择此房间",
