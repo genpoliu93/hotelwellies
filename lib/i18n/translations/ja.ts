@@ -39,7 +39,7 @@ export const ja = {
   },
   about: {
     title: "ホテルについて",
-    subtitle: "私たちについて",
+    subtitle: "Wellies",
     description: "",
     tourismInfo: "",
     diningInfo:
@@ -52,7 +52,7 @@ export const ja = {
     ...zenTextKeysJA.about,
   },
   features: {
-    title: "私たちのサービス",
+    title: "Welliesのサービス",
     subtitle: "ホテルの特色",
     dining: {
       title: "朝食、夕食、お茶",
@@ -85,7 +85,7 @@ export const ja = {
     ...zenTextKeysJA.features,
   },
   services: {
-    title: "私たちの特別なサービス",
+    title: "Welliesの特別なサービス",
     subtitle: "ホテルサービス",
     description:
       "お客様の滞在をより思い出深く快適にするために、丁寧に企画されたサービスをご体験ください。",
