@@ -102,7 +102,7 @@ export const en = {
       "We offer complimentary welcome tea for guests who arrive by 17:00 on their check-in day. We also provide traditional English scones or lemon cake, so please feel free to ask our staff after check-in.",
     diningTitle: "Meals (Breakfast & Dinner)",
     diningDescription:
-      "Even without advance reservations, we can prepare meals if contacted on the day or by the previous day.\n• Breakfast (English-style homemade): ¥2,000 per person\n• 5-course dinner: ¥5,000 per person\nStart time: 18:00-18:45 / Please reserve by the previous day.",
+      "Meals must be reserved by the day before your check-in.\n• Breakfast (English-style homemade): ¥2,000 per person\n• 5-course dinner: ¥5,000 per person\nStart time: 18:00-18:45",
     specialSurpriseTitle: "We also provide special day surprises!",
     specialSurpriseDescription:
       "We help create memorable moments for birthdays, anniversaries, graduations, and other special occasions. Cake, sparkling wine, and bouquet set (with message): ¥6,000 (*Reservation required 3 days in advance)",
